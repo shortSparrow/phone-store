@@ -1,17 +1,17 @@
 const { Router } = require("express");
-const { check, validationResult } = require("express-validator");
+const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken')
 const User = require("../models/User");
 const bcrypt = require('bcrypt');
 const router = Router();
-const config = require('../config')
+const config = require('../config/default.json')
 
 // // api/auth/register
 router.post(
     '/register', // path
     [
-        check['email', 'invalid imail'].isEnail(),
-        check['password', 'min 6 character'].isLength({ min: 6 })
+        body('email', 'Invalid email').isEmail(),
+        body('password', 'min 6 character').isLength({ min: 6 })
     ], // middlvare
     async(req, res) => { // function
         try {
@@ -51,8 +51,8 @@ router.post(
 router.post(
     '/login', //path
     [
-        check['email', 'invalid imail'].normalizeEmail().isEnail(),
-        check['password', 'Passwrod must exist'].exist()
+        body('email', 'invalid imail').normalizeEmail().isEmail(),
+        body('password', 'Passwrod must exist').exists()
     ], // middlvare
     async(req, res) => { // function
         try {
