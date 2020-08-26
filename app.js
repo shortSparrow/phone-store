@@ -1,8 +1,12 @@
 const express = require("express");
 const config = require('config');
 const mongoose = require("mongoose");
+cors = require('cors')
 
 const app = express();
+
+app.use(cors())
+app.use(express.json({ extented: true })); // что бы body было не undefined, а объекьтом с полями {}
 
 app.use('/api/auth', require('./routes/auth.routes'))
 

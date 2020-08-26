@@ -11,3 +11,5 @@ const schema = new Schema({
         required: true,
     },
 })
+
+module.exports = model('User', schema)

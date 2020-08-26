@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const User = require("../models/User");
 const bcrypt = require('bcrypt');
 const router = Router();
-const config = require('../config/default.json')
+const config = require('config');
 
 // // api/auth/register
 router.post(
@@ -40,6 +40,8 @@ router.post(
 
             await user.save();
 
+            res.status(201).json({ message: 'Ypu was registered' })
+
         } catch (err) {
             res.status(500).json({
                 message: "Something went wrong, try again"
@@ -74,19 +76,19 @@ router.post(
                     message: 'User does not exist'
                 })
             }
-
             const isMatch = await bcrypt.compare(password, user.password)
+
             if (!isMatch) {
                 return res.status(400).json({
                     message: 'not correct password, try again'
                 })
             }
 
-
             const token = jwt.sign({ userId: user.id },
                 config.get('jwtSecret'), // секретный ключ
                 { expiresIn: '1h' } // сколько бкдет действителен токен
             )
+
 
             res.json({ token, userId: user.id })
 
