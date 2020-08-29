@@ -1,10 +1,18 @@
-import React, { useEffect, useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useContext } from 'react';
+import { AuthContext } from '../context/authContext';
+
+interface dataInterface {
+    userId: null,
+    token: null,
+}
 
 const AuthPage = () => {
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
+
+    const auth = useContext(AuthContext)
 
     const logIn = (event:SyntheticEvent) => {
         event.preventDefault();
@@ -17,10 +25,11 @@ const AuthPage = () => {
             body: JSON.stringify(form)
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then((data:dataInterface) => {
+                auth.login!(data.token, data.userId)
+            })
             .catch(err => {
                 console.log(err);
-                
             })
     }
 

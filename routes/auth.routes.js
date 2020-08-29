@@ -86,7 +86,7 @@ router.post(
 
             const token = jwt.sign({ userId: user.id },
                 config.get('jwtSecret'), // секретный ключ
-                { expiresIn: '1h' } // сколько бкдет действителен токен
+                { expiresIn: '1h' } // сколько бкдет действителен токен, это по идеи если использовть потом jwt.verify()
             )
 
 
