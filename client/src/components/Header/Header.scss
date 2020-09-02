@@ -1,0 +1,113 @@
+@import "../../constants/style.scss";
+
+.header-navigation {
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        height: 64px;
+        box-shadow: 0px 1px 0px $light-border;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    &__nav-wrapper {
+
+
+    }
+
+
+
+    &__icon-wrapper {
+        width: 64px;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -1px 0px 0px $light-border;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            transition: background-color 0.2s ease-in-out;
+            bottom: -1px;
+            left: 0;
+        }
+        
+        &:hover {
+            &:after {
+                background-color: $color-black;
+            }
+        }
+    }
+
+    &__icon-link {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+.header-nav {
+    &__logo-wrapper {
+        width: 64px;
+        height: 100%;
+        background-color: aquamarine;
+        margin-left: 24px;
+        margin-right: 64.5px;
+    }
+
+    &__item-wrapper {
+        display: flex;
+    }
+
+    &__item {
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            transition: background-color 0.2s ease-in-out;
+            bottom: -22px;
+            left: 0;
+        }
+        
+        &:hover {
+            &:after {
+                background-color: $color-black;
+            }
+        }
+    }
+
+    &__item--andreline {
+        width: 100%;
+    }
+
+    &__item:not(:first-child) {
+        margin-left: 64px
+    }
+
+    &__link {
+            font-family: 'Mont';
+            text-transform: uppercase;
+            font-size: $uppercase-size;
+            line-height: $uppercase-line-height;
+            color: $color-light-grey;
+            font-weight: bold;
+            transition: color 0.2s ease-in-out;
+
+        &:hover {
+            color: $color-black
+        }
+    }
+}
