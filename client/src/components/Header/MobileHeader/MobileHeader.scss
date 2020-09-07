@@ -1,0 +1,68 @@
+.header-navigation-burger{
+    &__wrapper {
+
+        // position: relative;
+    }
+
+    &__line {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        height: 64px;
+        position: relative;
+        z-index: 10;
+        background-color: lightgreen;
+    }
+}
+
+.header-nav-burger {
+    &__logo-wrapper {
+
+    }
+
+    &__menu-wrapper {
+        // height: 64px;
+        // overflow: hidden;
+        // position: absolute;
+        // right: 0;
+        // top: 0;
+    }
+
+    &__nav-wrapper {
+        background-color: plum;
+        position: absolute;
+        width: 100%;
+        right: 0;
+        z-index: 1;
+        transition: all 0.3s ease-in-out;
+        transform: translateY(calc(-100% - 64px));
+
+        &--active {
+            // height: 100%;
+            transition: all 0.3s ease-in-out;
+            transform: translateY(0);
+
+        }
+    }
+
+    &__item-wrapper {
+
+
+        &--active {
+            
+        }
+    }
+    
+
+    &__item {
+
+    }
+
+    &__item-link {
+
+    }
+}
+
+.burger-icon {
+    height: 64px;
+}
