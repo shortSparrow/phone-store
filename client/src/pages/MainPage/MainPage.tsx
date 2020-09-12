@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+
+import './MainPage.scss';
+import { connect } from 'react-redux';
+import { RootStateInterface } from '../../interfaces/rootStateInterface';
+import {phones} from '../../store/actions'
+import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
+import { DeviceScreenType } from '../../interfaces/appStateInterface';
+
+
+
+const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones}) => {
+
+    useEffect(() => {
+        loadPhones()
+    }, [])
+
+    useEffect(() => {
+        console.log(phoneList);
+        
+    }, [phoneList])
+
+    return (
+        <div className="main-page">
+            <Header />
+
+        </div>
+    )
+}
+
+interface mainPropsInterfaces {
+    deviceScreen: DeviceScreenType,
+    phoneList: phoneCardInterface[],
+    loadPhones: () => {}
+}
+
+const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
+    deviceScreen: state.appState.deviceScreen,
+    phoneList: state.phonesState.phoneList
+})
+
+const mapDispatchToProps = (dispatch:any) => ({
+    loadPhones: () => dispatch(phones.loadPhones())
+})
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage)

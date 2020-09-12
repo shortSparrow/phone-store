@@ -6,7 +6,3 @@ export const setDeviceScreen = (payload: DeviceScreenType): AppStateActionTypes 
     type: DEVICE_SCREEN,
     payload
 })
-
-
-
-

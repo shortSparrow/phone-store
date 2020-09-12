@@ -6,7 +6,6 @@ const List = require('../models/Phone');
 
 router.get('/', async(req, res) => {
     const phoneList = await List.find({});
-    console.log(phoneList);
 
     res.status(200).json({ phoneList })
 })

@@ -1,4 +1,10 @@
-import { DEVICE_SCREEN } from '../constants/actions';
+import {
+    DEVICE_SCREEN,
+    PHONE_LIST_LOADING,
+    PHONE_LIST_ERROR,
+    PHONE_LIST_SUCCESS
+} from '../constants/actions';
+import { phoneCardInterface } from './phonesInterfaces';
 
 // here we describe states to appState reducer
 export type DeviceScreenType = {
@@ -19,5 +25,20 @@ interface setDeviceScreenInterface {
     payload: DeviceScreenType
 }
 
+interface phoneListLoadingInterface {
+    type: typeof PHONE_LIST_LOADING,
+    loading: boolean
+}
+
+interface phoneListSuccessInterface {
+    type: typeof PHONE_LIST_SUCCESS,
+    phoneList: phoneCardInterface[]
+}
+
+interface phoneListFailInterface {
+    type: typeof PHONE_LIST_ERROR,
+    error: any
+}
+
 // here we export whole action of appState as one big type
-export type AppStateActionTypes = setDeviceScreenInterface
+export type AppStateActionTypes = setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface | phoneListFailInterface
