@@ -4,15 +4,13 @@ export interface phoneCardInterface {
     title: string,
     availabelColor: string[],
     availabelDevices: {
-        [key: string]: {
             availableRAM: string[],
             images: {
                 main: string,
                 other: string[]
             },
             color: string
-        }
-    },
+       }[],
     price: {
         current: string,
         old: string

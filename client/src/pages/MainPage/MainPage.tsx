@@ -7,6 +7,7 @@ import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import {phones} from '../../store/actions'
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
+import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
 
 
 
@@ -17,14 +18,15 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones}) => {
     }, [])
 
     useEffect(() => {
-        console.log(phoneList);
+        // console.log(typeof phoneList);
+        // console.log( phoneList);
         
     }, [phoneList])
 
     return (
         <div className="main-page">
             <Header />
-
+            <PhoneCardList phoneList={phoneList}/>
         </div>
     )
 }

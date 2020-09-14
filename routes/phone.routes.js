@@ -7,7 +7,7 @@ const List = require('../models/Phone');
 router.get('/', async(req, res) => {
     const phoneList = await List.find({});
 
-    res.status(200).json({ phoneList })
+    res.status(200).json([...phoneList])
 })
 
 module.exports = router
