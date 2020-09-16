@@ -6,15 +6,15 @@ import PhoneCardItem from '../PhoneCardItem/PhoneCardItem';
 
 import "./PhoneCardList.scss";
 
-const Pagination = ({structureList, setStructureList}: any) => {
+const Pagination = ({structureList, setStructureList, leftSpace=2, rightSpace=2}: any) => {
     const [paginationList, setPaginationList] = useState<any>([]);
-
     
     const updatePagination = (page: any = null) => {
         const { data, onPage } = structureList;
 
-        let leftStep = 3;
-        let rightStep = 3;
+        // without + 1 we recive leftSpace and rightSpace less on 1 the we get from props ;)
+        let leftStep = leftSpace + 1;
+        let rightStep = rightSpace + 1;
 
         while (structureList.currentPage - leftStep <= 0) {
             leftStep--;
@@ -51,16 +51,11 @@ const Pagination = ({structureList, setStructureList}: any) => {
                 currentVissible: data.slice((page! - 1) * onPage, onPage * page! + 1)
             })
         }
-        // return luft;
     }
 
     useEffect(() => {
         updatePagination()
-
-        
     }, [structureList])
-
-  
 
     return (
         <div className="pagination">
@@ -83,13 +78,6 @@ const Pagination = ({structureList, setStructureList}: any) => {
                     )
                 }
 
-                if (index === list.length - 1) {
-                    console.log(index,list[list.length - 2] , page);
-
-                }
-
-                
-
                 if (index === list.length - 1 && list[list.length - 2] !== page - 1 ) {
                     return (
                         <>
@@ -110,7 +98,6 @@ interface cardListInterface {
 }
 
 const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
-    const [list, setList] = useState([]);
     const [structureList, setStructureList] = useState<any>({
         onPage: 16,
         currentPage: 1,
@@ -120,24 +107,20 @@ const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
         loaded: false
     })
 
-    const test = (arr: any) => {
-        setList(arr)
-        setStructureList({
-            onPage: 5,
-            currentPage: 1,
-            pages: Array.from(Array(Math.ceil(arr.length / 5)).keys(), (_, i) => i + 1),
-            data: arr,
-            currentVissible: arr.slice(0, 5),
-            loaded: true
-        })
-    }
-
     useEffect(() => {
         if (phoneList.length) {
-            const arrEmpty = new Array();
-            arrEmpty.length = 100;
-            arrEmpty.fill(phoneList[0]);
-            test(arrEmpty)
+            const arr = new Array();
+            arr.length = 100;
+            arr.fill(phoneList[0]);
+
+            setStructureList({
+                onPage: 5,
+                currentPage: 1,
+                pages: Array.from(Array(Math.ceil(arr.length / 5)).keys(), (_, i) => i + 1),
+                data: arr,
+                currentVissible: arr.slice(0, 5),
+                loaded: true
+            })
         }
     }, [phoneList])
 
@@ -164,7 +147,12 @@ const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
                 </select>
             </div>
             <div className="xxx">
-                <Pagination structureList={structureList} setStructureList={setStructureList} />
+                <Pagination
+                structureList={structureList}
+                setStructureList={setStructureList}
+                leftSpace={2}
+                rightSpace={2}
+                />
             </div>
             {
                 structureList.currentVissible.map((phone: any) => <PhoneCardItem phone={phone} />)
