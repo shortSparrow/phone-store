@@ -23,6 +23,7 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones}) => {
         
     }, [phoneList])
 
+    // create sorted 
     return (
         <div className="main-page">
             <Header />

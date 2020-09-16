@@ -9,18 +9,20 @@ interface cardListInterface {
     phoneList: phoneCardInterface[]
 }
 
-const PhoneCardList: React.FC<cardListInterface> = ({phoneList}) => {
+const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
     console.log(phoneList);
-    
+
 
     return (
-       <>
-        <div>CARD LIST</div>
+        <>
+            <div>CARD LIST</div>
 
-        {
-            phoneList.map((phone: phoneCardInterface) => <PhoneCardItem phone={phone} key={phone._id}/>)
-        }
-       </>
+            <div className="phone-list">
+                {
+                    phoneList.map((phone: phoneCardInterface) => <PhoneCardItem phone={phone} key={phone._id} />)
+                }
+            </div>
+        </>
     )
 }
 

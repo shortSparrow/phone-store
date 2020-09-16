@@ -1,9 +1,14 @@
+@import "../../constants/style.scss";
+
 .phone-card {
     background: #FFFFFF;
     border: 1px solid #E2E6E9;
     box-sizing: border-box;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
     padding: 24px;
+    max-width: 272px;
+    margin: 0 8px;
+    margin-bottom: 40px;
 
     &__image--wrapper {
         margin: 8px 8px 0 8px; // top right bottom left
@@ -19,6 +24,69 @@
 
     &__price {
         display: flex;
+        margin: 8px 0;
+    }
+
+    &__title {
+        color: $color-black;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        margin-top: 24px;
+    }
+
+    &__current-price {
+        font-weight: bold;
+        font-size: 22px;
+        font-family: "Mont Bold";
+        margin: 0;
+    }
+
+    &__old-price {
+        font-size: 22px;
+        color: $color-light-grey;
+        margin: 0;
+        margin-left: 8px;
+    }
+
+    &__line {
+        height: 1px;
+        background-color: #E2E6E9;
+        margin-bottom: 16px;
     }
     
+    &__button--wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+
+    }
+
+    &__add-cart--wrapper {
+        // margin-right: 4px;
+        cursor: pointer;
+    }
+    
+    &__favorite--wrapper {
+        // margin-left: 4px;
+        cursor: pointer;
+    }
+}
+
+
+.card-specification {
+    &--item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8;
+    }
+
+    &__name {
+        font-size: 12px;
+        color: $color-light-grey;
+    }
+
+    &__value {
+        font-size: 12px;
+    }
 }

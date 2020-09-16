@@ -1,0 +1,26 @@
+@import "./constants/style.scss";
+
+.button {
+    &__add-cart--wrapper {
+        width: 176px;
+        background-color: $color-black;
+        // background-color: $color-light-grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    &__add-cart--text {
+        color: #ffffff
+    }
+
+    &__favorite--wrapper {
+        border: 1px solid #B4BDC4;
+        box-sizing: border-box;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
