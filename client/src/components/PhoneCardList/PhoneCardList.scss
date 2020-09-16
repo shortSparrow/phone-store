@@ -1,0 +1,19 @@
+.phone-card__list {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.pagination {
+    display: flex;
+    &__item {
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        box-sizing: border-box;
+        background-color: aqua;
+    }
+}
+
+.selected {
+    background-color: rebeccapurple;
+}
