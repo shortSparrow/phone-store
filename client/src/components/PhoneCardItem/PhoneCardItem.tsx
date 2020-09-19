@@ -12,12 +12,15 @@ interface PhoneCardInterface {
 const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone }) => {
 
     return (
-        <div className="phone-card">
+       <>
+       {
+           phone.availabelDevices.map(item => (
+            <div className="phone-card">
             <div className="phone-card__image--wrapper">
-                <img src={phone.availabelDevices[0].images.main} alt={phone.title} className="phone-card__image--item" />
+                <img src={item.images.main} alt={phone.title} className="phone-card__image--item" />
             </div>
             <div className="phone-card__content">
-                <p className="phone-card__title">{phone.title}</p>
+           <p className="phone-card__title">{phone.title} {item.color} {item.availableRAM[0]}</p>
                 <div className="phone-card__price">
                     <p className="phone-card__current-price">{phone.price.current}</p>
                     <p className="phone-card__old-price">{phone.price.old}</p>
@@ -53,6 +56,9 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone }) => {
 
             </div>
         </div>
+           ))
+       }
+       </>
     )
 }
 

@@ -31,5 +31,10 @@ export interface phoneCardInterface {
 }
 
 export type phoneState = {
-    phoneList: phoneCardInterface[]
+    phoneList: phoneCardInterface[] | [],
+    sortedList: phoneCardInterface[] | [],
+    visibleList: phoneCardInterface[] | [],
+    currentSort: string,
+    loading: boolean | null,
+    error: any
 };
