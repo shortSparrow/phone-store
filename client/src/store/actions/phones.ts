@@ -5,12 +5,14 @@ import {
     PHONE_LIST_LOADING,
     PHONE_LIST_ERROR,
     PHONE_LIST_SUCCESS,
-    SORT_DIVICE, FILTER_DEVICE
+    PHONE_LIST_STATE,
+    PHONE_ITEM_SUCCESS
 } from '../../constants/actions';
-import { request } from '../../api/request';
+import { request, postRequest} from '../../api/request';
 import { AppStateActionTypes } from '../../interfaces/appStateInterface';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
+import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
+import { phonesState } from '../reducers/phones';
 
 export const phoneLoading = (loading: boolean): AppStateActionTypes => ({
     type: PHONE_LIST_LOADING,
@@ -27,29 +29,29 @@ export const phoneError = (error: any): AppStateActionTypes => ({
     error
 })
 
-export const sortPhones = (sortedList: phoneCardInterface[], currentSort: string): AppStateActionTypes => ({
-    type: SORT_DIVICE,
-    sortedList,
-    currentSort
+export const phoneListState = (phoneListState: phoneListStateType): AppStateActionTypes => ({
+    type: PHONE_LIST_STATE,
+    phoneListState
 })
 
-export const filterPhones = (visibleList: phoneCardInterface[] | []): AppStateActionTypes => ({
-    type: FILTER_DEVICE,
-    visibleList,
-})
 
 export const loadPhones = (): ThunkAction<void, RootStateInterface, unknown, Action<string>> => {
     return async dispatch => {
         dispatch(phoneLoading(true));
         try {
-            const phones: phoneCardInterface[] = await request('/api/phone-list');
-            dispatch(phoneSuccess(phones));
+            const phones: phoneCardInterface[] = await request('/api/phone/list');
+            await dispatch(phoneSuccess(phones));
 
-            const defaultSorted = await [...phones].sort( (a, b) => {
-                return +b.price.current.slice(1,) - +a.price.current.slice(1,) // ew recive $790, so cut $ sign and conver string to numer
-            })
-            await dispatch(filterPhones(defaultSorted))
-           await dispatch(sortPhones(defaultSorted, 'rich'))
+            // sorted by cheap price
+            const sortedPoneList = phones.sort((a,b) => +a.price.current.slice(1,) - +b.price.current.slice(1,))
+            await dispatch(phoneListState({
+                pages: 0,
+                currentPage: 0,
+                onPage: 0,
+                visible: sortedPoneList,
+                sorted: sortedPoneList,
+                currentSortedValue: 'cheap'
+            }))
         } catch (err) {
             console.log(err);
             dispatch(phoneError(err));
@@ -59,4 +61,24 @@ export const loadPhones = (): ThunkAction<void, RootStateInterface, unknown, Act
     }
 }
 
+export const phoneItemSuccess = (currentModel: phoneCardInterface): AppStateActionTypes => ({
+    type: PHONE_ITEM_SUCCESS,
+    currentModel
+})
+
+export const getPhoneByModelName = (model_name: string): ThunkAction<void, RootStateInterface, unknown, Action<string>> => {
+    return async dispatch => {
+        dispatch(phoneLoading(true));
+        try {
+            const phone = await request(`/api/phone/item/?model_name=${model_name}`);
+            dispatch(phoneItemSuccess(phone))
+            
+        } catch (err){
+            dispatch(phoneError(err));
+        } finally {
+            dispatch(phoneLoading(false));
+        }
+
+    }
+}
 

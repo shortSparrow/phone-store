@@ -32,9 +32,21 @@ export interface phoneCardInterface {
 
 export type phoneState = {
     phoneList: phoneCardInterface[] | [],
-    sortedList: phoneCardInterface[] | [],
-    visibleList: phoneCardInterface[] | [],
-    currentSort: string,
+    error: any | null,
     loading: boolean | null,
-    error: any
+    phoneListState: phoneListStateType,
+    currentModel: phoneCardInterface | null
 };
+
+export type phoneListStateType = {
+    pages: number,
+    currentPage: number,
+    onPage: number,
+    visible: phoneCardInterface[] | [],
+    sorted: phoneCardInterface[] | [],
+    currentSortedValue: string
+}
+
+// phoneList = visileList
+// visibleList.sort() -> sorted
+// sorted.filter() => visible

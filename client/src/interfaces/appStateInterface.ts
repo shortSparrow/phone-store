@@ -3,10 +3,10 @@ import {
     PHONE_LIST_LOADING,
     PHONE_LIST_ERROR,
     PHONE_LIST_SUCCESS,
-    SORT_DIVICE,
-    FILTER_DEVICE
+    PHONE_LIST_STATE,
+    PHONE_ITEM_SUCCESS
 } from '../constants/actions';
-import { phoneCardInterface } from './phonesInterfaces';
+import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
 
 // here we describe states to appState reducer
 export type DeviceScreenType = {
@@ -42,19 +42,17 @@ interface phoneListFailInterface {
     error: any
 }
 
-interface sortedPhoneListInterface {
-    type: typeof SORT_DIVICE,
-    sortedList: phoneCardInterface[],
-    currentSort: string
+interface phoneListState {
+    type: typeof PHONE_LIST_STATE,
+    phoneListState: phoneListStateType
 }
 
-interface filterPhoneListInterface {
-    type: typeof FILTER_DEVICE,
-    visibleList: phoneCardInterface[] | [],
+interface phoneItemSuccess {
+    type: typeof PHONE_ITEM_SUCCESS,
+    currentModel: phoneCardInterface
 }
-
 
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
-    setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface
-    | phoneListFailInterface | sortedPhoneListInterface | filterPhoneListInterface
+    setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
+    phoneListFailInterface | phoneListState | phoneItemSuccess

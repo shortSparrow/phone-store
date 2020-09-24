@@ -5,63 +5,65 @@ import './MainPage.scss';
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import {phones} from '../../store/actions'
-import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
+import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
-import SortedBy from '../../components/SortedBy/SortedBy';
 
 
 
-const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, sortedList, loadPhones, sortPhones, filterPhones, visibleList}) => {
-    const [searchValue, setSearchValue] = useState('');
+const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss}) => {
+    const [searchField, setSearchField] = useState('');
 
     useEffect(() => {
-        loadPhones();
+        loadPhones()
     }, [])
 
-    useEffect(() => {
-        // console.log(typeof phoneList);
-        // console.log( phoneList);
-        
-    }, [visibleList])
+    const handleVisible = (event: ChangeEvent<HTMLInputElement>) => {
+        const {value} = event.target
+        setSearchField(value)
 
+       const filtered = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+       setPhoneListState({
+           ...phoneListState,
+           visible: filtered
+       })
+    }
 
-    const sortBy = (value: string) => {
-        return [...phoneList].sort((a,b) => {
+    const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
+        const {value} = event.target;
+
+        const sortedList = [...phoneListState.visible].sort((a,b) => {
             if (value === 'rich') {
-                return +b.price.current.slice(1,) - +a.price.current.slice(1,) 
-            } else if (value === 'ceap') {
-                return +a.price.current.slice(1,) - +b.price.current.slice(1,) 
-            } else if (value === 'rate'){
-                // return +b.price.current.slice(1,) - +a.price.current.slice(1,)
-                return 1
-            } else if (value === 'newest') {
-                // return +b.price.current.slice(1,) - +a.price.current.slice(1,)
-                return 1
+                return +b.price.current.slice(1,) - +a.price.current.slice(1,)
+            } else if (value === 'cheap') {
+                return +a.price.current.slice(1,) - +b.price.current.slice(1,)
             } else {
                 return 1
             }
-        })
-    }
+         })
 
-    const handleFilter = (event: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value);
-        const filteredList = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()));
-        
-        console.log(filteredList);
-        
-        filterPhones(filteredList)
+        setPhoneListState({
+            ...phoneListState,
+            sorted: sortedList,
+            visible: sortedList,
+            currentSortedValue: value
+        })
     }
 
     // create sorted 
     return (
         <div className="main-page">
             <Header />
-            <SortedBy dispatchFunc={sortPhones} sortFunc={sortBy}/>
-            <div>
-                <input type="text" value={searchValue} onChange={handleFilter}/>
+            <div className="select">
+                <select value={phoneListState.currentSortedValue} onChange={handleSort}>
+                    <option value="rich">rich</option>
+                    <option value="cheap">Cheap</option>
+                </select>
             </div>
-            <PhoneCardList phoneList={visibleList}/>
+            <div className="filter">
+                <input type="text" value={searchField} onChange={handleVisible}/>
+            </div>
+            <PhoneCardList phoneList={phoneListState.visible}/>
         </div>
     )
 }
@@ -69,24 +71,23 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, sortedList, loadPho
 interface mainPropsInterfaces {
     deviceScreen: DeviceScreenType,
     phoneList: phoneCardInterface[],
-    sortedList: phoneCardInterface[],
-    visibleList: phoneCardInterface[] | [],
-    loadPhones: () => {}
-    sortPhones: (phoneList: phoneCardInterface[], currentSort: string) => {},
-    filterPhones: (visibleList: phoneCardInterface[] | []) => {}
+    phoneListState: phoneListStateType,
+    loadPhones: () => {},
+    setPhoneListState: (phoneListState: phoneListStateType) => {},
+    phoneLoadSuccss: (data: phoneCardInterface[]) => {}
 }
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
     phoneList: state.phonesState.phoneList,
-    sortedList: state.phonesState.sortedList,
-    visibleList: state.phonesState.visibleList
+    phoneListState: state.phonesState.phoneListState,
+    phoneState: state.phonesState.phoneListState
 })
 
 const mapDispatchToProps = (dispatch:any) => ({
     loadPhones: () => dispatch(phones.loadPhones()),
-    sortPhones: (sortedList: phoneCardInterface[], currentSort: string) => dispatch(phones.sortPhones(sortedList, currentSort)),
-    filterPhones: (visibleList: phoneCardInterface[] | []) => dispatch(phones.filterPhones(visibleList))
+    setPhoneListState: (phoneListState: phoneListStateType) => dispatch(phones.phoneListState(phoneListState)),
+    phoneLoadSuccss: (data: phoneCardInterface[]) => dispatch(phones.phoneSuccess(data))
 })
 
 

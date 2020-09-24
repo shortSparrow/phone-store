@@ -10,7 +10,7 @@ interface cardListInterface {
 }
 
 const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
-    // console.log(phoneList);
+    console.log(phoneList);
 
 
     return (

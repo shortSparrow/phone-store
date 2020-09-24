@@ -1,26 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
+import { useHistory } from "react-router-dom";
 
 import "./PhoneCardItem.scss";
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
+import { phones } from '../../store/actions';
 
 interface PhoneCardInterface {
     phone: phoneCardInterface
 }
 
 const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone }) => {
+    let history = useHistory();
 
     return (
-       <>
-       {
-           phone.availabelDevices.map(item => (
-            <div className="phone-card">
+        <div className="phone-card" onClick={() => history.push(`/phone/${phone.routePosition}`)}>
             <div className="phone-card__image--wrapper">
-                <img src={item.images.main} alt={phone.title} className="phone-card__image--item" />
+                <img src={phone.availabelDevices[0].images.main} alt={phone.title} className="phone-card__image--item" />
             </div>
             <div className="phone-card__content">
-           <p className="phone-card__title">{phone.title} {item.color} {item.availableRAM[0]}</p>
+                <p className="phone-card__title">{phone.title}</p>
                 <div className="phone-card__price">
                     <p className="phone-card__current-price">{phone.price.current}</p>
                     <p className="phone-card__old-price">{phone.price.old}</p>
@@ -56,9 +56,6 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone }) => {
 
             </div>
         </div>
-           ))
-       }
-       </>
     )
 }
 
@@ -66,8 +63,7 @@ const mapStateToProps = (state: RootStateInterface) => ({
 
 });
 
-const mapDispatchToProps = () => ({
-
+const mapDispatchToProps = (dispatch: any) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardItem)
