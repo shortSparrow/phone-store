@@ -26,71 +26,66 @@
 }
 
 
-
-.full-card {
-    &__images-wrapper {
-        display: flex;
-    }
-
-    &__big-image {
-        width: 442px;
-        height: 422px
-    }
-
-    &__big-image--itself {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    &__small-image-list {
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__small-image {
-        width: 80px;
-        height: 80px;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid black;
-        cursor: pointer;
-    }
-
-    &__small-image--itself {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-
-&__available-color-list {
-    display: flex;
+.main-titile {
+    font-family: "Mont Bold";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 41px;
+    letter-spacing: -0.01em;
+    color: $color-black;
 }
 
-    &__availabe-color-wrapper {
-        width: 32px;
-        height: 32px;
-        padding: 3px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #E2E6E9;
-        transition: border 0.3s ease;
-        border-radius: 50%;
+.second-title {
+    font-family: "Mont Bold";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 140%;
+    color: $color-black;
+}
 
-        &:hover {
-            border-color: #313237
-        }
-    }
+.third-title {
+    font-family: "Mont Bold";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+    color: $color-black;
+}
 
-    &__availabe-color {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
 
-    &__selected-ram {
-        color: aqua;
-    }
+.uppaercase-text {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-black;
+}
+
+.buttons-text {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: $color-black;
+}
+
+.body-text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: $color-black;
+}
+
+
+.small-text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: $color-light-grey;
 }

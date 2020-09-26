@@ -33,13 +33,13 @@ const DesktopHeader = () => {
             <div className="header-navigation__item">
                 <div className="header-navigation__icon-wrapper">
                     <Link to="/favorites" className="header-navigation__icon-link">
-                        <img src="icons/heart.svg" alt="favorites" />
+                        <img src="/icons/heart.svg" alt="favorites" />
                     </Link>
 
                 </div>
                 <div className="header-navigation__icon-wrapper">
                     <Link to="/chart" className="header-navigation__icon-link">
-                        <img src="icons/shopping-bag.svg" alt="shopping-bag" />
+                        <img src="/icons/shopping-bag.svg" alt="shopping-bag" />
                     </Link>
                 </div>
             </div>

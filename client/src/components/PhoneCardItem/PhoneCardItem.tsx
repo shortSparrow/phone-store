@@ -50,7 +50,7 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone }) => {
                         <div className="button__add-cart--text">Add to cart</div>
                     </div>
                     <div className="button__favorite--wrapper phone-card__favorite--wrapper">
-                        <img src="icons/heart.svg" alt="favorite" className="button__favorite--icon"/>
+                        <img src="/icons/heart.svg" alt="favorite" className="button__favorite--icon"/>
                     </div>
                 </div>
 
