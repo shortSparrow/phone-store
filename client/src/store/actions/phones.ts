@@ -8,7 +8,7 @@ import {
     PHONE_LIST_STATE,
     PHONE_ITEM_SUCCESS
 } from '../../constants/actions';
-import { request, postRequest} from '../../api/request';
+import { request, postRequest } from '../../api/request';
 import { AppStateActionTypes } from '../../interfaces/appStateInterface';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
@@ -40,10 +40,22 @@ export const loadPhones = (): ThunkAction<void, RootStateInterface, unknown, Act
         dispatch(phoneLoading(true));
         try {
             const phones: phoneCardInterface[] = await request('/api/phone/list');
-            await dispatch(phoneSuccess(phones));
+
+            // add mainImage ro other imageList, ecause in db they not connected
+            const modificatedPhoneList = phones.map(phone => {
+                const modificatedAvailabelDevices = phone.availabelDevices.map(device => {
+                    device.images.other.unshift(device.images.main);
+                    return device
+                });
+                phone.availabelDevices = modificatedAvailabelDevices
+                return phone
+            });
+
+
+            await dispatch(phoneSuccess(modificatedPhoneList));
 
             // sorted by cheap price
-            const sortedPoneList = phones.sort((a,b) => +a.price.current.slice(1,) - +b.price.current.slice(1,))
+            const sortedPoneList = phones.sort((a, b) => +a.price.current.slice(1,) - +b.price.current.slice(1,))
             await dispatch(phoneListState({
                 pages: 0,
                 currentPage: 0,
@@ -70,10 +82,17 @@ export const getPhoneByModelName = (model_name: string): ThunkAction<void, RootS
     return async dispatch => {
         dispatch(phoneLoading(true));
         try {
-            const phone = await request(`/api/phone/item/?model_name=${model_name}`);
+            const phone: phoneCardInterface = await request(`/api/phone/item/?model_name=${model_name}`);
+
+            // add mainImage ro other imageList, ecause in db they not connected
+            phone.availabelDevices.map(device => {
+                device.images.other.unshift(device.images.main);
+                return device
+            });
+
             dispatch(phoneItemSuccess(phone))
-            
-        } catch (err){
+
+        } catch (err) {
             dispatch(phoneError(err));
         } finally {
             dispatch(phoneLoading(false));

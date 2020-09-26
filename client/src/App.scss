@@ -62,4 +62,35 @@
         height: 100%;
         object-fit: contain;
     }
+
+
+&__available-color-list {
+    display: flex;
+}
+
+    &__availabe-color-wrapper {
+        width: 32px;
+        height: 32px;
+        padding: 3px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #E2E6E9;
+        transition: border 0.3s ease;
+        border-radius: 50%;
+
+        &:hover {
+            border-color: #313237
+        }
+    }
+
+    &__availabe-color {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    &__selected-ram {
+        color: aqua;
+    }
 }

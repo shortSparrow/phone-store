@@ -19,6 +19,7 @@ interface PhoneCardFullInterface {
 
 const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, currentModel, getPhoneByModelName }) => {
     const [device, setDevice] = useState<any>(null);
+    // const [bigImage, set]
     let params: params = useParams();
 
     useEffect(() => {
@@ -29,12 +30,13 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
         if (currentModel) {
             setDevice({
                 ...currentModel,
-                bigImage: currentModel.availabelDevices[0].images.main,
+                currentDevice: currentModel.availabelDevices[0],
+                currentRAM: currentModel.availabelDevices[0].availableRAM[0],
+                bigImage: currentModel.availabelDevices[0].images.main
             })
         }
 
     }, [currentModel])
-
 
     return (
         <div>
@@ -48,23 +50,64 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                 <div className="full-card__images-wrapper">
                                     <div className="full-card__small-image-list">
                                         {
-                                            device.availabelDevices[0].images.other.map((image: string) => (
-                                                <div className="full-card__small-image" onClick={() => setDevice({...device, bigImage: image})}>
+                                            device.currentDevice.images.other.map((image: string) => (
+                                                <div className="full-card__small-image" onClick={() => {
+                                                    const newDevice = { ...device, bigImage: image }
+                                                    // newDevice.currentDevice.images.main = image
+                                                    setDevice(newDevice)
+                                                }
+                                                }>
                                                     <img
-                                                    src={defaultConstatnts.clientHost + "/" + image}
-                                                    alt={device.title}
-                                                    className="full-card__small-image--itself"
-                                                />
+                                                        src={defaultConstatnts.domain + "/" + image}
+                                                        alt={device.title}
+                                                        className="full-card__small-image--itself"
+                                                    />
                                                 </div>
                                             ))
                                         }
                                     </div>
                                     <div className="full-card__big-image">
                                         <img
-                                            src={defaultConstatnts.clientHost + "/" + device.bigImage}
+                                            src={defaultConstatnts.domain + "/" + device.bigImage}
                                             alt={device.title}
                                             className="full-card__big-image--itself"
                                         />
+                                    </div>
+                                </div>
+
+                                <div className="full-card__select-balock">
+                                    <div className="full-card__available-color-list">
+                                        {
+                                            device.availabelColor.map((color: string) => (
+                                                <div className="full-card__availabe-color-wrapper">
+                                                    <div
+                                                        className="full-card__availabe-color"
+                                                        style={{ backgroundColor: color }}
+                                                        onClick={() => {
+                                                            const newModel = currentModel?.availabelDevices.find((model) => model.color === color)
+                                                            setDevice({
+                                                                ...device,
+                                                                currentDevice: newModel,
+                                                                currentRAM: newModel?.availableRAM.find((ram) => ram === device.currentRAM) || newModel?.availableRAM[0],
+                                                                bigImage: newModel?.images.main
+                                                            })
+                                                        }}
+                                                    ></div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+
+                                    <div className="full-card__availabe-ram-list">
+                                        {
+                                            device.currentDevice.availableRAM.map((ram: string) => (
+                                                <div className={`full-card__availale-ram-wrapper ${device.currentRAM === ram ? "full-card__selected-ram" : ""}`} onClick={() => {
+                                                    setDevice({...device, currentRAM: ram})
+                                                }}>
+                                                    <div className="full-card__availale-ram">{ram}</div>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>
