@@ -86,7 +86,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             </div>
                                         </div>
 
-                                        <div className="full-card__select-balock">
+                                        <div className="full-card__select-block">
                                             <div className="full-card__available-color-list__wrapper">
                                                 <p className="card-specification__name full-card__select-titile">Available colors</p>
 
@@ -138,6 +138,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                 <p className="phone-card__old-price">{currentModel?.price.old}</p>
                                             </div>
 
+                                            <div className="full-card__short-info">
                                             <div className="phone-card__button--wrapper full-card__button-wrapper">
                                                 <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
                                                     <div className="button__add-cart--text">Add to cart</div>
@@ -163,12 +164,15 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                     <div className="card-specification__value">{currentModel?.deviceInfo.camera}</div>
                                                 </div>
                                             </div>
+                                            </div>
 
-                                        </div>
-
-                                        <div className="full-card__id">
+                                            <div className="full-card__id">
                                             <p className="card-specification__name">ID: undefined</p>
                                         </div>
+
+                                        </div>
+
+
                                     </div>
 
 
