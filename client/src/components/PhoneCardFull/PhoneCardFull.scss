@@ -34,6 +34,10 @@
         border-color: #C4C4C4;
         cursor: pointer;
 
+        &--active {
+            border-color: $color-black;
+        }
+
         &:not(:first-child) {
             margin-top: 16px;
         }
@@ -71,12 +75,16 @@
         transition: border 0.3s ease;
         border-radius: 50%;
 
+        &--selected {
+            border-color: $color-black;
+        }
+
         &:not(:first-child) {
             margin-left: 8px;
         }
 
         &:hover {
-            border-color: #B4BDC4
+            border-color: $color-black;
         }
     }
 
@@ -147,5 +155,42 @@
     &__id {
         position: absolute;
         right: 0;
+    }
+
+    &__description {
+        display: flex;
+    }
+
+    &__second-title {
+        margin-bottom: 16px;
+    }
+
+    &__summary {
+        width: 560px;
+        margin-right: 32px;
+    }
+
+    &__summary__title {
+        margin-bottom: 16px;
+        margin-top: 32px;
+        font-family: "Mont" !important;
+    }
+
+    &__summary__description{
+        color: #89939A !important;
+    }
+
+    &__tech-sepcification {
+        margin-left: 32px;
+        width: 512px;
+    }
+
+    &__tech-specifation__list {
+
+    }
+
+    &__tech-sepcification__item {
+        display: flex;
+        justify-content: space-between;
     }
 }

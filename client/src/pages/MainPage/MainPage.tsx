@@ -4,14 +4,14 @@ import Header from '../../components/Header/Header';
 import './MainPage.scss';
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import {phones} from '../../store/actions'
+import { phones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
 
 
 
-const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss}) => {
+const MainPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss }) => {
     const [searchField, setSearchField] = useState('');
 
     useEffect(() => {
@@ -19,20 +19,20 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones, setPhon
     }, [])
 
     const handleVisible = (event: ChangeEvent<HTMLInputElement>) => {
-        const {value} = event.target
+        const { value } = event.target
         setSearchField(value)
 
-       const filtered = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
-       setPhoneListState({
-           ...phoneListState,
-           visible: filtered
-       })
+        const filtered = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+        setPhoneListState({
+            ...phoneListState,
+            visible: filtered
+        })
     }
 
     const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
-        const {value} = event.target;
+        const { value } = event.target;
 
-        const sortedList = [...phoneListState.visible].sort((a,b) => {
+        const sortedList = [...phoneListState.visible].sort((a, b) => {
             if (value === 'rich') {
                 return +b.price.current.slice(1,) - +a.price.current.slice(1,)
             } else if (value === 'cheap') {
@@ -40,7 +40,7 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones, setPhon
             } else {
                 return 1
             }
-         })
+        })
 
         setPhoneListState({
             ...phoneListState,
@@ -54,16 +54,18 @@ const MainPage: React.FC<mainPropsInterfaces> = ({phoneList, loadPhones, setPhon
     return (
         <div className="main-page">
             <Header />
-            <div className="select">
-                <select value={phoneListState.currentSortedValue} onChange={handleSort}>
-                    <option value="rich">rich</option>
-                    <option value="cheap">Cheap</option>
-                </select>
+            <div className="main-limit">
+                <div className="select">
+                    <select value={phoneListState.currentSortedValue} onChange={handleSort}>
+                        <option value="rich">rich</option>
+                        <option value="cheap">Cheap</option>
+                    </select>
+                </div>
+                <div className="filter">
+                    <input type="text" value={searchField} onChange={handleVisible} />
+                </div>
+                <PhoneCardList phoneList={phoneListState.visible} />
             </div>
-            <div className="filter">
-                <input type="text" value={searchField} onChange={handleVisible}/>
-            </div>
-            <PhoneCardList phoneList={phoneListState.visible}/>
         </div>
     )
 }
@@ -84,7 +86,7 @@ const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     phoneState: state.phonesState.phoneListState
 })
 
-const mapDispatchToProps = (dispatch:any) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     loadPhones: () => dispatch(phones.loadPhones()),
     setPhoneListState: (phoneListState: phoneListStateType) => dispatch(phones.phoneListState(phoneListState)),
     phoneLoadSuccss: (data: phoneCardInterface[]) => dispatch(phones.phoneSuccess(data))

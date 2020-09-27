@@ -16,12 +16,7 @@ export interface phoneCardInterface {
         old: string
     },
     deviceInfo: {
-        screen: string,
-        resolution: string,
-        processor: string,
-        camera: string,
-        zoom: string,
-        cell: string,
+        [key: string]: string
     },
     about: {
         title: string,
