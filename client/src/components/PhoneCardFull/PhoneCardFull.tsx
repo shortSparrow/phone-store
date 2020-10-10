@@ -8,6 +8,8 @@ import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 import "./PhoneCardFull.scss"
 import { defaultConstatnts } from '../../constants/defaultConstants';
 import Header from '../Header/Header';
+import SmallNavigation from '../SmallNavigation/SmallNavigation';
+import GoBack from '../GoBack/GoBack';
 
 type params = {
     model_name: string
@@ -49,6 +51,10 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
         <div>
             <Header />
             <div className="main-limit">
+                {
+                    device?.title ? <SmallNavigation params={[{title: 'Phones', link: '/phones'}, {title: device.title, link: ''} ]}/> : null
+                }
+                <GoBack />
                 <h1>Card full</h1>
                 {
                     loading ? <p>LOADING...</p>

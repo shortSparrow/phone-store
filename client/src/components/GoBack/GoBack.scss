@@ -1,0 +1,17 @@
+.go-back {
+    &__navigation {
+        display: flex;
+        align-items: center;
+        margin-top: 41px;
+        margin-bottom: 16px;
+    }
+
+    &__text {
+        transition: color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            color: #313237;
+        }
+    }
+}

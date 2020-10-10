@@ -1,0 +1,46 @@
+@import "../../constants/style.scss";
+
+.slider-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -60px;
+    width: 32px;
+    height: 32px;
+    z-index: 2;
+    cursor: pointer;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: $darkness-light-border;
+
+    &:hover {
+        border-color: $color-black;
+    }
+
+    &--left {
+        right: 25px;
+    }
+
+    &--right {
+        right: 75px,
+    }
+
+    &--not-active {
+        border-color: $light-border !important;
+        cursor: initial;
+    }
+
+    &__arrow {
+
+    }
+
+    &__arrow--prev {
+
+    }
+
+    &__arrow--next {
+        transform: rotate(180deg);
+    }
+}

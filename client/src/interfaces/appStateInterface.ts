@@ -4,7 +4,10 @@ import {
     PHONE_LIST_ERROR,
     PHONE_LIST_SUCCESS,
     PHONE_LIST_STATE,
-    PHONE_ITEM_SUCCESS
+    PHONE_ITEM_SUCCESS,
+    REQUEST_LOADING,
+    REQUEST_FAILED,
+    PHONE_HOT_PRICE_SUCCESS
 } from '../constants/actions';
 import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
 
@@ -52,7 +55,23 @@ interface phoneItemSuccess {
     currentModel: phoneCardInterface
 }
 
+interface requestLoading {
+    type: typeof REQUEST_LOADING,
+    loading: boolean
+}
+
+interface requestFailed {
+    type: typeof REQUEST_FAILED,
+    error: any
+}
+
+interface phoneHotPriceSuccess {
+    type: typeof PHONE_HOT_PRICE_SUCCESS,
+    hotPricePhoneList: phoneCardInterface[]
+}
+
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
     setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
-    phoneListFailInterface | phoneListState | phoneItemSuccess
+    phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
+    phoneHotPriceSuccess

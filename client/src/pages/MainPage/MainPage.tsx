@@ -2,94 +2,57 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 
 import './MainPage.scss';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import { phones } from '../../store/actions'
+import { phones, hotPricePhones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
+import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
+import SliderDevice from '../../components/SliderDevice/SliderDevice';
 
 
 
-const MainPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss }) => {
-    const [searchField, setSearchField] = useState('');
-
+const MainPage: React.FC<mainPropsInterfaces> = (props) => {
     useEffect(() => {
-        loadPhones()
+        props.loadHotPricePhones()
     }, [])
 
-    const handleVisible = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target
-        setSearchField(value)
+    useEffect(() => {
+        console.log(props.hotPricePhonesList);
 
-        const filtered = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
-        setPhoneListState({
-            ...phoneListState,
-            visible: filtered
-        })
-    }
+    }, [props.hotPricePhonesList])
 
-    const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
-        const { value } = event.target;
-
-        const sortedList = [...phoneListState.visible].sort((a, b) => {
-            if (value === 'rich') {
-                return +b.price.current.slice(1,) - +a.price.current.slice(1,)
-            } else if (value === 'cheap') {
-                return +a.price.current.slice(1,) - +b.price.current.slice(1,)
-            } else {
-                return 1
-            }
-        })
-
-        setPhoneListState({
-            ...phoneListState,
-            sorted: sortedList,
-            visible: sortedList,
-            currentSortedValue: value
-        })
-    }
-
-    // create sorted 
     return (
         <div className="main-page">
             <Header />
             <div className="main-limit">
-                <div className="select">
-                    <select value={phoneListState.currentSortedValue} onChange={handleSort}>
-                        <option value="rich">rich</option>
-                        <option value="cheap">Cheap</option>
-                    </select>
-                </div>
-                <div className="filter">
-                    <input type="text" value={searchField} onChange={handleVisible} />
-                </div>
-                <PhoneCardList phoneList={phoneListState.visible} />
+                <h1>Main page</h1>
+                <SliderDevice deviceList={props.hotPricePhonesList} />
             </div>
         </div>
     )
 }
 
 interface mainPropsInterfaces {
-    deviceScreen: DeviceScreenType,
-    phoneList: phoneCardInterface[],
-    phoneListState: phoneListStateType,
-    loadPhones: () => {},
-    setPhoneListState: (phoneListState: phoneListStateType) => {},
-    phoneLoadSuccss: (data: phoneCardInterface[]) => {}
+    hotPricePhonesLoading: boolean | null,
+    hotPricePhonesFailed: any,
+    hotPricePhonesList: phoneCardInterface[],
+    loadHotPricePhones: () => {},
 }
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
-    deviceScreen: state.appState.deviceScreen,
-    phoneList: state.phonesState.phoneList,
-    phoneListState: state.phonesState.phoneListState,
-    phoneState: state.phonesState.phoneListState
+    hotPricePhonesLoading: state.hotPricePhones.loading,
+    hotPricePhonesFailed: state.hotPricePhones.error,
+    hotPricePhonesList: state.hotPricePhones.hotPricePhoneList,
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    loadPhones: () => dispatch(phones.loadPhones()),
-    setPhoneListState: (phoneListState: phoneListStateType) => dispatch(phones.phoneListState(phoneListState)),
-    phoneLoadSuccss: (data: phoneCardInterface[]) => dispatch(phones.phoneSuccess(data))
+    loadHotPricePhones: () => dispatch(hotPricePhones.loadHotPricePhones()),
 })
 
 

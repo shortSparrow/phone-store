@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const List = new Schema({
+const phonePatternSchema = {
     // _id: String,
     routePosition: String,
     title: String,
@@ -49,6 +49,11 @@ const List = new Schema({
         description: String
     }]
 
-})
+};
 
-module.exports = model('List', List)
+const AllPhones = new Schema(phonePatternSchema, {collection: 'lists'})
+const HotPricePhones = new Schema(phonePatternSchema, {collection: 'hot_price'})
+
+
+module.exports = model('AllPhones', AllPhones);
+module.exports = model('HotPricePhones', HotPricePhones);

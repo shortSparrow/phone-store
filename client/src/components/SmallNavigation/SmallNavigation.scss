@@ -1,0 +1,40 @@
+.small-navigation {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 41px;
+
+    &__home-link {
+        width: 14px;
+        height: 15px;
+        display: block;
+    }
+
+    &__home {
+        width: 14px;
+        height: 15px;
+    }
+
+    &__greater-than-sign {
+        width: 5px;
+        height: 9px;
+        margin-left: 15px;
+        transform: rotate(180deg);
+    }
+
+    &__text {
+        margin: 0;
+        margin-left: 15px;
+        display: block;
+        font-family: "Mont Regular";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        color: #89939A;
+    }
+
+    &__link {
+        color: #313237;
+    }
+}

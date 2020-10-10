@@ -22,7 +22,6 @@ export interface phoneCardInterface {
         title: string,
         description: string
     }[]
-
 }
 
 export type phoneState = {
@@ -40,6 +39,12 @@ export type phoneListStateType = {
     visible: phoneCardInterface[] | [],
     sorted: phoneCardInterface[] | [],
     currentSortedValue: string
+}
+
+export type hotPriceState = {
+    error: any | null,
+    loading: boolean | null,
+    hotPricePhoneList: phoneCardInterface[] | [],
 }
 
 // phoneList = visileList
