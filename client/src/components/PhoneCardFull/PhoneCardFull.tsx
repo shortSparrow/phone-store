@@ -52,7 +52,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
             <Header />
             <div className="main-limit">
                 {
-                    device?.title ? <SmallNavigation params={[{title: 'Phones', link: '/phones'}, {title: device.title, link: ''} ]}/> : null
+                    device?.title ? <SmallNavigation params={[{ title: 'Phones', link: '/phones' }, { title: device.title, link: '' }]} /> : null
                 }
                 <GoBack />
                 <h1>Card full</h1>
@@ -69,10 +69,13 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             <div className="full-card__small-image-list">
                                                 {
                                                     device.currentDevice.images.other.map((image: string, index: number) => (
-                                                        <div className={`full-card__small-image ${image === device.bigImage ? "full-card__small-image--active" : ""}`} onClick={() => {
-                                                            const newDevice = { ...device, bigImage: image }
-                                                            setDevice(newDevice)
-                                                        }}
+                                                        <div
+                                                            className={`full-card__small-image ${image === device.bigImage ? "full-card__small-image--active" : ""}`}
+                                                            onClick={() => {
+                                                                const newDevice = { ...device, bigImage: image }
+                                                                setDevice(newDevice)
+                                                            }}
+                                                            key={image}
                                                         >
                                                             <img
                                                                 src={defaultConstatnts.domain + "/" + image}
@@ -99,7 +102,10 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                 <div className="full-card__available-color-list">
                                                     {
                                                         device.availabelColor.map((color: string) => (
-                                                            <div className={`full-card__availabe-color-wrapper ${device.currentColor === color ? "full-card__availabe-color-wrapper--selected" : ""}`}>
+                                                            <div
+                                                                className={`full-card__availabe-color-wrapper ${device.currentColor === color ? "full-card__availabe-color-wrapper--selected" : ""}`}
+                                                                key={color}
+                                                            >
                                                                 <div
                                                                     className="full-card__availabe-color"
                                                                     style={{ backgroundColor: color }}
@@ -130,6 +136,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                             <div
                                                                 className={`full-card__availale-ram-wrapper ${device.currentRAM === ram ? "full-card__availale-ram-wrapper__selected" : ""}`}
                                                                 onClick={() => setDevice({ ...device, currentRAM: ram })}
+                                                                key={ram}
                                                             >
                                                                 <p className="full-card__availale-ram">{ram}</p>
                                                             </div>
@@ -145,36 +152,36 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             </div>
 
                                             <div className="full-card__short-info">
-                                            <div className="phone-card__button--wrapper full-card__button-wrapper">
-                                                <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
-                                                    <div className="button__add-cart--text">Add to cart</div>
-                                                </div>
-                                                <div className="button__favorite--wrapper phone-card__favorite--wrapper">
-                                                    <img src="/icons/heart.svg" alt="favorite" className="button__favorite--icon" />
-                                                </div>
-                                            </div>
-
-                                            <div className="card-specification--list">
-                                                <div className="card-specification--item">
-                                                    <div className="card-specification__name">Screen</div>
-                                                    <div className="card-specification__value">{currentModel?.deviceInfo.screen}</div>
+                                                <div className="phone-card__button--wrapper full-card__button-wrapper">
+                                                    <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
+                                                        <div className="button__add-cart--text">Add to cart</div>
+                                                    </div>
+                                                    <div className="button__favorite--wrapper phone-card__favorite--wrapper">
+                                                        <img src="/icons/heart.svg" alt="favorite" className="button__favorite--icon" />
+                                                    </div>
                                                 </div>
 
-                                                <div className="card-specification--item">
-                                                    <div className="card-specification__name">Processor</div>
-                                                    <div className="card-specification__value">{currentModel?.deviceInfo.processor}</div>
-                                                </div>
+                                                <div className="card-specification--list">
+                                                    <div className="card-specification--item">
+                                                        <div className="card-specification__name">Screen</div>
+                                                        <div className="card-specification__value">{currentModel?.deviceInfo.screen}</div>
+                                                    </div>
 
-                                                <div className="card-specification--item">
-                                                    <div className="card-specification__name">Camera</div>
-                                                    <div className="card-specification__value">{currentModel?.deviceInfo.camera}</div>
+                                                    <div className="card-specification--item">
+                                                        <div className="card-specification__name">Processor</div>
+                                                        <div className="card-specification__value">{currentModel?.deviceInfo.processor}</div>
+                                                    </div>
+
+                                                    <div className="card-specification--item">
+                                                        <div className="card-specification__name">Camera</div>
+                                                        <div className="card-specification__value">{currentModel?.deviceInfo.camera}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
 
                                             <div className="full-card__id">
-                                            <p className="card-specification__name">ID: undefined</p>
-                                        </div>
+                                                <p className="card-specification__name">ID: undefined</p>
+                                            </div>
 
                                         </div>
 

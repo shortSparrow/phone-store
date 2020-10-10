@@ -14,12 +14,7 @@
         height: 100%;
     }
 
-    &__nav-wrapper {
-
-
-    }
-
-
+    &__nav-wrapper {}
 
     &__icon-wrapper {
         width: 64px;
@@ -37,11 +32,17 @@
             bottom: -1px;
             left: 0;
         }
-        
+
         &:hover {
             &:after {
                 background-color: $color-black;
             }
+        }
+    }
+
+    &__icon-wrapper--active {
+        &:after {
+            background-color: $color-black;
         }
     }
 
@@ -81,11 +82,21 @@
             bottom: -22px;
             left: 0;
         }
-        
+
         &:hover {
             &:after {
                 background-color: $color-black;
             }
+        }
+    }
+
+    &__item--active {
+        &:after {
+            background-color: $color-black;
+        }
+
+        .header-nav__link {
+            color: $color-black
         }
     }
 
@@ -98,13 +109,13 @@
     }
 
     &__link {
-            font-family: 'Mont';
-            text-transform: uppercase;
-            font-size: $uppercase-size;
-            line-height: $uppercase-line-height;
-            color: $color-light-grey;
-            font-weight: bold;
-            transition: color 0.2s ease-in-out;
+        font-family: 'Mont';
+        text-transform: uppercase;
+        font-size: $uppercase-size;
+        line-height: $uppercase-line-height;
+        color: $color-light-grey;
+        font-weight: bold;
+        transition: color 0.2s ease-in-out;
 
         &:hover {
             color: $color-black
