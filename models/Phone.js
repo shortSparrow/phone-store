@@ -55,5 +55,5 @@ const AllPhones = new Schema(phonePatternSchema, {collection: 'lists'})
 const HotPricePhones = new Schema(phonePatternSchema, {collection: 'hot_price'})
 
 
-module.exports = model('AllPhones', AllPhones);
-module.exports = model('HotPricePhones', HotPricePhones);
+exports.AllPhones = model('AllPhones', AllPhones);
+exports.HotPricePhones = model('HotPricePhones', HotPricePhones);

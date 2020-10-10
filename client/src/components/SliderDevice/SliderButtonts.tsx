@@ -16,11 +16,6 @@ export const SampleNextArrow = (props: any) => {
         // setVisibbleSlides(currentBreakpoint.settings.slidesToShow)
         const visibleSlides = currentBreakpoint.settings.slidesToShow
         edgeSlide = currentSlide === slideCount - visibleSlides ? true : false
-
-        console.log('breakpoint: ', breakpoint);
-        console.log('responsive: ', responsive);
-        console.log('currentBreakpoint: ', currentBreakpoint);
-
     }
 
 

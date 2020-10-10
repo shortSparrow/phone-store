@@ -1,19 +1,19 @@
 const { Router } = require("express");
 const router = Router();
-const AllPhones  = require('../models/Phone');
-const HotPricePhones = require('../models/Phone');
+const Phones  = require('../models/Phone');
+// const HotPricePhones = require('../models/Phone');
 
 // const User = require('../models/User')
 
 
 router.get('/list', async(req, res) => {
-    const phoneList = await AllPhones.find({});
+    const phoneList = await Phones.AllPhones.find({});
 
     res.status(200).json([...phoneList])
 })
 
 router.get('/hot-price', async(req, res) => {
-    const hotPriceList = await HotPricePhones.find({});
+    const hotPriceList = await Phones.HotPricePhones.find({});
 
     res.status(200).json([...hotPriceList])
 })
@@ -23,7 +23,7 @@ router.get('/hot-price', async(req, res) => {
 router.get('/item', async(req, res) => {
     const model_name = req.param('model_name')
     
-    const phoneItem = await AllPhones.findOne({routePosition: model_name});
+    const phoneItem = await Phones.AllPhones.findOne({routePosition: model_name});
 
     res.status(200).json(phoneItem)
 })

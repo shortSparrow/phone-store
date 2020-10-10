@@ -19,14 +19,14 @@ const SmallNavigation: React.FC<smallNavigation> = ({ params }) => {
             </Link>
             {
                 params.map((item, index, arr) => (
-                    <>
+                    <div className="small-navigation__img-wrapper" key={item.title}>
                         <img src="/icons/arrow.svg" alt="greater than icon" className="small-navigation__greater-than-sign" />
                         {
                             index === arr.length - 1
                                 ? <p className="small-navigation__text">{item.title}</p>
                                 : <Link to={item.link} className="small-navigation__text small-navigation__link">{item.title}</Link>
                         }
-                    </>
+                    </div>
                 ))
             }
         </div>

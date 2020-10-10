@@ -95,8 +95,6 @@ export const getPhoneByModelName = (model_name: string): ThunkAction<void, RootS
         } catch (err) {
             dispatch(phoneError(err));
         } finally {
-            console.log('HERE');
-            
             dispatch(phoneLoading(false));
         }
 
