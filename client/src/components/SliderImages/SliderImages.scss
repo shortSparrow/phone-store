@@ -1,0 +1,39 @@
+@import "../../constants//style.scss";
+
+.slider-images {
+    &__big-image {
+        display: block !important;
+    }
+
+    &__bottom-dots--wrapper {
+        align-self: flex-end;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__bottom-dots {
+        width: 14px;
+        height: 4px;
+        background-color: $light-border;
+        cursor: pointer;
+
+        &:not(:first-child) {
+            margin-left: 14px;
+        }
+    }
+
+    &__bottom-dots--active {
+        background-color: $color-black;
+    }
+}
+
+.slider-big-images > .slick-slider {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider-big-images > .slick-slider > .slick-list {
+    // max-width: 1040px;
+}

@@ -4,11 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: -60px;
-    width: 32px;
-    height: 32px;
-    z-index: 2;
+
     cursor: pointer;
 
     border-width: 1px;
@@ -17,6 +13,26 @@
 
     &:hover {
         border-color: $color-black;
+    }
+
+    &__device {
+        position: absolute;
+        top: -60px;
+        width: 32px;
+        height: 32px;
+        z-index: 2;
+    }
+
+    &__big-image {
+        min-width: 32px;
+    }
+
+    &__big-image--left {
+        margin-right: 16px;
+    }
+
+    &__big-image--right {
+        margin-left: 16px;
     }
 
     &--left {

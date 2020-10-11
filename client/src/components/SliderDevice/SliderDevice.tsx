@@ -52,8 +52,8 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
                 }
             }
         ],
-        nextArrow: <SampleNextArrow slickSliderRef={slickSliderRef}/>,
-        prevArrow: <SamplePrevArrow slickSliderRef={slickSliderRef}/>,
+        nextArrow: <SampleNextArrow slickSliderRef={slickSliderRef} classNames="slider-buttons__device" />,
+        prevArrow: <SamplePrevArrow slickSliderRef={slickSliderRef} classNames="slider-buttons__device" />,
     }
 
     return (
