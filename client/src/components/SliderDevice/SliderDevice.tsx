@@ -16,7 +16,7 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
 
 
     const settings = {
-        dots: true,
+        dots: false,
         infinite: false,
         swipeToSlide: true,
         speed: 500,

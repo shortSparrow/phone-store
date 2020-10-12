@@ -1,0 +1,19 @@
+.shop-category {
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__item:not(:first-child) {
+        margin-left: 16px;
+    }
+
+    &__description {
+        margin-top: 24px;
+    }
+
+    &__title,
+    &__amount {
+        margin: 0;
+    }
+}

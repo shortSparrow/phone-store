@@ -32,6 +32,12 @@
     // margin: auto;
 }
 
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 @media screen and (max-width: 1100px) {
     .main-limit {
         padding: 0 100px;

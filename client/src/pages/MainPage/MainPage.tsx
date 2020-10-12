@@ -15,6 +15,8 @@ import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import SliderDevice from '../../components/SliderDevice/SliderDevice';
 import SliderImages from '../../components/SliderImages/SliderImages';
+import Footer from '../../components/Footer/Footer';
+import ShopCategory from '../../components/ShopCategory/ShopCategory';
 
 
 
@@ -35,7 +37,7 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
     ];
 
     return (
-        <div className="main-page">
+        <div className="main-page page">
             <Header />
             <div className="main-limit">
                 <h1>Main page</h1>
@@ -43,10 +45,15 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
                 <h2>IMAGE SLIDER</h2>
                 <SliderImages imageList={imageList} />
 
-
                 <h2>HOT PRICE</h2>
                 <SliderDevice deviceList={props.hotPricePhonesList} />
+
+                <h2>Shop by category</h2>
+                <ShopCategory />
+
+                <h2>Brand new models</h2>
             </div>
+            <Footer />
         </div>
     )
 }

@@ -1,0 +1,68 @@
+@import "../../constants//style.scss";
+
+.footer {
+    &__wrapper {
+        border-top: 1px solid #E2E6E9;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 96px;
+    }
+
+    &__navigation__list {
+        display: flex;
+    }
+
+    &__navigation__item:not(:first-child) {
+        margin-left: 64px;
+    }
+
+    &__navigation__link {
+        font-weight: 700 !important;
+        color: #89939A !important;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+            color: $color-black !important
+        }
+    }
+
+    &__back-to-top {
+        display: flex;
+        align-items: center;
+    }
+
+    &__navigation__back-to-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        margin-left: 16px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $darkness-light-border;
+        transition: border-color 0.2s ease-in-out;
+
+    
+        &:hover {
+            border-color: $color-black;
+        }
+    }
+
+    &__back-to-top__arrow {
+        transform: rotate(90deg);
+    }
+}
+
+@media screen and (max-width: 665px) {
+    .footer {
+        &__content {
+            flex-direction: column;
+        }
+    }
+}

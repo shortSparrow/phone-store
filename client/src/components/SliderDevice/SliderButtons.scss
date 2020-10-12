@@ -10,6 +10,8 @@
     border-width: 1px;
     border-style: solid;
     border-color: $darkness-light-border;
+    transition: border-color 0.2s ease-in-out;
+
 
     &:hover {
         border-color: $color-black;

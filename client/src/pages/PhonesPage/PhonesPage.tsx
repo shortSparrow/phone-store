@@ -53,7 +53,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
 
     // create sorted 
     return (
-        <div className="phones-page">
+        <div className="phones-page page">
             <Header />
             <div className="main-limit">
                 <SmallNavigation params={[{title: 'Phones', link: ''}]}/>
