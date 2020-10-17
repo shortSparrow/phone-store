@@ -13,6 +13,7 @@ export const request = async (path: string) => {
     
     } catch (err) {
         console.log('error of request', err)
+        throw err
     }
 
 }

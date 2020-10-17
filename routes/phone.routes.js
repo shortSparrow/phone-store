@@ -18,6 +18,12 @@ router.get('/hot-price', async(req, res) => {
     res.status(200).json([...hotPriceList])
 })
 
+router.get('/new-models', async(req, res) => {
+    const newPhoneModels = await Phones.PewPhoneModels.find({});
+
+    res.status(200).json([...newPhoneModels])
+})
+
 
 
 router.get('/item', async(req, res) => {

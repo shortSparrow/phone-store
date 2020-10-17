@@ -6,9 +6,12 @@ import "./SliderDevice.scss";
 
 import PhoneCardItem from '../PhoneCardItem/PhoneCardItem';
 import { SampleNextArrow, SamplePrevArrow } from './SliderButtonts';
+import { Preloader } from '../Preloader/Preloader';
 
 type sliderDeviceInterface = {
-    deviceList: any
+    deviceList: any,
+    error?: any,
+    loading?: boolean | null
 }
 
 const SliderDevice: FC<sliderDeviceInterface> = (props) => {
@@ -58,16 +61,24 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
 
     return (
         <div className="slider-devices">
-            {
-                props.deviceList.length ? (
-                    <Slider {...settings} ref={slickSliderRef}>
-                        {
-                            props.deviceList.map((phone: any) => <PhoneCardItem phone={phone} key={phone._id} />)
-                        }
-                    </Slider>
-                ) : null
-            }
 
+            {
+                props.loading
+                    ? (
+                        <Preloader />
+                    )
+                    : props.error ? (
+                        <h1>We can't load data, please try reload page</h1>
+                    )
+                        : props.deviceList.length ? (
+                            <Slider {...settings} ref={slickSliderRef}>
+                                {
+                                    props.deviceList.map((phone: any) => <PhoneCardItem phone={phone} key={phone._id} />)
+                                }
+                            </Slider>
+                        ) : null
+
+            }
         </div>
     )
 }

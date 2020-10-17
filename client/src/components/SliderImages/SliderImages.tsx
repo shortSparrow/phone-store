@@ -13,7 +13,7 @@ type sliderImagesInterface = {
 
 const SliderImages: FC<sliderImagesInterface> = (props) => {
     const slickSliderRef = useRef(null);
-
+    // console.log(props);
 
     const settings = {
         dots: true,
@@ -23,16 +23,15 @@ const SliderImages: FC<sliderImagesInterface> = (props) => {
         slidesToShow: 1,
         initialSlide: 0,
         appendDots: (dots: any) => {
-            console.log(dots);
-
             return (
                 <div>
                     <div className="slider-images__bottom-dots--wrapper">
                         {
-                            dots.map((dot: any) => (
+                            dots.map((dot: any, index: number) => (
                                 <div
                                     className={`slider-images__bottom-dots ${dot.props.className === "slick-active" ? "slider-images__bottom-dots--active" : ""}`}
                                     onClick={dot.props.children.props.onClick}
+                                    key={index}
                                 >
                                 </div>
                             )
@@ -55,14 +54,13 @@ const SliderImages: FC<sliderImagesInterface> = (props) => {
                         {
                             props.imageList.map((image: any) => (
                                 // <div className="slider-image" key={image}>
-                                <img src={image} alt="" className="slider-images__big-image" />
+                                <img src={image} alt="" className="slider-images__big-image" key={image}/>
                                 // </div>
                             ))
                         }
                     </Slider>
                 ) : null
             }
-
         </div>
     )
 }

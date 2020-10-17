@@ -1,11 +1,22 @@
 .shop-category {
     &__list {
-        display: flex;
-        flex-wrap: wrap;
+        // display: flex;
+        // flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(150px, 368px) minmax(150px, 368px) minmax(150px, 368px);
+        gap: 16px;
     }
 
-    &__item:not(:first-child) {
-        margin-left: 16px;
+    // &__item:not(:first-child) {
+    //     margin-left: 16px;
+    // }
+
+    &__item {
+        width: 100%;
+
+        img {
+            width: 100%;
+        }
     }
 
     &__description {
@@ -15,5 +26,18 @@
     &__title,
     &__amount {
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .shop-category {
+        &__list {
+            grid-template-columns: 1fr;
+            justify-items: center;
+        }
+
+        &__item {
+            max-width: 368px;
+        }
     }
 }
