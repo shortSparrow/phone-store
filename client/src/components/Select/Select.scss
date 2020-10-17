@@ -1,0 +1,67 @@
+@import "../../constants/style.scss";
+
+.custom-select {
+    width: 176px;
+    position: relative;
+
+    &__selected-field {
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 12px;
+        padding-right: 17px;
+        align-items: center;
+        box-sizing: border-box;
+        border: 1px solid $darkness-light-border;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            border: 1px solid $color-light-grey;
+        }
+    }
+
+    &__selected-text {
+        color: $color-black;
+    }
+
+    &__list {
+        position: absolute;
+        top: 44px;
+        width: 176px;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        border: 1px solid $light-border;
+    }
+
+    &__item-field {
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        padding-left: 12px;
+        padding-right: 12px;
+        color: $color-light-grey;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #FAFBFC;
+            color: $color-black;
+        }
+    }
+
+    &__arrow {
+        transform: rotate(-90deg);
+    }
+
+    // &__overlay {
+    //     position: fixed;
+    //     top: 0;
+    //     left: 0;
+    //     z-index: 99;
+    //     width: 100vw;
+    //     height: 100vh;
+    //     background-color: transparent;
+    // }
+}

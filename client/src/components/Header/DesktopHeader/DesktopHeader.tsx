@@ -5,12 +5,10 @@ import './DesktopHeader.scss';
 import { Link, useParams, useLocation } from 'react-router-dom';
 
 const DesktopHeader = () => {
-    const params = useParams();
     const location = useLocation()
 
     useEffect(() => {
         // console.log(location);
-
     }, [location])
 
     return (

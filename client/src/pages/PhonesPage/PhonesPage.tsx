@@ -9,15 +9,42 @@ import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesI
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
+import { Select } from '../../components/Select/Select';
 
-
+const selectList = [
+    {
+        title: 'Rich',
+        value: 'rich'
+    },
+    {
+        title: 'Cheap',
+        value: 'cheap'
+    }
+]
 
 const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss }) => {
     const [searchField, setSearchField] = useState('');
+    const [selectedSortValue, setSelectedSortValue] = useState({
+        title: 'Cheap',
+        value: 'cheap'
+    });
 
     useEffect(() => {
-        loadPhones()
-    }, [])
+        loadPhones();
+    }, []);
+
+    useEffect(() => {
+        handleSort(selectedSortValue.value)
+    }, [selectedSortValue])
+
+    /*
+    // force first sort if need
+    useEffect(() => {
+        if (phoneListState.currentSortedValue !== selectedSortValue.value) {
+            handleSort(selectedSortValue.value)
+        }
+    }, [phoneListState])
+    */
 
     const handleVisible = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target
@@ -30,9 +57,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         })
     }
 
-    const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
-        const { value } = event.target;
-
+    const handleSort = (value: string) => {
         const sortedList = [...phoneListState.visible].sort((a, b) => {
             if (value === 'rich') {
                 return +b.price.current.slice(1,) - +a.price.current.slice(1,)
@@ -51,18 +76,12 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         })
     }
 
-    // create sorted 
     return (
         <div className="phones-page page">
             <Header />
             <div className="main-limit">
-                <SmallNavigation params={[{title: 'Phones', link: ''}]}/>
-                <div className="select">
-                    <select value={phoneListState.currentSortedValue} onChange={handleSort}>
-                        <option value="rich">rich</option>
-                        <option value="cheap">Cheap</option>
-                    </select>
-                </div>
+                <SmallNavigation params={[{ title: 'Phones', link: '' }]} />
+                <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                 <div className="filter">
                     <input type="text" value={searchField} onChange={handleVisible} />
                 </div>
