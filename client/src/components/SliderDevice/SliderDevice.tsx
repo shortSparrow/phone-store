@@ -65,7 +65,9 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
             {
                 props.loading
                     ? (
-                        <Preloader />
+                        <div className="preloader-wrapper--center">
+                            <Preloader />
+                            </div>
                     )
                     : props.error ? (
                         <h1>We can't load data, please try reload page</h1>

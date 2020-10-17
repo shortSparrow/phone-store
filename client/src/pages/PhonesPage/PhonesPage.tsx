@@ -10,6 +10,7 @@ import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { Select } from '../../components/Select/Select';
+import { Preloader } from '../../components/Preloader/Preloader';
 
 const selectList = [
     {
@@ -50,7 +51,8 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         const { value } = event.target
         setSearchField(value)
 
-        const filtered = [...phoneList].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+        const filtered = [...phoneListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+
         setPhoneListState({
             ...phoneListState,
             visible: filtered
@@ -58,7 +60,8 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
     }
 
     const handleSort = (value: string) => {
-        const sortedList = [...phoneListState.visible].sort((a, b) => {
+        // sort all items
+        const sortedList = [...phoneList].sort((a, b) => {
             if (value === 'rich') {
                 return +b.price.current.slice(1,) - +a.price.current.slice(1,)
             } else if (value === 'cheap') {
@@ -66,12 +69,23 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
             } else {
                 return 1
             }
-        })
+        });
+
+        // sort visible part
+        const sortedVisible = [...phoneListState.visible].sort((a, b) => {
+            if (value === 'rich') {
+                return +b.price.current.slice(1,) - +a.price.current.slice(1,)
+            } else if (value === 'cheap') {
+                return +a.price.current.slice(1,) - +b.price.current.slice(1,)
+            } else {
+                return 1
+            }
+        });
 
         setPhoneListState({
             ...phoneListState,
             sorted: sortedList,
-            visible: sortedList,
+            visible: sortedVisible,
             currentSortedValue: value
         })
     }
@@ -81,6 +95,28 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
             <Header />
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Phones', link: '' }]} />
+                <p className="main-titile phones-page__title">Mobile phones</p>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center'
+                }}>
+                    {
+                        phoneList.length === 0 && (
+                            <Preloader
+                                color="black"
+                                width={17}
+                                height={17}
+                                wrapperWidth={24}
+                                wrapperHeight={24}
+                                borderWidth={1}
+                            />
+                        )
+                    }
+
+                    <p className="small-text">{phoneList.length > 0 && phoneList.length} Models </p>
+
+                </div>
+
                 <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                 <div className="filter">
                     <input type="text" value={searchField} onChange={handleVisible} />

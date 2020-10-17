@@ -1,0 +1,29 @@
+.preloader-wrapper {
+  &--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+.preloader-container {
+  display: inline-block;
+}
+
+.preloader {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  animation: preloader-container 1.2s linear infinite
+}
+
+@keyframes preloader-container {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

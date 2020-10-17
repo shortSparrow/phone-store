@@ -2,4 +2,12 @@
 
 .main-page {
     // padding: 0 $padding-page;
+    &__big-slider__wrapper {
+        margin-top: 40px;
+        margin-bottom: 104px;
+    }
+
+    &__title {
+        margin-top: 80px;
+    }
 }

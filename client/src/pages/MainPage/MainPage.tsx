@@ -76,18 +76,17 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         <div className="main-page page">
             <Header />
             <div className="main-limit">
-                <h1>Main page</h1>
-                {/* on 700px remove slider or change on other images */}
-                <h2>IMAGE SLIDER</h2>
+                <div className="main-page__big-slider__wrapper">
                 <SliderImages imageList={imageList} />
+                </div>
 
-                <h2>HOT PRICE</h2>
+                <p className="main-titile main-page__title">Hot price</p>
                 <SliderDevice deviceList={hotPricePhones} loading={loadingHotPricePhones} error={errorHotPricePhones} />
 
-                <h2>Shop by category</h2>
+                <p className="main-titile main-page__title">Shop by category</p>
                 <ShopCategory />
 
-                <h2>Brand new models</h2>
+                <p className="main-titile main-page__title">Brand new models</p>
                 <SliderDevice deviceList={newModelPhones} loading={loadingNewModelPhones} error={errorNewModelPhones} />
 
             </div>

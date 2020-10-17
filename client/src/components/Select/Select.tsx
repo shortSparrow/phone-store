@@ -62,7 +62,7 @@ export const Select: FC<selectInterface> = (props) => {
                     <div className="custom-select__list">
                         {
                             itemList.map(item => (
-                                <div className="custom-select__item-field" onClick={() => selectItem(item)}>{item.title}</div>
+                                <div className="custom-select__item-field" onClick={() => selectItem(item)} key={item.value}>{item.title}</div>
                             ))
                         }
                     </div>
