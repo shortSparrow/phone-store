@@ -1,7 +1,6 @@
 @import "../../constants/style.scss";
 
 .custom-select {
-    width: 176px;
     position: relative;
 
     &__selected-field {
@@ -28,7 +27,7 @@
     &__list {
         position: absolute;
         top: 44px;
-        width: 176px;
+        width: 100%;
         background-color: #ffffff;
         box-sizing: border-box;
         border: 1px solid $light-border;
@@ -54,14 +53,4 @@
     &__arrow {
         transform: rotate(-90deg);
     }
-
-    // &__overlay {
-    //     position: fixed;
-    //     top: 0;
-    //     left: 0;
-    //     z-index: 99;
-    //     width: 100vw;
-    //     height: 100vh;
-    //     background-color: transparent;
-    // }
 }

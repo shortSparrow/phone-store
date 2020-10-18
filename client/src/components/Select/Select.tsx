@@ -5,7 +5,8 @@ interface selectInterface {
     itemList: itemType[],
     defaultSelectIndex?: number,
     setSelectedItem: any,
-    selectedItem: any
+    selectedItem: any,
+    width?: number
 }
 
 type itemType = {
@@ -18,7 +19,8 @@ export const Select: FC<selectInterface> = (props) => {
         itemList,
         defaultSelectIndex = 0,
         selectedItem,
-        setSelectedItem
+        setSelectedItem,
+        width = 176
     } = props;
 
     const [openMenu, setOpenMenu] = useState(false);
@@ -45,27 +47,26 @@ export const Select: FC<selectInterface> = (props) => {
             if (selectRef.current && !selectRef.current!.contains(event.target)) {
                 setOpenMenu(false)
             }
-            
         })
     }, [])
 
     return (
-        <div className="custom-select" ref={selectRef}>
-            <div className="custom-select__selected-field" onClick={handleMenu}  style={openMenu ? {border: "1px solid #313237"} : {}}>
+        <div className="custom-select" ref={selectRef} style={{ width: `${width}px` }}>
+            <div className="custom-select__selected-field" onClick={handleMenu} style={openMenu ? { border: "1px solid #313237" } : {}}>
                 <p className="buttons-text custom-select__selected-text">{selectedItem.title} </p>
-                <img src={"/icons/arrow.svg"} className="custom-select__arrow" style={openMenu ? {transform: "rotate(90deg)"} : {}} />
+                <img src={"/icons/arrow.svg"} className="custom-select__arrow" style={openMenu ? { transform: "rotate(90deg)" } : {}} />
             </div>
 
             {
                 openMenu && (
                     <>
-                    <div className="custom-select__list">
-                        {
-                            itemList.map(item => (
-                                <div className="custom-select__item-field" onClick={() => selectItem(item)} key={item.value}>{item.title}</div>
-                            ))
-                        }
-                    </div>
+                        <div className="custom-select__list">
+                            {
+                                itemList.map(item => (
+                                    <div className="custom-select__item-field" onClick={() => selectItem(item)} key={item.value}>{item.title}</div>
+                                ))
+                            }
+                        </div>
 
                         {/* <div className="custom-select__overlay" onClick={() => setOpenMenu(false)}></div> */}
                     </>
