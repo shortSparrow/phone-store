@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 
 import './MainPage.scss';
@@ -31,9 +31,9 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
 
 
     useEffect(() => {
-        // props.loadHotPricePhones();
+        props.loadHotPricePhones();
         loadNewModels();
-        loadHotPricePhones()
+        loadHotPricePhones();        
     }, [])
 
     useEffect(() => {
@@ -56,21 +56,25 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         }
     }, [props.deviceScreen])
 
-    const loadHotPricePhones = async () => {
+    const loadHotPricePhones = useCallback(async () => {
         const request = await getHotPricePhones('/api/phone/hot-price');
 
         if (request) {
             setHotPricePhones(request)
         }
-    }
+    },[])
 
-    const loadNewModels = async () => {
+    const loadNewModels = useCallback(async () => {
         const request = await getNewModelPhones('/api/phone/new-models');
         if (request) {
             setNewModelPhones(request)
         }
-    }
+    },[])
 
+    useEffect(() => {
+        console.log(loadingHotPricePhones);
+
+    }, [loadingHotPricePhones])
 
     return (
         <div className="main-page page">

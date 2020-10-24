@@ -7,6 +7,7 @@ import "./SliderDevice.scss";
 import PhoneCardItem from '../PhoneCardItem/PhoneCardItem';
 import { SampleNextArrow, SamplePrevArrow } from './SliderButtonts';
 import { Preloader } from '../Preloader/Preloader';
+import { log } from 'console';
 
 type sliderDeviceInterface = {
     deviceList: any,

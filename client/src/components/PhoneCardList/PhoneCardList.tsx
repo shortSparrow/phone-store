@@ -15,8 +15,6 @@ const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
 
     return (
         <>
-            <div>CARD LIST</div>
-
             <div className="phone-list">
                 {
                     phoneList.map((phone: phoneCardInterface) => <PhoneCardItem phone={phone} key={phone._id} />)

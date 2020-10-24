@@ -180,6 +180,8 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         <div className="phones-page page">
             <Header />
             <div className="main-limit">
+                <SmallNavigation params={[{ title: 'Phones', link: '/phones' }]} />
+
                 <div className="phones-page__pagination-warpper">
                     <Pagination
                         structureList={structureList}
@@ -190,14 +192,14 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                 </div>
 
                 <div className="phones-page__select-phones--wrapper">
-                <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
-                <Select
-                    itemList={selectitemsOnPageList}
-                    setSelectedItem={setSelectedItemsOnPageValue}
-                    selectedItem={selectedItemsOnPAgeValue}
-                    defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
-                    width={90}
-                />
+                    <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
+                    <Select
+                        itemList={selectitemsOnPageList}
+                        setSelectedItem={setSelectedItemsOnPageValue}
+                        selectedItem={selectedItemsOnPAgeValue}
+                        defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
+                        width={90}
+                    />
                 </div>
 
 

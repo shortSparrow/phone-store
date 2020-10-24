@@ -10,6 +10,10 @@ import { defaultConstatnts } from '../../constants/defaultConstants';
 import Header from '../Header/Header';
 import SmallNavigation from '../SmallNavigation/SmallNavigation';
 import GoBack from '../GoBack/GoBack';
+import {favoritesDevice} from '../../store/actions';
+
+import { favoriteDevice } from '../../interfaces/favoriteDevice'
+import { title } from 'process';
 
 type params = {
     model_name: string
@@ -19,17 +23,30 @@ interface PhoneCardFullInterface {
     currentModel: phoneCardInterface | null,
     loading: boolean | null,
     error: any,
-    getPhoneByModelName: (model_name: string) => {}
+    getPhoneByModelName: (model_name: string) => {},
+    toggleFavoriteDevice: (device: favoriteDevice) => {}
+    favoriteDevices: favoriteDevice[]
 }
 
-const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, currentModel, getPhoneByModelName }) => {
+const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, currentModel, getPhoneByModelName, favoriteDevices, toggleFavoriteDevice }) => {
     const [device, setDevice] = useState<any>(null);
-    // const [bigImage, set]
+    const [addToFavotireList, setAddToFavoriteList] = useState<boolean | null>(null);
     let params: params = useParams();
 
     useEffect(() => {
         getPhoneByModelName(params.model_name)
     }, [])
+
+
+    useEffect(() => {
+        const favorite = favoriteDevices.find((item: favoriteDevice) => item._id === currentModel?._id);
+
+        if (favorite) {
+            setAddToFavoriteList(true)
+        } else {
+            setAddToFavoriteList(false)
+        }
+    }, [favoriteDevices, currentModel])
 
     useEffect(() => {
         if (currentModel) {
@@ -156,8 +173,12 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                     <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
                                                         <div className="button__add-cart--text">Add to cart</div>
                                                     </div>
-                                                    <div className="button__favorite--wrapper phone-card__favorite--wrapper">
-                                                        <img src="/icons/heart.svg" alt="favorite" className="button__favorite--icon" />
+                                                    <div className="button__favorite--wrapper phone-card__favorite--wrapper" onClick={() => toggleFavoriteDevice(currentModel!)}>
+                                                        <img
+                                                            src={`${addToFavotireList ? '/icons/heart-filed.svg' : '/icons/heart.svg'}`}
+                                                            alt="favorite"
+                                                            className="button__favorite--icon"
+                                                        />
                                                     </div>
                                                 </div>
 
@@ -194,8 +215,8 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             <p className="second-title full-card__second-title">About</p>
                                             <div className="full-card__separate-line"></div>
                                             {
-                                                device.abuot.map((item: { title: string, description: string }) => (
-                                                    <div className="full-card__summary__paragraph">
+                                                device.abuot.map((item: { title: string, description: string }, index: number) => (
+                                                    <div className="full-card__summary__paragraph" key={title + index}>
                                                         <p className="full-card__summary__title third-title">{item.title}</p>
                                                         <p className="full-card__summary__description body-text">{item.description}</p>
                                                     </div>
@@ -207,11 +228,11 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             <div className="full-card__separate-line"></div>
                                             <div className="full-card__tech-specifation__list">
                                                 {
-                                                    Object.entries(device.deviceInfo).map((item: [string, any]) => {
+                                                    Object.entries(device.deviceInfo).map((item: [string, any], index: number) => {
                                                         const [name, description] = item;
 
                                                         return (
-                                                            <div className="full-card__tech-sepcification__item">
+                                                            <div className="full-card__tech-sepcification__item" key={name + index}>
                                                                 <p className="full-card__tech-sepcification__name card-specification__name">{name}</p>
                                                                 <p className="full-card__tech-sepcification__description card-specification__value">{description}</p>
                                                             </div>
@@ -235,11 +256,13 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
 const mapStateToProps = (state: RootState) => ({
     loading: state.phonesState.loading,
     error: state.phonesState.error,
-    currentModel: state.phonesState.currentModel
+    currentModel: state.phonesState.currentModel,
+    favoriteDevices: state.favoritesDevice.deviceList
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    getPhoneByModelName: (id: string) => dispatch(phones.getPhoneByModelName(id))
+    getPhoneByModelName: (id: string) => dispatch(phones.getPhoneByModelName(id)),
+    toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardFull)

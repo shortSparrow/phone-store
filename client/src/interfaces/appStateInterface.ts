@@ -7,7 +7,8 @@ import {
     PHONE_ITEM_SUCCESS,
     REQUEST_LOADING,
     REQUEST_FAILED,
-    PHONE_HOT_PRICE_SUCCESS
+    PHONE_HOT_PRICE_SUCCESS,
+    SET_FAVORITE_DEVICES
 } from '../constants/actions';
 import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
 
@@ -70,8 +71,13 @@ interface phoneHotPriceSuccess {
     hotPricePhoneList: phoneCardInterface[]
 }
 
+interface setFavoriteDevices {
+    type: typeof SET_FAVORITE_DEVICES,
+    deviceList: any
+}
+
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
     setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
     phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
-    phoneHotPriceSuccess
+    phoneHotPriceSuccess | setFavoriteDevices

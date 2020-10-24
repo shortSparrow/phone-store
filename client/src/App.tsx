@@ -6,6 +6,7 @@ import './App.scss';
 
 import store from './store';
 import { setDeviceScreen } from './store/actions/appState';
+import { setFavoriteDevices } from './store/actions/favoritesDevice';
 
 
 function App() {
@@ -27,7 +28,11 @@ function App() {
 
   useEffect(() => {
     window.addEventListener('resize', checkDeviceSize);
-    checkDeviceSize()
+    checkDeviceSize();
+
+    // add favoriteDevice from localStorage to redux
+    const favoriteDeviceLocalList = localStorage.getItem('@favotiteDeviceList');
+    store.dispatch(setFavoriteDevices(JSON.parse(favoriteDeviceLocalList!)));
 
     return () => {
       window.removeEventListener('resize', checkDeviceSize);

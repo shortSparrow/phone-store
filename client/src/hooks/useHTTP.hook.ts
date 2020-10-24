@@ -10,7 +10,9 @@ export const useHTTP = ()=> {
     const [error, setError] = useState<any>(null);
     const [response, setResponse] = useState(null)
 
-    const getReguest = async (path: string) => {
+    const getReguest = useCallback(async (path: string) => {
+        console.log('request');
+        
         setLoading(true)
         try {
             const response = await request(path);
@@ -23,7 +25,7 @@ export const useHTTP = ()=> {
         } finally {
             setLoading(false)
         }
-    }
+    },[])
 
     const cleanError = () => {
         setError(null)
