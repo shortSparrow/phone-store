@@ -3,6 +3,7 @@ import {appState}  from './appState';
 import {phonesState}  from './phones';
 import {hotPricePhones}  from './hotPricePhones';
 import {favoritesDevice}  from './favoritesDevice';
+import {cartDeviceList}  from './cartDeviceList';
 
 
 import { AppStateInterface } from '../../interfaces/appStateInterface';
@@ -18,7 +19,8 @@ export const rootReducer = combineReducers({
     appState,
     phonesState,
     hotPricePhones,
-    favoritesDevice
+    favoritesDevice,
+    cartDeviceList
   })
   
   export type RootState = ReturnType<typeof rootReducer>

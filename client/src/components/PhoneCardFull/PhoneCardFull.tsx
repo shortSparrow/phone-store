@@ -10,10 +10,11 @@ import { defaultConstatnts } from '../../constants/defaultConstants';
 import Header from '../Header/Header';
 import SmallNavigation from '../SmallNavigation/SmallNavigation';
 import GoBack from '../GoBack/GoBack';
-import {favoritesDevice} from '../../store/actions';
+import { favoritesDevice, cartDeviceList } from '../../store/actions';
 
 import { favoriteDevice } from '../../interfaces/favoriteDevice'
 import { title } from 'process';
+import { cartDevice } from '../../interfaces/cartDeviceList';
 
 type params = {
     model_name: string
@@ -24,13 +25,26 @@ interface PhoneCardFullInterface {
     loading: boolean | null,
     error: any,
     getPhoneByModelName: (model_name: string) => {},
-    toggleFavoriteDevice: (device: favoriteDevice) => {}
-    favoriteDevices: favoriteDevice[]
+    toggleFavoriteDevice: (device: favoriteDevice) => {},
+    toggleCartDevice: (device: cartDevice) => void,
+    favoriteDevices: favoriteDevice[],
+    cartDeviceList: cartDevice[]
 }
 
-const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, currentModel, getPhoneByModelName, favoriteDevices, toggleFavoriteDevice }) => {
+
+
+const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
+    const {
+        loading, error, currentModel,
+        getPhoneByModelName, favoriteDevices,
+        toggleFavoriteDevice, toggleCartDevice,
+        cartDeviceList
+    } = props
+
     const [device, setDevice] = useState<any>(null);
     const [addToFavotireList, setAddToFavoriteList] = useState<boolean | null>(null);
+    const [addToCartList, setAddToCartList] = useState<boolean | null>(null);
+
     let params: params = useParams();
 
     useEffect(() => {
@@ -49,13 +63,54 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
     }, [favoriteDevices, currentModel])
 
     useEffect(() => {
+        const cart = cartDeviceList.find((item: cartDevice) => item._id === currentModel?._id);
+
+        if (cart) {
+            setAddToCartList(true)
+        } else {
+            setAddToCartList(false)
+        }
+
+    }, [cartDeviceList, currentModel])
+
+
+    const handleToggleCartList = () => {
+        const cartDevice = {
+            _id: currentModel!._id,
+            price: {
+                old: currentModel!.price.old,
+                current: currentModel!.price.current
+            },
+            image: device.currentDevice.images.main,
+            title: currentModel!.title,
+            routePosition: currentModel!.routePosition,
+            deviceInfo: {
+                camera: currentModel!.deviceInfo.camera,
+                cell: currentModel!.deviceInfo.cell,
+                processor: currentModel!.deviceInfo.processor,
+                resolution: currentModel!.deviceInfo.resolution,
+                screen: currentModel!.deviceInfo.screen,
+                zoom: currentModel!.deviceInfo.zoom,
+                color: device.currentDevice.currentColor,
+                RAM: device.currentDevice.currentRAM,
+            },
+            about: device.abuot
+        }
+
+        toggleCartDevice(cartDevice)
+    }
+
+    useEffect(() => {
         if (currentModel) {
             setDevice({
                 ...currentModel,
-                currentDevice: currentModel.availabelDevices[0],
-                currentRAM: currentModel.availabelDevices[0].availableRAM[0],
-                currentColor: currentModel.availabelColor[0],
-                bigImage: currentModel.availabelDevices[0].images.main,
+                currentDevice: {
+                    ...currentModel.availabelDevices[0],
+                    currentRAM: currentModel.availabelDevices[0].availableRAM[0],
+                    currentColor: currentModel.availabelColor[0],
+                    bigImage: currentModel.availabelDevices[0].images.main,
+                },
+
             })
         }
     }, [currentModel])
@@ -87,9 +142,9 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                 {
                                                     device.currentDevice.images.other.map((image: string, index: number) => (
                                                         <div
-                                                            className={`full-card__small-image ${image === device.bigImage ? "full-card__small-image--active" : ""}`}
+                                                            className={`full-card__small-image ${image === device.currentDevice.bigImage ? "full-card__small-image--active" : ""}`}
                                                             onClick={() => {
-                                                                const newDevice = { ...device, bigImage: image }
+                                                                const newDevice = { ...device, currentDevice: { ...device.currentDevice, bigImage: image } }
                                                                 setDevice(newDevice)
                                                             }}
                                                             key={image}
@@ -105,7 +160,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             </div>
                                             <div className="full-card__big-image">
                                                 <img
-                                                    src={defaultConstatnts.domain + "/" + device.bigImage}
+                                                    src={defaultConstatnts.domain + "/" + device.currentDevice.bigImage}
                                                     alt={device.title}
                                                     className="full-card__big-image--itself"
                                                 />
@@ -127,14 +182,18 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                                     className="full-card__availabe-color"
                                                                     style={{ backgroundColor: color }}
                                                                     onClick={() => {
-                                                                        const newModel = currentModel?.availabelDevices.find((model) => model.color === color)
-                                                                        setDevice({
-                                                                            ...device,
-                                                                            currentDevice: newModel,
-                                                                            currentRAM: newModel?.availableRAM.find((ram) => ram === device.currentRAM) || newModel?.availableRAM[0],
-                                                                            bigImage: newModel?.images.main,
-                                                                            currentColor: color,
-                                                                        })
+                                                                        const newDeviceIndex = currentModel?.availabelDevices.findIndex((model) => model.color === color)
+
+                                                                        const newDevice = {
+                                                                            ...device, currentDevice: {
+                                                                                ...currentModel!.availabelDevices[newDeviceIndex!],
+                                                                                currentRAM: currentModel!.availabelDevices[newDeviceIndex!].availableRAM[0],
+                                                                                currentColor: currentModel!.availabelColor[newDeviceIndex!],
+                                                                                bigImage: currentModel!.availabelDevices[newDeviceIndex!].images.main,
+                                                                            }
+                                                                        }
+
+                                                                        setDevice(newDevice)
                                                                     }}
                                                                 ></div>
                                                             </div>
@@ -151,8 +210,11 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                                     {
                                                         device.currentDevice.availableRAM.map((ram: string) => (
                                                             <div
-                                                                className={`full-card__availale-ram-wrapper ${device.currentRAM === ram ? "full-card__availale-ram-wrapper__selected" : ""}`}
-                                                                onClick={() => setDevice({ ...device, currentRAM: ram })}
+                                                                className={`full-card__availale-ram-wrapper ${device.currentDevice.currentRAM === ram ? "full-card__availale-ram-wrapper__selected" : ""}`}
+                                                                onClick={() => {
+                                                                    const updatedDevice = { ...device, currentDevice: { ...device.currentDevice, currentRAM: ram } }
+                                                                    setDevice(updatedDevice)
+                                                                }}
                                                                 key={ram}
                                                             >
                                                                 <p className="full-card__availale-ram">{ram}</p>
@@ -170,7 +232,10 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
 
                                             <div className="full-card__short-info">
                                                 <div className="phone-card__button--wrapper full-card__button-wrapper">
-                                                    <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
+                                                    <div
+                                                        className={`button__add-cart--wrapper phone-card__add-cart--wrapper ${addToCartList ? 'button__add-cart--active' : ''}`}
+                                                        onClick={handleToggleCartList}
+                                                    >
                                                         <div className="button__add-cart--text">Add to cart</div>
                                                     </div>
                                                     <div className="button__favorite--wrapper phone-card__favorite--wrapper" onClick={() => toggleFavoriteDevice(currentModel!)}>
@@ -215,7 +280,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = ({ loading, error, curre
                                             <p className="second-title full-card__second-title">About</p>
                                             <div className="full-card__separate-line"></div>
                                             {
-                                                device.abuot.map((item: { title: string, description: string }, index: number) => (
+                                                device.about.map((item: { title: string, description: string }, index: number) => (
                                                     <div className="full-card__summary__paragraph" key={title + index}>
                                                         <p className="full-card__summary__title third-title">{item.title}</p>
                                                         <p className="full-card__summary__description body-text">{item.description}</p>
@@ -257,12 +322,15 @@ const mapStateToProps = (state: RootState) => ({
     loading: state.phonesState.loading,
     error: state.phonesState.error,
     currentModel: state.phonesState.currentModel,
-    favoriteDevices: state.favoritesDevice.deviceList
+    favoriteDevices: state.favoritesDevice.deviceList,
+    cartDeviceList: state.cartDeviceList.deviceList
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
     getPhoneByModelName: (id: string) => dispatch(phones.getPhoneByModelName(id)),
-    toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device))
+    toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device)),
+    toggleCartDevice: (device: cartDevice) => dispatch(cartDeviceList.toggleCartDevice(device))
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardFull)

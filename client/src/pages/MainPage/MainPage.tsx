@@ -33,7 +33,10 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
     useEffect(() => {
         props.loadHotPricePhones();
         loadNewModels();
-        loadHotPricePhones();        
+        loadHotPricePhones();    
+        
+        console.log(newModelPhones);
+        
     }, [])
 
     useEffect(() => {

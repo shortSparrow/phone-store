@@ -4,6 +4,7 @@ import PhoneCardFull from './components/PhoneCardFull/PhoneCardFull';
 import MainPage from './pages/MainPage/MainPage';
 import PhonesPage from './pages/PhonesPage/PhonesPage';
 import FavoritePage from './pages/FavoritesPage/FavoritePage';
+import ChartPage from './pages/CartPage/CartPage';
 
 
 export const useRoutes = (isAuthentificated: boolean) => {
@@ -21,6 +22,10 @@ export const useRoutes = (isAuthentificated: boolean) => {
             </Route>
             <Route path="/favorites" exact>
                 <FavoritePage />
+            </Route>
+
+            <Route path="/cart" exact>
+                <ChartPage />
             </Route>
         </Switch>
     )

@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import './DesktopHeader.scss';
 import { Link, useParams, useLocation } from 'react-router-dom';
+import { RootState } from '../../../store/reducers';
+import { favoriteDevice } from '../../../interfaces/favoriteDevice';
+import { cartDevice } from '../../../interfaces/cartDeviceList';
 
-const DesktopHeader = () => {
+interface DesktopHeaderInterface {
+    favoriteDevices: favoriteDevice[],
+    cartDeviceList: cartDevice[]
+}
+
+const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDeviceList }) => {
     const location = useLocation()
 
     useEffect(() => {
@@ -36,14 +44,46 @@ const DesktopHeader = () => {
                 </nav>
             </div>
             <div className="header-navigation__item">
+
                 <div className={`header-navigation__icon-wrapper ${location.pathname === "/favorites" ? "header-navigation__icon-wrapper--active" : ""}`}>
+                    {
+                        favoriteDevices.length && (
+                            <div style={{
+                                backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                position: 'absolute',
+                                top: 15,
+                                right: 15,
+                                zIndex: 2
+                            }}>
+                                <div style={{
+                                    fontSize: 11,
+                                    color: '#fff'
+                                }}>{favoriteDevices.length}</div>
+                            </div>
+                        )
+                    }
                     <Link to="/favorites" className="header-navigation__icon-link">
                         <img src="/icons/heart.svg" alt="favorites" />
                     </Link>
-
                 </div>
-                <div className={`header-navigation__icon-wrapper ${location.pathname === "/chart" ? "header-navigation__icon-wrapper--active" : ""}`}>
-                    <Link to="/chart" className="header-navigation__icon-link">
+                <div className={`header-navigation__icon-wrapper ${location.pathname === "/cart" ? "header-navigation__icon-wrapper--active" : ""}`}>
+                    {
+                        cartDeviceList.length && (
+                            <div style={{
+                                backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                position: 'absolute',
+                                top: 15,
+                                right: 15,
+                                zIndex: 2
+                            }}>
+                                <div style={{
+                                    fontSize: 11,
+                                    color: '#fff'
+                                }}>{cartDeviceList.length}</div>
+                            </div>
+                        )
+                    }
+                    <Link to="/cart" className="header-navigation__icon-link">
                         <img src="/icons/shopping-bag.svg" alt="shopping-bag" />
                     </Link>
                 </div>
@@ -52,8 +92,9 @@ const DesktopHeader = () => {
     )
 }
 
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state: RootState) => ({
+    favoriteDevices: state.favoritesDevice.deviceList,
+    cartDeviceList: state.cartDeviceList.deviceList
 });
 
 const matDispatchToProps = () => ({

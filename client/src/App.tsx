@@ -7,6 +7,8 @@ import './App.scss';
 import store from './store';
 import { setDeviceScreen } from './store/actions/appState';
 import { setFavoriteDevices } from './store/actions/favoritesDevice';
+import { setCartDeviceList } from './store/actions/cartDeviceList';
+
 
 
 function App() {
@@ -31,8 +33,13 @@ function App() {
     checkDeviceSize();
 
     // add favoriteDevice from localStorage to redux
-    const favoriteDeviceLocalList = localStorage.getItem('@favotiteDeviceList');
+    const favoriteDeviceLocalList = localStorage.getItem('@favotiteDeviceList') || JSON.stringify([]);
     store.dispatch(setFavoriteDevices(JSON.parse(favoriteDeviceLocalList!)));
+
+    // add chartDeviceList from localStorage to redux
+    const cartDeviceLocalList = localStorage.getItem('@cartDeviceList') || JSON.stringify([]);
+    
+    store.dispatch(setCartDeviceList(JSON.parse(cartDeviceLocalList!)));
 
     return () => {
       window.removeEventListener('resize', checkDeviceSize);

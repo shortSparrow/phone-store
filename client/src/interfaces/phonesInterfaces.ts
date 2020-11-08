@@ -4,13 +4,13 @@ export interface phoneCardInterface {
     title: string,
     availabelColor: string[],
     availabelDevices: {
-            availableRAM: string[],
-            images: {
-                main: string,
-                other: string[]
-            },
-            color: string
-       }[],
+        availableRAM: string[],
+        images: {
+            main: string,
+            other: string[]
+        },
+        color: string
+    }[],
     price: {
         current: string,
         old: string
@@ -21,7 +21,8 @@ export interface phoneCardInterface {
     about: {
         title: string,
         description: string
-    }[]
+    }[],
+    // currentDevice?: currentDevice
 }
 
 export type phoneState = {
@@ -46,6 +47,19 @@ export type hotPriceState = {
     loading: boolean | null,
     hotPricePhoneList: phoneCardInterface[] | [],
 }
+
+// export type currentDevice = {
+//     availableRAM: string[],
+//     bigImage: string,
+//     color: string,
+//     currentColor: string,
+//     currentRAM: string,
+//     images: {
+//         main: string,
+//         other: string[]
+//     },
+// }
+
 
 // phoneList = visileList
 // visibleList.sort() -> sorted

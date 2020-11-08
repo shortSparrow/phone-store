@@ -44,7 +44,7 @@ const phonePatternSchema = {
         zoom: String,
         cell: String,
     },
-    abuot: [{
+    about: [{
         title: String,
         description: String
     }]

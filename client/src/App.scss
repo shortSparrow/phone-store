@@ -9,10 +9,14 @@
         justify-content: center;
         align-items: center;
         padding: 10px 0;
+        color: #fff;
+        box-sizing: border-box;
     }
-
-    &__add-cart--text {
-        color: #ffffff
+    
+    &__add-cart--active {
+        background-color: #fff;
+        border: 1px solid $light-border;
+        color: #27AE60 !important
     }
 
     &__favorite--wrapper {

@@ -6,20 +6,26 @@ import { useHistory } from "react-router-dom";
 import "./PhoneCardItem.scss";
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 import { phones } from '../../store/actions';
-import { favoritesDevice } from '../../store/actions';
+import { favoritesDevice, cartDeviceList } from '../../store/actions';
 import { favoriteDevice } from '../../interfaces/favoriteDevice';
+import { cartDevice } from '../../interfaces/cartDeviceList';
+
 
 interface PhoneCardInterface {
     phone: phoneCardInterface,
     toggleFavoriteDevice: any,
-    favoriteDevices: favoriteDevice[]
+    favoriteDevices: favoriteDevice[],
+    cartDeviceList: cartDevice[],
+    toggleCartDevice: any
 }
 
-const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevice, favoriteDevices }) => {
+const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevice, favoriteDevices, toggleCartDevice, cartDeviceList }) => {
     let history = useHistory();
     const [startClick, setStartClick] = useState<Date | null>(null);
     const [letPress, setLetPress] = useState(true); // if we move when mouseDown being, we don't navigate on fullPhoneScreen. Because we wont use drag nad drop with slider
     const [addToFavotireList, setAddToFavoriteList] = useState<boolean | null>(null);
+    const [addToCartList, setAddToCartList] = useState<boolean | null>(null);
+
 
     useEffect(() => {
         const favorite = favoriteDevices.find((item: favoriteDevice) => item._id === phone._id);
@@ -31,8 +37,48 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
         }
     }, [favoriteDevices])
 
+
+    useEffect(() => {
+        const favorite = cartDeviceList.find((item: cartDevice) => item._id === phone._id);
+
+        if (favorite) {
+            setAddToCartList(true)
+        } else {
+            setAddToCartList(false)
+        }
+    }, [cartDeviceList])
+
+
     const handleAddToFavoriteList = () => {
         toggleFavoriteDevice(phone)
+    }
+
+    const handleAddToCartList = () => {
+        const cartDevice = {
+            _id: phone._id,
+            price: {
+                old: phone!.price.old,
+                current: phone!.price.current
+            },
+            image: phone.availabelDevices[0].images.main,
+            title: phone.title,
+            routePosition: phone.routePosition,
+            deviceInfo: {
+                
+                camera: phone.deviceInfo.camera,
+                cell: phone.deviceInfo.cell,
+                processor: phone.deviceInfo.processor,
+                resolution: phone.deviceInfo.resolution,
+                screen: phone.deviceInfo.screen,
+                zoom: phone.deviceInfo.zoom,
+                color: phone.availabelDevices[0].color,
+                RAM: phone.availabelDevices[0].availableRAM[0],
+            },
+            about: phone.about
+        }
+
+        toggleCartDevice(cartDevice)
+        // toggleCartDevice(phone)
     }
 
     return (
@@ -92,14 +138,15 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
                     </div>
                 </div>
 
-                <div className="phone-card__button--wrapper">
-                    <div className="button__add-cart--wrapper phone-card__add-cart--wrapper">
-                        <div className="button__add-cart--text">Add to cart</div>
+                <div className="phone-card__button--wrapper" onClick={(event) => event.stopPropagation()}>
+                    <div className={`button__add-cart--wrapper phone-card__add-cart--wrapper ${addToCartList ? 'button__add-cart--active' : ''}`} >
+                        <div
+                            onClick={handleAddToCartList}
+                        >
+                            Add to cart
+                            </div>
                     </div>
-                    <div className="button__favorite--wrapper phone-card__favorite--wrapper" onClick={(event) => {
-                        event.stopPropagation()
-                        handleAddToFavoriteList()
-                    }}>
+                    <div className="button__favorite--wrapper phone-card__favorite--wrapper" onClick={handleAddToFavoriteList}>
                         <img
                             src={`${addToFavotireList ? '/icons/heart-filed.svg' : '/icons/heart.svg'}`}
                             alt="favorite"
@@ -114,11 +161,13 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
 }
 
 const mapStateToProps = (state: RootStateInterface) => ({
-    favoriteDevices: state.favoritesDevice.deviceList
+    favoriteDevices: state.favoritesDevice.deviceList,
+    cartDeviceList: state.cartDeviceList.deviceList
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device))
+    toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device)),
+    toggleCartDevice: (device: cartDevice) => dispatch(cartDeviceList.toggleCartDevice(device))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardItem)
