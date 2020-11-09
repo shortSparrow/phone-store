@@ -47,7 +47,7 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
 
                 <div className={`header-navigation__icon-wrapper ${location.pathname === "/favorites" ? "header-navigation__icon-wrapper--active" : ""}`}>
                     {
-                        favoriteDevices.length && (
+                        favoriteDevices.length ? (
                             <div style={{
                                 backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
                                 position: 'absolute',
@@ -60,7 +60,7 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
                                     color: '#fff'
                                 }}>{favoriteDevices.length}</div>
                             </div>
-                        )
+                        ): null
                     }
                     <Link to="/favorites" className="header-navigation__icon-link">
                         <img src="/icons/heart.svg" alt="favorites" />
@@ -68,7 +68,7 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
                 </div>
                 <div className={`header-navigation__icon-wrapper ${location.pathname === "/cart" ? "header-navigation__icon-wrapper--active" : ""}`}>
                     {
-                        cartDeviceList.length && (
+                        cartDeviceList.length ? (
                             <div style={{
                                 backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
                                 position: 'absolute',
@@ -81,7 +81,7 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
                                     color: '#fff'
                                 }}>{cartDeviceList.length}</div>
                             </div>
-                        )
+                        ) : null
                     }
                     <Link to="/cart" className="header-navigation__icon-link">
                         <img src="/icons/shopping-bag.svg" alt="shopping-bag" />

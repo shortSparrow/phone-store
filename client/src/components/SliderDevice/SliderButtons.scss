@@ -25,6 +25,16 @@
         z-index: 2;
     }
 
+    &--cart {
+        width: 32px;
+        height: 32px;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &--cart__click {
+        opacity: 0.5;
+    }
+
     &__big-image {
         min-width: 32px;
     }
