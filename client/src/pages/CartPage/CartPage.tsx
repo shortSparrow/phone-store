@@ -21,14 +21,19 @@ interface deviceCheckoutType extends cartDevice {
 
 const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) => {
     const [checkoutDeviceList, setCheckoutDeviceList] = useState<any>([])
-    const [totalSum, setTotalSum] = useState(0)
+    const [totalSum, setTotalSum] = useState(0);
+    const [deletedItemsId, setDeletedItemsId] = useState<string[]>([])
 
     useEffect(() => {
-        setCheckoutDeviceList(chartDeviceList.map((device: cartDevice) => ({
-            ...device,
-            priceNumber: Number(device.price.current.slice(1,)),
-            count: 1
-        })))
+        if (!checkoutDeviceList.length) {
+            setCheckoutDeviceList(chartDeviceList.map((device: cartDevice) => ({
+                ...device,
+                priceNumber: Number(device.price.current.slice(1,)),
+                count: 1
+            })))
+        } else {
+            setCheckoutDeviceList(checkoutDeviceList.filter((device: any) => deletedItemsId.every((item: string) => item !== device._id)))
+        }
     }, [chartDeviceList])
 
     useEffect(() => {
@@ -43,7 +48,7 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
     }, [checkoutDeviceList])
 
 
-    const plusDevice = (id: string) => {
+    const plusDevice = (id: string) => { 
         const newCheckoutDevice = checkoutDeviceList.map((device: deviceCheckoutType) => {
             if (device._id === id) {
                 return {
@@ -81,9 +86,13 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
 
 
     const removeDeviceFromList = (id: string) => {
-        // // now we have bug
-        // const mathcedDevice = chartDeviceList.find((device: cartDevice) => device._id === id);
-        // toggleCartDevice(mathcedDevice!)
+        // now we have a bug
+        const mathcedDevice = checkoutDeviceList.find((device: cartDevice) => device._id === id);
+        setDeletedItemsId([...deletedItemsId, id])
+
+        console.log('mathcedDevice: ', mathcedDevice);
+        
+        toggleCartDevice(mathcedDevice!)
     }   
 
     return (
