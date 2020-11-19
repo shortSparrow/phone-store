@@ -19,4 +19,24 @@
 .slider-devices .slick-list .slick-slide>div {
     max-width: 330px !important;
     margin: auto;
+    height: 100%;
 }
+
+.slider-devices .slick-list {
+    height: 586px;
+}
+
+.slider-devices .slick-track {
+    height: 100%;
+}
+
+.slider-devices .phone-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+// .slider-devices .phone-card__content {
+//     display: flex;
+//     flex-direction: column;
+// }

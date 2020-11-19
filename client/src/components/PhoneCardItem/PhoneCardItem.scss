@@ -72,6 +72,8 @@
     &__favorite--wrapper {
         // margin-left: 4px;
         cursor: pointer;
+        min-width: 40px;
+        min-height: 40px;
     }
 }
 
@@ -90,5 +92,6 @@
 
     &__value {
         font-size: 12px;
+        text-align: end;
     }
 }
