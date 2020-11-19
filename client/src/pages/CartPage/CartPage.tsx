@@ -141,7 +141,7 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
                                         </div>
 
                                         <div className="cart-item__price-wrapper">
-                                            <p className="second-title">{device.priceNumber * device.count} {device.price.current[0]}</p>
+                                            <p className="second-title cart-item__price">{device.priceNumber * device.count} {device.price.current[0]}</p>
                                         </div>
                                     </div>
 
