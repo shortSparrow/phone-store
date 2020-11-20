@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage/MainPage';
 import PhonesPage from './pages/PhonesPage/PhonesPage';
 import FavoritePage from './pages/FavoritesPage/FavoritePage';
 import ChartPage from './pages/CartPage/CartPage';
+import TabletsPage from './pages/TabletsPage/TabletsPage';
 
 
 export const useRoutes = (isAuthentificated: boolean) => {
@@ -16,6 +17,9 @@ export const useRoutes = (isAuthentificated: boolean) => {
             </Route>
             <Route path="/phones" exact>
                 <PhonesPage />
+            </Route>
+            <Route path="/tablets" exact>
+                <TabletsPage />
             </Route>
             <Route path="/phone/:model_name" exact>
                 <PhoneCardFull/>

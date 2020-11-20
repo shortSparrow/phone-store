@@ -9,9 +9,15 @@ import {
     REQUEST_FAILED,
     PHONE_HOT_PRICE_SUCCESS,
     SET_FAVORITE_DEVICES,
-    SET_CART_DEVICE_LIST
+    SET_CART_DEVICE_LIST,
+    TABLET_LIST_LOADING,
+    TABLET_LIST_SUCCESS,
+    TABLET_LIST_ERROR,
+    TABLET_LIST_STATE,
+    TABLET_ITEM_SUCCESS
 } from '../constants/actions';
 import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
+import { tabletCardInterface, tabletListStateType } from './tabletStateInterface';
 
 // here we describe states to appState reducer
 export type DeviceScreenType = {
@@ -82,8 +88,31 @@ interface setCartDeviceList {
     deviceList: any
 }
 
+interface tabletsLoading {
+    type: typeof TABLET_LIST_LOADING,
+    loading: boolean
+}
+
+interface tabletsSuccess {
+    type: typeof TABLET_LIST_SUCCESS,
+    tabletList: tabletCardInterface[]
+}
+interface tabletsError {
+    type: typeof TABLET_LIST_ERROR,
+    error: any
+}
+interface tabletListState {
+    type: typeof TABLET_LIST_STATE,
+    tabletListState: tabletListStateType
+}
+
+interface tabletItemSuccess {
+    type: typeof TABLET_ITEM_SUCCESS,
+    currentModel: tabletCardInterface
+}
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
     setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
     phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
-    phoneHotPriceSuccess | setFavoriteDevices | setCartDeviceList
+    phoneHotPriceSuccess | setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess | 
+    tabletsError | tabletListState | tabletItemSuccess
