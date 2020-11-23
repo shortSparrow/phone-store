@@ -11,7 +11,7 @@ import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phones, hotPricePhones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
-import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
+import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import SliderDevice from '../../components/SliderDevice/SliderDevice';
 import SliderImages from '../../components/SliderImages/SliderImages';

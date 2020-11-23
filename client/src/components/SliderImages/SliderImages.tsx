@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 
 import "./SliderImages.scss";
 
-import PhoneCardItem from '../PhoneCardItem/PhoneCardItem';
+import DeviceCardItem from '../DeviceCardItem/DeviceCardItem';
 import { SampleNextArrow, SamplePrevArrow } from '../SliderDevice/SliderButtonts';
 
 type sliderImagesInterface = {

@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import { MobileHeader } from './MobileHeader/MobileHeader';
+import  MobileHeader from './MobileHeader/MobileHeader';
 import DesktopHeader from './DesktopHeader/DesktopHeader';
 
 const Header:FC<MainPageInterface> = ({deviceScreen}) => {

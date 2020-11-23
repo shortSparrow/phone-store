@@ -83,15 +83,17 @@ export const getTabletByModelName = (model_name: string): ThunkAction<void, Root
     return async dispatch => {
         dispatch(tabletsLoading(true));
         try {
-            const phone: phoneCardInterface = await request(`/api/phone/item/?model_name=${model_name}`);
+            const tablet: tabletCardInterface = await request(`/api/tablet/item/?model_name=${model_name}`);
+            // console.log('tablet item: ', tablet);
+            
 
             // add mainImage ro other imageList, ecause in db they not connected
-            phone.availabelDevices.map(device => {
+            tablet.availabelDevices.map(device => {
                 device.images.other.unshift(device.images.main);
                 return device
             });
 
-            dispatch(tabletItemSuccess(phone))
+            dispatch(tabletItemSuccess(tablet))
 
         } catch (err) {
             dispatch(tabletsError(err));

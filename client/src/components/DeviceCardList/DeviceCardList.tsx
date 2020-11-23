@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
-import PhoneCardItem from '../PhoneCardItem/PhoneCardItem';
+import DeviceCardItem from '../DeviceCardItem/DeviceCardItem';
 
-import "./PhoneCardList.scss";
+import "./DeviceCardList.scss";
 
 interface cardListInterface {
-    phoneList: phoneCardInterface[]
+    deviceList: any // array of device type
 }
 
-const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
+const DeviceCardList: React.FC<cardListInterface> = ({ deviceList }) => {
     // console.log(phoneList);
 
 
@@ -17,7 +17,7 @@ const PhoneCardList: React.FC<cardListInterface> = ({ phoneList }) => {
         <>
             <div className="phone-list">
                 {
-                    phoneList.map((phone: phoneCardInterface) => <PhoneCardItem phone={phone} key={phone._id} />)
+                    deviceList.map((device: phoneCardInterface) => <DeviceCardItem device={device} key={device._id} />)
                 }
             </div>
         </>
@@ -28,4 +28,4 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardList)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceCardList)

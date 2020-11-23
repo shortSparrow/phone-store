@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { useHistory } from "react-router-dom";
 
-import "./PhoneCardItem.scss";
+import "./DeviceCardItem.scss";
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 import { phones } from '../../store/actions';
 import { favoritesDevice, cartDeviceList } from '../../store/actions';
@@ -12,14 +12,14 @@ import { cartDevice } from '../../interfaces/cartDeviceList';
 
 
 interface PhoneCardInterface {
-    phone: phoneCardInterface,
+    device: any, // device type
     toggleFavoriteDevice: any,
     favoriteDevices: favoriteDevice[],
     cartDeviceList: cartDevice[],
-    toggleCartDevice: any
+    toggleCartDevice: any,
 }
 
-const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevice, favoriteDevices, toggleCartDevice, cartDeviceList }) => {
+const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDevice, favoriteDevices, toggleCartDevice, cartDeviceList }) => {
     let history = useHistory();
     const [startClick, setStartClick] = useState<Date | null>(null);
     const [letPress, setLetPress] = useState(true); // if we move when mouseDown being, we don't navigate on fullPhoneScreen. Because we wont use drag nad drop with slider
@@ -28,7 +28,7 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
 
 
     useEffect(() => {
-        const favorite = favoriteDevices.find((item: favoriteDevice) => item._id === phone._id);
+        const favorite = favoriteDevices.find((item: favoriteDevice) => item._id === device._id);
 
         if (favorite) {
             setAddToFavoriteList(true)
@@ -39,7 +39,7 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
 
 
     useEffect(() => {
-        const favorite = cartDeviceList.find((item: cartDevice) => item._id === phone._id);
+        const favorite = cartDeviceList.find((item: cartDevice) => item._id === device._id);
 
         if (favorite) {
             setAddToCartList(true)
@@ -50,31 +50,31 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
 
 
     const handleAddToFavoriteList = () => {
-        toggleFavoriteDevice(phone)
+        toggleFavoriteDevice(device)
     }
 
     const handleAddToCartList = () => {
         const cartDevice = {
-            _id: phone._id,
+            _id: device._id,
             price: {
-                old: phone!.price.old,
-                current: phone!.price.current
+                old: device!.price.old,
+                current: device!.price.current
             },
-            image: phone.availabelDevices[0].images.main,
-            title: phone.title,
-            routePosition: phone.routePosition,
+            image: device.availabelDevices[0].images.main,
+            title: device.title,
+            routePosition: device.routePosition,
             deviceInfo: {
                 
-                camera: phone.deviceInfo.camera,
-                cell: phone.deviceInfo.cell,
-                processor: phone.deviceInfo.processor,
-                resolution: phone.deviceInfo.resolution,
-                screen: phone.deviceInfo.screen,
-                zoom: phone.deviceInfo.zoom,
-                color: phone.availabelDevices[0].color,
-                RAM: phone.availabelDevices[0].availableRAM[0],
+                camera: device.deviceInfo.camera,
+                cell: device.deviceInfo.cell,
+                processor: device.deviceInfo.processor,
+                resolution: device.deviceInfo.resolution,
+                screen: device.deviceInfo.screen,
+                zoom: device.deviceInfo.zoom,
+                color: device.availabelDevices[0].color,
+                RAM: device.availabelDevices[0].availableRAM[0],
             },
-            about: phone.about
+            about: device.about
         }
 
         toggleCartDevice(cartDevice)
@@ -86,7 +86,16 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
             className="phone-card"
             onClick={(event) => {
                 if (letPress) {
-                    history.push(`/phone/${phone.routePosition}`)
+
+                    // console.log('device: ', device);
+                    
+                    if (device.type === 'tablet') {
+                        history.push(`/tablet/${device.routePosition}`)
+                    } else {
+                        history.push(`/phone/${device.routePosition}`)
+                    }
+                    
+                    
                 }
             }}
             onMouseDown={(event) => {
@@ -110,13 +119,13 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
             }}
         >
             <div className="phone-card__image--wrapper">
-                <img src={phone.availabelDevices[0].images.main} alt={phone.title} className="phone-card__image--item" />
+                <img src={device.availabelDevices[0].images.main} alt={device.title} className="phone-card__image--item" />
             </div>
             <div className="phone-card__content">
-                <p className="phone-card__title">{phone.title}</p>
+                <p className="phone-card__title">{device.title}</p>
                 <div className="phone-card__price">
-                    <p className="phone-card__current-price">{phone.price.current}</p>
-                    <p className="phone-card__old-price">{phone.price.old}</p>
+                    <p className="phone-card__current-price">{device.price.current}</p>
+                    <p className="phone-card__old-price">{device.price.old}</p>
                 </div>
 
                 <div className="phone-card__line"></div>
@@ -124,17 +133,17 @@ const PhoneCardItem: React.FC<PhoneCardInterface> = ({ phone, toggleFavoriteDevi
                 <div className="card-specification--list">
                     <div className="card-specification--item">
                         <div className="card-specification__name">Screen</div>
-                        <div className="card-specification__value">{phone.deviceInfo.screen}</div>
+                        <div className="card-specification__value">{device.deviceInfo.screen}</div>
                     </div>
 
                     <div className="card-specification--item">
                         <div className="card-specification__name">Processor</div>
-                        <div className="card-specification__value">{phone.deviceInfo.processor}</div>
+                        <div className="card-specification__value">{device.deviceInfo.processor}</div>
                     </div>
 
                     <div className="card-specification--item">
                         <div className="card-specification__name">Camera</div>
-                        <div className="card-specification__value">{phone.deviceInfo.camera}</div>
+                        <div className="card-specification__value">{device.deviceInfo.camera}</div>
                     </div>
                 </div>
 
@@ -170,4 +179,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     toggleCartDevice: (device: cartDevice) => dispatch(cartDeviceList.toggleCartDevice(device))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardItem)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceCardItem)

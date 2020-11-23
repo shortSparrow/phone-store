@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import GoBack from '../../components/GoBack/GoBack';
 import Header from '../../components/Header/Header';
-import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
+import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 
@@ -23,7 +23,7 @@ const FavoritePage: FC<FavoritePage> = ({ favoriteDevices }) => {
                 }
                 <GoBack />
                 <h1>Favorites</h1>
-                <PhoneCardList phoneList={favoriteDevices} />
+                <DeviceCardList deviceList={favoriteDevices} />
             </div>
         </div>
     )

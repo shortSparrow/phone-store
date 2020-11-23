@@ -7,7 +7,7 @@ import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
-import PhoneCardList from '../../components/PhoneCardList/PhoneCardList';
+import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { Select } from '../../components/Select/Select';
 import { Preloader } from '../../components/Preloader/Preloader';
@@ -206,7 +206,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                 <div className="filter">
                     <input type="text" value={searchField} onChange={handleVisible} />
                 </div>
-                <PhoneCardList phoneList={structureList.currentVissible} />
+                <DeviceCardList deviceList={structureList.currentVissible} />
             </div>
         </div>
     )

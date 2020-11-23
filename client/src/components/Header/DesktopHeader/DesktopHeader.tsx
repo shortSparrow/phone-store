@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import './DesktopHeader.scss';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import { RootState } from '../../../store/reducers';
 import { favoriteDevice } from '../../../interfaces/favoriteDevice';
 import { cartDevice } from '../../../interfaces/cartDeviceList';
@@ -14,6 +14,7 @@ interface DesktopHeaderInterface {
 
 const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDeviceList }) => {
     const location = useLocation()
+    let history = useHistory()
 
     useEffect(() => {
         // console.log(location);
@@ -25,19 +26,19 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
                 <div className="header-nav__logo-wrapper"></div>
                 <nav className="header-nav__nav-wrapper">
                     <ul className="header-nav__item-wrapper">
-                        <li className={`header-nav__item ${location.pathname === "/" ? "header-nav__item--active" : ""}`}>
+                        <li className={`header-nav__item ${location.pathname === "/" ? "header-nav__item--active" : ""}`} onClick={() => history.push('/')}>
                             <Link to="/" className="header-nav__link">home</Link>
                         </li>
 
-                        <li className={`header-nav__item ${location.pathname === "/phones" ? "header-nav__item--active" : ""}`}>
+                        <li className={`header-nav__item ${location.pathname === "/phones" ? "header-nav__item--active" : ""}`} onClick={() => history.push('/phones')}>
                             <Link to="/phones" className="header-nav__link">phones</Link>
                         </li>
 
-                        <li className={`header-nav__item ${location.pathname === "/tablets" ? "header-nav__item--active" : ""}`}>
+                        <li className={`header-nav__item ${location.pathname === "/tablets" ? "header-nav__item--active" : ""}`} onClick={() => history.push('/tablets')}>
                             <Link to="/tablets" className="header-nav__link">tablet</Link>
                         </li>
 
-                        <li className={`header-nav__item ${location.pathname === "/accessories" ? "header-nav__item--active" : ""}`}>
+                        <li className={`header-nav__item ${location.pathname === "/accessories" ? "header-nav__item--active" : ""}`} onClick={() => history.push('/accessories')}>
                             <Link to="/accessories" className="header-nav__link">accessories</Link>
                         </li>
                     </ul>
@@ -45,15 +46,12 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
             </div>
             <div className="header-navigation__item">
 
-                <div className={`header-navigation__icon-wrapper ${location.pathname === "/favorites" ? "header-navigation__icon-wrapper--active" : ""}`}>
+                <div className={`header-navigation__icon-wrapper ${location.pathname === "/favorites" ? "header-navigation__icon-wrapper--active" : ""}`} onClick={() => history.push('/favorites')}>
                     {
                         favoriteDevices.length ? (
-                            <div style={{
-                                backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                position: 'absolute',
+                            <div className="badge-wrapper" style={{
                                 top: 15,
                                 right: 15,
-                                zIndex: 2
                             }}>
                                 <div style={{
                                     fontSize: 11,
@@ -66,15 +64,12 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
                         <img src="/icons/heart.svg" alt="favorites" />
                     </Link>
                 </div>
-                <div className={`header-navigation__icon-wrapper ${location.pathname === "/cart" ? "header-navigation__icon-wrapper--active" : ""}`}>
+                <div className={`header-navigation__icon-wrapper ${location.pathname === "/cart" ? "header-navigation__icon-wrapper--active" : ""}`} onClick={() => history.push('/cart')}>
                     {
                         cartDeviceList.length ? (
-                            <div style={{
-                                backgroundColor: '#EB5757', borderRadius: 20, height: 12, minWidth: 12, padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                position: 'absolute',
+                            <div className="badge-wrapper" style={{
                                 top: 15,
                                 right: 15,
-                                zIndex: 2
                             }}>
                                 <div style={{
                                     fontSize: 11,

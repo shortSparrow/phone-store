@@ -1,11 +1,49 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import PhoneCardList from '../../components/PhoneCardList/PhoneCardList'
+import DeviceCardList from '../../components/DeviceCardList/DeviceCardList'
+import Header from '../../components/Header/Header'
+import { Pagination } from '../../components/Pagination/Pagination'
+import { Select } from '../../components/Select/Select'
+import SmallNavigation from '../../components/SmallNavigation/SmallNavigation'
 import { RootStateInterface } from '../../interfaces/rootStateInterface'
 import { tabletCardInterface, tabletListStateType } from '../../interfaces/tabletStateInterface'
-import { tablets } from '../../store/actions'
+import { tablets } from '../../store/actions';
 
-const TabletsPage: FC = ({tabletList, tabletListState, loadTablets, setTabletListState} : any) => {
+const selectList = [
+    {
+        title: 'Rich',
+        value: 'rich'
+    },
+    {
+        title: 'Cheap',
+        value: 'cheap'
+    }
+]
+
+const selectitemsOnPageList = [
+    {
+        title: '5',
+        value: 5
+    },
+    {
+        title: '10',
+        value: 10
+    },
+    {
+        title: '15',
+        value: 15
+    },
+    {
+        title: '25',
+        value: 25
+    },
+    {
+        title: '50',
+        value: 50
+    },
+]
+
+const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState }: any) => {
     const [searchField, setSearchField] = useState('');
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
@@ -135,10 +173,40 @@ const TabletsPage: FC = ({tabletList, tabletListState, loadTablets, setTabletLis
 
     return (
         <div>
-            <h1>Tablet</h1>
-            <PhoneCardList phoneList={structureList.currentVissible} />
+            <Header />
+            <div className="main-limit">
+                <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
+
+                <div className="phones-page__pagination-warpper">
+                    <Pagination
+                        structureList={structureList}
+                        setStructureList={setStructureList}
+                        leftSpace={2}
+                        rightSpace={2}
+                    />
+                </div>
+
+                <div className="phones-page__select-phones--wrapper">
+                    <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
+                    <Select
+                        itemList={selectitemsOnPageList}
+                        setSelectedItem={setSelectedItemsOnPageValue}
+                        selectedItem={selectedItemsOnPAgeValue}
+                        defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
+                        width={90}
+                    />
+                </div>
+
+
+                <div className="filter">
+                    <input type="text" value={searchField} onChange={handleVisible} />
+                </div>
+
+                <DeviceCardList deviceList={structureList.currentVissible} />
+            </div>
+            
         </div>
-        
+
     )
 }
 
