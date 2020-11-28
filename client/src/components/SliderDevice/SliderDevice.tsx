@@ -71,7 +71,7 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
                             </div>
                     )
                     : props.error ? (
-                        <h1>We can't load data, please try reload page</h1>
+                        <h1>We can't load data, please try to reload page</h1>
                     )
                         : props.deviceList.length ? (
                             <Slider {...settings} ref={slickSliderRef}>

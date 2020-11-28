@@ -46,6 +46,15 @@
         }
     }
 
+    &__buttons--not-active {
+        border-color: $light-border !important;
+        cursor: initial;
+
+        &:hover {
+            border-color: $darkness-light-border;
+        }
+    }
+
     &__buttons-arrow {
 
         &--next {

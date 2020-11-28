@@ -67,7 +67,10 @@
     &__logo-wrapper {
         width: 64px;
         height: 100%;
-        background-color: aquamarine;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // background-color: aquamarine;
         margin-left: 24px;
         margin-right: 64.5px;
     }

@@ -127,7 +127,6 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                     device?.title ? <SmallNavigation params={[{ title: 'Phones', link: '/phones' }, { title: device.title, link: '' }]} /> : null
                 }
                 <GoBack />
-                <h1>Card full</h1>
                 {
                     loading ? <p>LOADING...</p>
                         : error ? <p>Error</p>

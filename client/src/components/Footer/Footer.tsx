@@ -6,7 +6,7 @@ import "./Footer.scss"
 
 const Footer = () => {
     return (
-        <div className="footer__wrapper">
+        <footer className="footer__wrapper">
             <div className="main-limit footer__content">
                 <div className="footer__logo">LOGO</div>
                 <div className="footer__navigation__wrapper">
@@ -31,7 +31,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 

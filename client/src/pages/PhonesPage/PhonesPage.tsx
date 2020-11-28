@@ -73,18 +73,22 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         if (phoneList.length) {
 
             setStructureList({
-                onPage: 5,
-                currentPage: 1,
-                pages: Array.from(Array(Math.ceil(phoneList.length / 5)).keys(), (_, i) => i + 1),
-                data: phoneList,
-                currentVissible: phoneList.slice(0, 5),
+                ...structureList,
+                // onPage: 5,
+                // currentPage: 1,
+                // pages: Array.from(Array(Math.ceil(phoneList.length / 5)).keys(), (_, i) => i + 1),
+                // data: phoneList,
+                // currentVissible: phoneList.slice(0, 5),
                 loaded: true
             })
         }
     }, [phoneList])
 
+    console.log(structureList.currentVissible);
+
+
     const handlePageStructure = (value: number) => {
-        // const { onPage, data } = structureList;
+        const { onPage, data } = structureList;
 
         setStructureList({
             ...structureList,
@@ -181,6 +185,52 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
             <Header />
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Phones', link: '/phones' }]} />
+                <p className="main-title page-name-title">Mobile phones</p>
+                <p className="small-text models-count">{
+                    structureList.loaded && structureList?.data?.length
+                        ? structureList.data.length
+                        : <Preloader
+                            color="#89939A"
+                            width="12"
+                            height="12"
+                            borderWidth="1"
+                            wrapperWidth="12"
+                            wrapperHeight="12"
+                        />
+                } models</p>
+
+
+
+                <div className="phones-page__select-phones--wrapper">
+                    <div>
+                        <p className="small-text models-count"> Sort by</p>
+                        <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
+                    </div>
+
+                    <div style={{ marginLeft: 20 }}>
+                        <p className="small-text models-count"> Items on page</p>
+                        <Select
+                            itemList={selectitemsOnPageList}
+                            setSelectedItem={setSelectedItemsOnPageValue}
+                            selectedItem={selectedItemsOnPAgeValue}
+                            defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
+                            width={128}
+                        />
+                    </div>
+
+                    <div className="filter" style={{marginLeft: 15}}>
+                        <p className="small-text models-count">Serach field</p>
+                        <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                            <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
+
+                            <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <DeviceCardList deviceList={structureList.currentVissible} />
 
                 <div className="phones-page__pagination-warpper">
                     <Pagination
@@ -190,23 +240,6 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                         rightSpace={2}
                     />
                 </div>
-
-                <div className="phones-page__select-phones--wrapper">
-                    <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
-                    <Select
-                        itemList={selectitemsOnPageList}
-                        setSelectedItem={setSelectedItemsOnPageValue}
-                        selectedItem={selectedItemsOnPAgeValue}
-                        defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
-                        width={90}
-                    />
-                </div>
-
-
-                <div className="filter">
-                    <input type="text" value={searchField} onChange={handleVisible} />
-                </div>
-                <DeviceCardList deviceList={structureList.currentVissible} />
             </div>
         </div>
     )

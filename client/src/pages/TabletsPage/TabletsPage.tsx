@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import DeviceCardList from '../../components/DeviceCardList/DeviceCardList'
 import Header from '../../components/Header/Header'
 import { Pagination } from '../../components/Pagination/Pagination'
+import { Preloader } from '../../components/Preloader/Preloader'
 import { Select } from '../../components/Select/Select'
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation'
 import { RootStateInterface } from '../../interfaces/rootStateInterface'
@@ -177,24 +178,37 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
 
-                <div className="phones-page__pagination-warpper">
-                    <Pagination
-                        structureList={structureList}
-                        setStructureList={setStructureList}
-                        leftSpace={2}
-                        rightSpace={2}
-                    />
-                </div>
+                <p className="main-title page-name-title">Mobile phones</p>
+                <p className="small-text models-count">{
+                    structureList.loaded && structureList?.data?.length
+                        ? structureList.data.length
+                        : <Preloader
+                            color="#89939A"
+                            width="12"
+                            height="12"
+                            borderWidth="1"
+                            wrapperWidth="12"
+                            wrapperHeight="12"
+                        />
+                } models</p>
+
+
 
                 <div className="phones-page__select-phones--wrapper">
-                    <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
-                    <Select
-                        itemList={selectitemsOnPageList}
-                        setSelectedItem={setSelectedItemsOnPageValue}
-                        selectedItem={selectedItemsOnPAgeValue}
-                        defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
-                        width={90}
-                    />
+                    <div>
+                        <p className="small-text models-count"> Sort by</p>
+                        <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
+                    </div>
+                    <div style={{marginLeft: 20}}>
+                        <p className="small-text models-count"> Items on page</p>
+                        <Select
+                            itemList={selectitemsOnPageList}
+                            setSelectedItem={setSelectedItemsOnPageValue}
+                            selectedItem={selectedItemsOnPAgeValue}
+                            defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
+                            width={128}
+                        />
+                    </div>
                 </div>
 
 
@@ -203,6 +217,15 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                 </div>
 
                 <DeviceCardList deviceList={structureList.currentVissible} />
+
+                <div className="phones-page__pagination-warpper">
+                    <Pagination
+                        structureList={structureList}
+                        setStructureList={setStructureList}
+                        leftSpace={2}
+                        rightSpace={2}
+                    />
+                </div>
             </div>
             
         </div>

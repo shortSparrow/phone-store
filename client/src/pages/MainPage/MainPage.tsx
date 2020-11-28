@@ -87,13 +87,13 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
                 <SliderImages imageList={imageList} />
                 </div>
 
-                <p className="main-titile main-page__title">Hot price</p>
+                <p className="main-title main-page__title">Hot price</p>
                 <SliderDevice deviceList={hotPricePhones} loading={loadingHotPricePhones} error={errorHotPricePhones} />
 
-                <p className="main-titile main-page__title">Shop by category</p>
+                <p className="main-title main-page__title">Shop by category</p>
                 <ShopCategory />
 
-                <p className="main-titile main-page__title">Brand new models</p>
+                <p className="main-title main-page__title">Brand new models</p>
                 <SliderDevice deviceList={newModelPhones} loading={loadingNewModelPhones} error={errorNewModelPhones} />
 
             </div>

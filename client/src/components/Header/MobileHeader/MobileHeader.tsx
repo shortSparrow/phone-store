@@ -5,7 +5,7 @@ import { RootState } from '../../../store/reducers';
 
 import './MobileHeader.scss';
 
-const MobileHeader = ({ favoriteDevices }: any) => {
+const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
     const location = useLocation()
     let history = useHistory();
 
@@ -81,7 +81,7 @@ const MobileHeader = ({ favoriteDevices }: any) => {
                                         <div style={{
                                             fontSize: 11,
                                             color: '#fff'
-                                        }}>{favoriteDevices.length}</div>
+                                        }}>{cartDeviceList.length}</div>
                                     </div>
                                 ) : null
                             }

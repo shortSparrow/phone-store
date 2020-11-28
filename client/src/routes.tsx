@@ -7,6 +7,7 @@ import FavoritePage from './pages/FavoritesPage/FavoritePage';
 import ChartPage from './pages/CartPage/CartPage';
 import TabletsPage from './pages/TabletsPage/TabletsPage';
 import TabletCardFull from './components/TabletCardFull/TabletCardFull';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 
 export const useRoutes = (isAuthentificated: boolean) => {
@@ -34,6 +35,10 @@ export const useRoutes = (isAuthentificated: boolean) => {
 
             <Route path="/cart" exact>
                 <ChartPage />
+            </Route>
+
+            <Route>
+                <NotFoundPage />
             </Route>
         </Switch>
     )

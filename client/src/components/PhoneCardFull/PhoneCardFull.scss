@@ -31,8 +31,9 @@
     &__small-image-list {
         display: flex;
         flex-direction: column;
-        margin-right: 36px;
-        // margin-right: 16px;
+        padding-right: 36px;
+        max-height: 500px;
+        overflow-y: scroll;
 
     }
 
@@ -253,12 +254,7 @@
             margin-left: 0;
             width: 100%;
         }
-    }
-}
 
-
-@media screen and (max-width: 850px) {
-    .full-card {
         &__images-wrapper {
             flex-direction: column-reverse;
             max-width: 560px;
@@ -266,11 +262,19 @@
         }
 
         &__small-image-list {
+            width: 100%;
             margin-right: 0;
+            padding-right: 0;
             margin-top: 50px;
             flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-wrap: nowrap;
+            overflow: auto;
+        }
+
+        &__small-image {
+            min-width: 80px;
+            min-height: 80px;
+
         }
 
         &__small-image:not(:first-child) {
