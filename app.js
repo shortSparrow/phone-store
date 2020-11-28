@@ -1,7 +1,6 @@
 const express = require("express");
 const config = require('config');
 const mongoose = require("mongoose");
-<<<<<<< HEAD
 cors = require('cors')
 
 const app = express();
@@ -24,12 +23,6 @@ app.use('/api/tablet', require('./routes/tablets.routes'))
 // const PORT = config.get('port') || 5000
 const PORT = process.env.PORT || 5000
 // app.listen(PORT, () => console.log(`Listren server on ${PORT}`))
-=======
-
-const app = express();
-
-const PORT = config.get('port') || 5000
->>>>>>> b233ddf (connect data base)
 
 async function start() {
     try {
