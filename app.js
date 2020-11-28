@@ -15,15 +15,13 @@ app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/phone', require('./routes/phone.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
 
-// app.use(express.static(__dirname + '/dist'));
-
-// app.get('/*', function(req, res) {
-//     res.sendFile(path.join(__dirname + '/client/build/index.html'));
-// });
-
 
 
 const PORT = process.env.PORT || config.get('port') || 5000
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'))
+}
 
 // const PORT = config.get('port') || 5000
 
