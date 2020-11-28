@@ -8,6 +8,8 @@ const app = express();
 app.use(cors())
 app.use(express.json({ extented: true })); // что бы body было не undefined, а объекьтом с полями {}
 
+app.use(express.static('client/build'));
+
 app.use("/public", express.static("public"));
 
 app.use('/api/auth', require('./routes/auth.routes'))
