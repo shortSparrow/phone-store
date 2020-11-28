@@ -17,8 +17,9 @@ app.use('/api/tablet', require('./routes/tablets.routes'))
 
 
 
+const PORT = process.allowedNodeEnvironmentFlags.PORT || config.get('port') || 5000
 
-const PORT = config.get('port') || 5000
+// const PORT = config.get('port') || 5000
 
 async function start() {
     try {
