@@ -5,14 +5,6 @@ cors = require('cors')
 
 const app = express();
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
-
 app.use(cors())
 app.use(express.json({ extented: true })); // что бы body было не undefined, а объекьтом с полями {}
 
@@ -21,7 +13,6 @@ app.use("/public", express.static("public"));
 app.use('/api/auth', require('./routes/auth.routes'))
 
 app.use('/api/phone', require('./routes/phone.routes'))
-app.use('/api/tablet', require('./routes/tablets.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
 
 
