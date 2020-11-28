@@ -14,6 +14,8 @@ app.use('/api/auth', require('./routes/auth.routes'))
 
 app.use('/api/phone', require('./routes/phone.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
+app.use('/api/test', (req,res) => res.send({Sena: 'dede'}))
+
 
 
 
