@@ -46,6 +46,9 @@ const SliderImages: FC<sliderImagesInterface> = (props) => {
         prevArrow: <SamplePrevArrow slickSliderRef={slickSliderRef} classNames="slider-buttons__big-image slider-buttons__big-image--left" />,
     }
 
+    console.log(props.imageList);
+    
+
     return (
         <div className="slider-big-images">
             {
