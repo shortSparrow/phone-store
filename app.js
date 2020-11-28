@@ -16,6 +16,12 @@ app.use('/api/phone', require('./routes/phone.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
 
 
+app.use(express.static(path.join(__dirname, '../build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build'))
+})
+
+
 
 
 const PORT = process.env.PORT || config.get('port') || 5000
