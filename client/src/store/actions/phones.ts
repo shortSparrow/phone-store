@@ -34,7 +34,6 @@ export const phoneListState = (phoneListState: phoneListStateType): AppStateActi
     phoneListState
 })
 
-
 export const loadPhones = (): ThunkAction<void, RootStateInterface, unknown, Action<string>> => {
     return async dispatch => {
         dispatch(phoneLoading(true));
