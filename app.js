@@ -19,22 +19,22 @@ app.use('/api/tablet', require('./routes/tablets.routes'))
 
 
 // const PORT = config.get('port') || 5000
-const PORT = process.env.port || 5000
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => console.log(`Listren server on ${PORT}`))
 
+// async function start() {
+//     try {
+//         await mongoose.connect(config.get('mongoUri'), {
+//             useNewUrlParser: true,
+//             useCreateIndex: true,
+//             useUnifiedTopology: true,
+//         });
 
-async function start() {
-    try {
-        await mongoose.connect(config.get('mongoUri'), {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        });
+//         app.listen(PORT, () => console.log(`Listren server on ${PORT}`))
+//     } catch (err) {
+//         console.log("Server Error", err.message);
+//         process.exit()
+//     }
+// }
 
-        app.listen(PORT, () => console.log(`Listren server on ${PORT}`))
-    } catch (err) {
-        console.log("Server Error", err.message);
-        process.exit()
-    }
-}
-
-start();
+// start();
