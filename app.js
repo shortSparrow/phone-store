@@ -17,9 +17,9 @@ app.use('/api/tablet', require('./routes/tablets.routes'))
 
 // app.use(express.static(__dirname + '/dist'));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// });
 
 
 
