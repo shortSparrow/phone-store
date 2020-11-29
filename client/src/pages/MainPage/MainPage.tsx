@@ -41,19 +41,23 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
 
     useEffect(() => {
         if (props.deviceScreen.value && props.deviceScreen.value  < 700) {
-            if (imageList[0] !== "https://static.scientificamerican.com/sciam/cache/file/92E141F8-36E4-4331-BB2EE42AC8674DD3_source.jpg") {
+            if (imageList[0] !== "icons/big-slider-image-small-1.jpg") {
                 setImageList([
-                    "https://static.scientificamerican.com/sciam/cache/file/92E141F8-36E4-4331-BB2EE42AC8674DD3_source.jpg",
-                    "https://i.guim.co.uk/img/media/7a633730f5f90db3c12f6efc954a2d5b475c3d4a/0_138_5544_3327/master/5544.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=27c09d27ccbd139fd0f7d1cef8f7d41d",
-                    "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg",
+                    "icons/big-slider-image-small-1.jpg",
+                    "icons/big-slider-image-small-2.jpg",
+                    "icons/big-slider-image-small-3.jpg",
+                    "icons/big-slider-image-small-5.jpg",
+                    "icons/big-slider-image-small-6.jpg",
                 ])
             }
         } else {
-            if (imageList[0] !== "https://villaesposto.com/wp-content/uploads/2018/09/1040x400.jpg") {
+            if (imageList[0] !== "icons/big-slider-1.jpg") {
                 setImageList([
-                    "https://villaesposto.com/wp-content/uploads/2018/09/1040x400.jpg",
-                    "https://blog.bigyellowbag.com/wp-content/uploads/2018/06/1040x400.png",
-                    "https://villaesposto.com/wp-content/uploads/2018/08/1040x400-1.png"
+                    "icons/big-slider-image-big-1.jpg",
+                    "icons/big-slider-image-big-2.jpg",
+                    "icons/big-slider-image-big-3.jpg",
+                    "icons/big-slider-image-big-4.jpg",
+                    "icons/big-slider-image-big-5.jpg",
                 ])
             }
         }
