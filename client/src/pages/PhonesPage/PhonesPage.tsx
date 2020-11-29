@@ -13,6 +13,7 @@ import { Select } from '../../components/Select/Select';
 import { Preloader } from '../../components/Preloader/Preloader';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { phonesState } from '../../store/reducers/phones';
+import Footer from '../../components/Footer/Footer';
 
 const selectList = [
     {
@@ -241,6 +242,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                     />
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

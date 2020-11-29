@@ -61,19 +61,23 @@
 
 .main-limit {
     padding: 0 150px;
-    // max-width: 1600px;
-    // margin: auto;
+    max-width: 1600px;
+    margin: auto;
+    flex-grow: 1;
+    width: -webkit-fill-available;;
 }
 
 .page {
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
 .page-name-title {
     margin: 0;
 }
+
 
 @media screen and (max-width: 1100px) {
     .main-limit {
@@ -95,7 +99,7 @@
 
 @media screen and (max-width: 400px) {
     .main-limit {
-        padding: 0 10px;
+        padding: 0 20px;
     }
 }
 

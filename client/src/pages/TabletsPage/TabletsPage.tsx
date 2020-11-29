@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import DeviceCardList from '../../components/DeviceCardList/DeviceCardList'
+import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { Preloader } from '../../components/Preloader/Preloader'
@@ -173,7 +174,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
     }, [selectedItemsOnPAgeValue])
 
     return (
-        <div>
+        <div className="tablets-page page">
             <Header />
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
@@ -227,7 +228,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                     />
                 </div>
             </div>
-            
+            <Footer/>
         </div>
 
     )
