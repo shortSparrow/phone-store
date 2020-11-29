@@ -10,6 +10,11 @@
     // &__item:not(:first-child) {
     //     margin-left: 16px;
     // }
+    &__image {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
     &__item {
         width: 100%;

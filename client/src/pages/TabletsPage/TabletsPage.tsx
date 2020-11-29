@@ -200,6 +200,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                         <p className="small-text models-count"> Sort by</p>
                         <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                     </div>
+
                     <div style={{marginLeft: 20}}>
                         <p className="small-text models-count"> Items on page</p>
                         <Select
@@ -210,11 +211,15 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                             width={128}
                         />
                     </div>
-                </div>
 
+                    <div className="filter" style={{marginLeft: 15}}>
+                        <p className="small-text models-count">Serach field</p>
+                        <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                            <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
 
-                <div className="filter">
-                    <input type="text" value={searchField} onChange={handleVisible} />
+                            <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
+                        </label>
+                    </div>
                 </div>
 
                 <DeviceCardList deviceList={structureList.currentVissible} />

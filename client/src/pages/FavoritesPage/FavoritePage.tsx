@@ -7,6 +7,7 @@ import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 
 import './FavoritePage.scss';
+import Footer from '../../components/Footer/Footer';
 
 interface FavoritePage {
     favoriteDevices: any[]
@@ -25,6 +26,7 @@ const FavoritePage: FC<FavoritePage> = ({ favoriteDevices }) => {
                 <h1>Favorites</h1>
                 <DeviceCardList deviceList={favoriteDevices} />
             </div>
+            <Footer />
         </div>
     )
 }

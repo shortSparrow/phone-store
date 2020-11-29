@@ -78,10 +78,10 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         }
     },[])
 
-    useEffect(() => {
-        console.log(loadingHotPricePhones);
+    // useEffect(() => {
+    //     console.log('loadingHotPricePhones');
 
-    }, [loadingHotPricePhones])
+    // }, [loadingHotPricePhones])
 
     return (
         <div className="main-page page">

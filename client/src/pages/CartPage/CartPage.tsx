@@ -8,6 +8,7 @@ import { RootState } from '../../store/reducers';
 import { cartDeviceList } from '../../store/actions';
 
 import './CartPage.scss';
+import Footer from '../../components/Footer/Footer';
 
 interface cartPageInterface {
     chartDeviceList: cartDevice[],
@@ -166,6 +167,7 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
 
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

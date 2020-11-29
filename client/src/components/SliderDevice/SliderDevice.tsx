@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
 
@@ -15,7 +15,7 @@ type sliderDeviceInterface = {
     loading?: boolean | null
 }
 
-const SliderDevice: FC<sliderDeviceInterface> = (props) => {
+const SliderDevice: FC<sliderDeviceInterface> = ({deviceList, error, loading}) => {
     const slickSliderRef = useRef(null);
 
 
@@ -60,23 +60,34 @@ const SliderDevice: FC<sliderDeviceInterface> = (props) => {
         prevArrow: <SamplePrevArrow slickSliderRef={slickSliderRef} classNames="slider-buttons__device" />,
     }
 
+    // useEffect(() => {
+    //     console.log('loadingHotPricePhones');
+
+    // }, [loading])
+
+    // console.log(
+    //     'deviceList: ', deviceList,
+    //     'loading: ', loading,
+    //     // 'deviceList: ', deviceList,
+    // );
+    
     return (
         <div className="slider-devices">
 
             {
-                props.loading
+                loading && !deviceList.length
                     ? (
                         <div className="preloader-wrapper--center">
                             <Preloader />
                             </div>
                     )
-                    : props.error ? (
+                    : error ? (
                         <h1>We can't load data, please try to reload page</h1>
                     )
-                        : props.deviceList.length ? (
+                        : deviceList.length ? (
                             <Slider {...settings} ref={slickSliderRef}>
                                 {
-                                    props.deviceList.map((device: any) => <DeviceCardItem device={device} key={device._id} />)
+                                    deviceList.map((device: any) => <DeviceCardItem device={device} key={device._id} />)
                                 }
                             </Slider>
                         ) : null
