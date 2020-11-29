@@ -1,4 +1,4 @@
-import React, {MouseEvent} from 'react';
+import React, { MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { RootState } from '../../../store/reducers';
@@ -12,7 +12,9 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
     return (
         <div className="header-navigation-burger__wrapper">
             <div className="header-navigation-burger__line">
-                <div className="header-nav-burger__logo-wrapper">LOGO</div>
+                <div className="header-nav-burger__logo-wrapper">
+                    <img src="icons/logo.png" className="logo-image" style={{ width: '100%' }} />
+                </div>
 
                 <div className="header-nav-burger__menu-wrapper">
                     {/* <button className="burger-icon" onClick={() => {
@@ -22,7 +24,7 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
                         document.querySelector('.header-nav-burger__nav-wrapper')?.classList.toggle('header-nav-burger__nav-wrapper--active')
                         document.querySelector('.menu-toggle')?.classList.toggle('active')
 
-                        
+
                     }}>
                         <div className="hamburger">
                             <span></span>
@@ -40,7 +42,7 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
             <nav className="header-nav-burger__nav-wrapper">
                 <ul className="header-nav-burger__item-wrapper" onClick={() => {
                     console.log('click');
-                    
+
                 }}>
                     <li className={`header-nav-burger__item ${location.pathname === "/" ? "header-nav-burger__item--active" : ""}`} onClick={() => history.push('/')}>
                         <Link to="/" className="header-nav-burger__link third-title ">home</Link>
