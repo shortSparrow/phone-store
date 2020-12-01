@@ -65,7 +65,7 @@
     }
 
     &__logo-wrapper {
-        width: 64px;
+        width: 54px;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -73,6 +73,7 @@
         // background-color: aquamarine;
         margin-left: 24px;
         margin-right: 64.5px;
+        cursor: pointer;
     }
 
     &__item-wrapper {

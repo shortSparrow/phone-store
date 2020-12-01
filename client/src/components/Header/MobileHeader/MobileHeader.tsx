@@ -12,7 +12,7 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
     return (
         <div className="header-navigation-burger__wrapper">
             <div className="header-navigation-burger__line">
-                <div className="header-nav-burger__logo-wrapper">
+                <div className="header-nav-burger__logo-wrapper" onClick={() => history.push('/')}>
                     <img src="icons/logo.png" className="logo-image" style={{ width: '100%' }} />
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import { useRoutes } from './routes';
 import './App.scss';
@@ -49,9 +49,9 @@ function App() {
   return (
     <Provider store={store}>
       <div className="app">
-        <BrowserRouter>
+        <HashRouter>
           {routes}
-        </BrowserRouter>
+        </HashRouter>
       </div>
     </Provider>
   )

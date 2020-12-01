@@ -23,7 +23,7 @@ const DesktopHeader: FC<DesktopHeaderInterface> = ({ favoriteDevices, cartDevice
     return (
         <div className="header-navigation__wrapper">
             <div className="header-navigation__item">
-                <div className="header-nav__logo-wrapper">
+                <div className="header-nav__logo-wrapper" onClick={() => history.push('/')}>
                     <img src="icons/logo.png" className="logo-image" style={{width: '100%'}}/>
                 </div>
                 <nav className="header-nav__nav-wrapper">

@@ -13,7 +13,7 @@ const ShopCategory: FC = () => {
                 <img src="./icons/phones-catalog-preview.jpg" alt="" className="shop-category__image" onClick={() => history.push('/phones')}/>
                 <div className="shop-category__description">
                     <p className="shop-category__title">Mobile phones</p>
-                    <p className="small-text shop-category__amount">undefined</p>
+                    <p className="small-text shop-category__amount">8 models</p>
                 </div>
             </div>
 
@@ -21,7 +21,7 @@ const ShopCategory: FC = () => {
                 <img src="./icons/tablets-category-preview.png" alt="" className="shop-category__image" onClick={() => history.push('/tablets')}/>
                 <div className="shop-category__description">
                     <p className="shop-category__title">Tablets</p>
-                    <p className="small-text shop-category__amount">undefined</p>
+                    <p className="small-text shop-category__amount">5 models</p>
                 </div>
             </div>
 
@@ -29,7 +29,7 @@ const ShopCategory: FC = () => {
                 <img src="./icons/accsessories-catalog-preview.jpg" alt="" className="shop-category__image" onClick={() => history.push('/accessories')}/>
                 <div className="shop-category__description">
                     <p className="shop-category__title">Accessories</p>
-                    <p className="small-text shop-category__amount">undefined</p>
+                    <p className="small-text shop-category__amount">coming soon</p>
                 </div>
             </div>
         </div>
