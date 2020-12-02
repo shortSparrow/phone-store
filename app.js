@@ -13,12 +13,14 @@ app.use(express.static('client/build'));
 app.use("/public", express.static("public"));
 
 app.use('/api/auth', require('./routes/auth.routes'))
-
 app.use('/api/phone', require('./routes/phone.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
 
-// const PORT = config.get('port') || 5000
-const PORT = process.env.PORT || 5000
+app.use('/api/devices_count', require('./routes/devicesCount.routes'))
+
+const PORT = config.get('port') || 5000
+
+// const PORT = process.env.PORT || 5000
 
 async function start() {
     try {

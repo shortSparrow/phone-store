@@ -5,7 +5,7 @@ import { useRoutes } from './routes';
 import './App.scss';
 
 import store from './store';
-import { setDeviceScreen } from './store/actions/appState';
+import { setDeviceScreen, loadDevicesCount } from './store/actions/appState';
 import { setFavoriteDevices } from './store/actions/favoritesDevice';
 import { setCartDeviceList } from './store/actions/cartDeviceList';
 
@@ -31,6 +31,7 @@ function App() {
   useEffect(() => {
     window.addEventListener('resize', checkDeviceSize);
     checkDeviceSize();
+    store.dispatch(loadDevicesCount())
 
     // add favoriteDevice from localStorage to redux
     const favoriteDeviceLocalList = localStorage.getItem('@favotiteDeviceList') || JSON.stringify([]);

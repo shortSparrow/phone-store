@@ -9,6 +9,7 @@ export const request = async (path: string) => {
         }
 
         const json = await response.json();
+        
         return json
     
     } catch (err) {

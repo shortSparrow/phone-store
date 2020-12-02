@@ -13,7 +13,8 @@ import {
     TABLET_LIST_SUCCESS,
     TABLET_LIST_ERROR,
     TABLET_LIST_STATE,
-    TABLET_ITEM_SUCCESS
+    TABLET_ITEM_SUCCESS,
+    SET_DEVICES_COUNT
 } from '../constants/actions';
 import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
 import { tabletCardInterface, tabletListStateType } from './tabletStateInterface';
@@ -27,14 +28,26 @@ export type DeviceScreenType = {
 
 // here we export all state types as one big interface for whole appState
 export interface AppStateInterface {
-    deviceScreen: DeviceScreenType
+    deviceScreen: DeviceScreenType,
+    deviceCount: DeviceCountType
 }
 
+export type DeviceCountType = {
+    tablets: number | null,
+    phones: number | null,
+    accessories: number | null
+}
 
 // here we describe all cation Interfaces and export them
 interface setDeviceScreenInterface {
     type: typeof DEVICE_SCREEN
     payload: DeviceScreenType
+}
+
+
+interface setDevicesCountInterface {
+    type: typeof SET_DEVICES_COUNT
+    payload: DeviceCountType
 }
 
 interface phoneListLoadingInterface {
@@ -106,7 +119,7 @@ interface tabletItemSuccess {
 }
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
-    setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
+    setDeviceScreenInterface | setDevicesCountInterface | phoneListLoadingInterface | phoneListSuccessInterface |
     phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
-    setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess | 
+    setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess |
     tabletsError | tabletListState | tabletItemSuccess

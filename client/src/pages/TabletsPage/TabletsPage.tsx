@@ -45,7 +45,7 @@ const selectitemsOnPageList = [
     },
 ]
 
-const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState }: any) => {
+const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState, deviceCount }: any) => {
     const [searchField, setSearchField] = useState('');
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
@@ -94,13 +94,10 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
     }
 
     useEffect(() => {
-
         if (tabletList.length) {
             // console.log(structureList);
             // console.log('tabletListState: ', tabletListState.visible);
             // console.log('curentVisible: ', [...tabletListState.visible].slice(0, structureList.onPage));
-
-
 
             setStructureList({
                 ...structureList,
@@ -193,7 +190,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                 <p className="small-text models-count">{
                     structureList.loaded && structureList?.data?.length
                         ? structureList.data.length
-                        : <Preloader
+                        : deviceCount.tablets ?? <Preloader
                             color="#89939A"
                             width="12"
                             height="12"
@@ -244,6 +241,7 @@ const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
     tabletList: state.tabletsState.tabletList,
     tabletListState: state.tabletsState.tabletListState,
+    deviceCount: state.appState.deviceCount
 })
 
 const mapDispatchToProps = (dispatch: any) => ({

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
-import { DeviceScreenType } from '../../interfaces/appStateInterface';
+import { DeviceCountType, DeviceScreenType } from '../../interfaces/appStateInterface';
 import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { Select } from '../../components/Select/Select';
@@ -49,7 +49,12 @@ const selectitemsOnPageList = [
     },
 ]
 
-const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss }) => {
+const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
+    const {
+        phoneList, loadPhones,
+        setPhoneListState, phoneListState,
+        phoneLoadSuccss, deviceCount
+    } = props
     const [searchField, setSearchField] = useState('');
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
@@ -200,7 +205,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                 <p className="small-text models-count">{
                     structureList.loaded && structureList?.data?.length
                         ? structureList.data.length
-                        : <Preloader
+                        : deviceCount.phones ?? <Preloader
                             color="#89939A"
                             width="12"
                             height="12"
@@ -228,15 +233,6 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                             width={128}
                         />
                     </div>
-
-                    {/* <div className="filter" style={{ marginLeft: 15 }}>
-                        <p className="small-text models-count">Serach field</p>
-                        <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                            <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
-
-                            <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
-                        </label>
-                    </div> */}
                 </div>
 
 
@@ -261,6 +257,7 @@ interface mainPropsInterfaces {
     deviceScreen: DeviceScreenType,
     phoneList: phoneCardInterface[],
     phoneListState: any,
+    deviceCount: DeviceCountType,
     loadPhones: () => {},
     setPhoneListState: (phoneListState: phoneListStateType) => {},
     phoneLoadSuccss: (data: phoneCardInterface[]) => {}
@@ -270,7 +267,8 @@ const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
     phoneList: state.phonesState.phoneList,
     phoneListState: state.phonesState.phoneListState,
-    phoneState: state.phonesState.phoneListState
+    phoneState: state.phonesState.phoneListState,
+    deviceCount: state.appState.deviceCount
 })
 
 const mapDispatchToProps = (dispatch: any) => ({

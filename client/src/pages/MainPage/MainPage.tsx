@@ -14,6 +14,7 @@ import SliderImages from '../../components/SliderImages/SliderImages';
 import Footer from '../../components/Footer/Footer';
 import ShopCategory from '../../components/ShopCategory/ShopCategory';
 import { useHTTP } from '../../hooks/useHTTP.hook';
+import { request } from '../../api/request';
 
 let hotPriceList: any = null;
 let newModelList: any = null;
@@ -36,6 +37,7 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         if (!newModelList) {
             loadNewModels()
         }
+
     }, [])
 
     useEffect(() => {
@@ -76,9 +78,6 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         if (request) {
             setNewModelPhones(request)
             newModelList = request
-
-            
-            
         }
     }, [])
 
