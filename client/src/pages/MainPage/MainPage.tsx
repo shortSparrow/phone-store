@@ -8,17 +8,15 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import { phones, hotPricePhones } from '../../store/actions'
-import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
-import { DeviceScreenType } from '../../interfaces/appStateInterface';
-import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
-import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
+import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 import SliderDevice from '../../components/SliderDevice/SliderDevice';
 import SliderImages from '../../components/SliderImages/SliderImages';
 import Footer from '../../components/Footer/Footer';
 import ShopCategory from '../../components/ShopCategory/ShopCategory';
 import { useHTTP } from '../../hooks/useHTTP.hook';
 
+let hotPriceList: any = null;
+let newModelList: any = null;
 
 
 const MainPage: React.FC<mainPropsInterfaces> = (props) => {
@@ -26,21 +24,22 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
     const { getReguest: getHotPricePhones, loading: loadingHotPricePhones, error: errorHotPricePhones } = useHTTP();
     const [imageList, setImageList] = useState<string[]>([])
 
-    const [newModelPhones, setNewModelPhones] = useState([]);
-    const [hotPricePhones, setHotPricePhones] = useState([]);
-
+    const [newModelPhones, setNewModelPhones] = useState(newModelList ? newModelList : []);
+    const [hotPricePhones, setHotPricePhones] = useState(hotPriceList ? hotPriceList : []);
 
     useEffect(() => {
-        props.loadHotPricePhones();
-        loadNewModels();
-        loadHotPricePhones();    
-        
-        // console.log(newModelPhones);
-        
+        // loadNewModels();
+        if (!hotPriceList) {
+            loadHotPricePhones()
+        }
+
+        if (!newModelList) {
+            loadNewModels()
+        }
     }, [])
 
     useEffect(() => {
-        if (props.deviceScreen.value && props.deviceScreen.value  < 700) {
+        if (props.deviceScreen.value && props.deviceScreen.value < 700) {
             if (imageList[0] !== "icons/big-slider-image-small-1.jpg") {
                 setImageList([
                     "icons/big-slider-image-small-1.jpg",
@@ -68,27 +67,28 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
 
         if (request) {
             setHotPricePhones(request)
+            hotPriceList = request
         }
-    },[])
+    }, [])
 
     const loadNewModels = useCallback(async () => {
         const request = await getNewModelPhones('/api/phone/new-models');
         if (request) {
             setNewModelPhones(request)
+            newModelList = request
+
+            
+            
         }
-    },[])
+    }, [])
 
-    // useEffect(() => {
-    //     console.log('loadingHotPricePhones');
-
-    // }, [loadingHotPricePhones])
 
     return (
         <div className="main-page page">
             <Header />
             <div className="main-limit">
                 <div className="main-page__big-slider__wrapper">
-                <SliderImages imageList={imageList} />
+                    <SliderImages imageList={imageList} />
                 </div>
 
                 <p className="main-title main-page__title">Hot price</p>
@@ -107,22 +107,14 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
 }
 
 interface mainPropsInterfaces {
-    hotPricePhonesLoading: boolean | null,
-    hotPricePhonesFailed: any,
-    hotPricePhonesList: phoneCardInterface[],
-    deviceScreen: {name: string | null, value: number | null},
-    loadHotPricePhones: () => {},
+    deviceScreen: { name: string | null, value: number | null },
 }
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
-    hotPricePhonesLoading: state.hotPricePhones.loading,
-    hotPricePhonesFailed: state.hotPricePhones.error,
-    hotPricePhonesList: state.hotPricePhones.hotPricePhoneList,
     deviceScreen: state.appState.deviceScreen,
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    loadHotPricePhones: () => dispatch(hotPricePhones.loadHotPricePhones()),
 })
 
 

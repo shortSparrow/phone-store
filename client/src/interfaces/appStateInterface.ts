@@ -7,7 +7,6 @@ import {
     PHONE_ITEM_SUCCESS,
     REQUEST_LOADING,
     REQUEST_FAILED,
-    PHONE_HOT_PRICE_SUCCESS,
     SET_FAVORITE_DEVICES,
     SET_CART_DEVICE_LIST,
     TABLET_LIST_LOADING,
@@ -73,11 +72,6 @@ interface requestFailed {
     error: any
 }
 
-interface phoneHotPriceSuccess {
-    type: typeof PHONE_HOT_PRICE_SUCCESS,
-    hotPricePhoneList: phoneCardInterface[]
-}
-
 interface setFavoriteDevices {
     type: typeof SET_FAVORITE_DEVICES,
     deviceList: any
@@ -114,5 +108,5 @@ interface tabletItemSuccess {
 export type AppStateActionTypes =
     setDeviceScreenInterface | phoneListLoadingInterface | phoneListSuccessInterface |
     phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
-    phoneHotPriceSuccess | setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess | 
+    setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess | 
     tabletsError | tabletListState | tabletItemSuccess
