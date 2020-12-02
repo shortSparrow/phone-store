@@ -120,7 +120,7 @@ export const Pagination = ({ structureList, setStructureList, leftSpace = 2, rig
     }
 
     const goNextPage = () => {
-        console.log('structureList: ', structureList);
+        // console.log('structureList: ', structureList);
 
         const { currentPage, pages } = structureList;
         if (Number(pages[pages.length - 1]) >= currentPage + 1) {

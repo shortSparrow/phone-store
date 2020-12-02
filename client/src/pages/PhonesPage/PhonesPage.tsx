@@ -85,7 +85,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         }
     }, [phoneList])
 
-    console.log(structureList.currentVissible);
+    // console.log(structureList.currentVissible);
 
 
     const handlePageStructure = (value: number) => {
@@ -106,7 +106,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         if (phoneList.length) {
             // console.log(structureList);
             // console.log('phoneListState: ', phoneListState.visible);
-            console.log('curentVisible: ', [...phoneListState.visible].slice(0, structureList.onPage));
+            // console.log('curentVisible: ', [...phoneListState.visible].slice(0, structureList.onPage));
 
 
 
@@ -135,7 +135,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
 
         const filtered = [...phoneListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        console.log('filtered: ', filtered);
+        // console.log('filtered: ', filtered);
 
         setPhoneListState({
             ...phoneListState,
@@ -177,13 +177,23 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
 
     useEffect(() => {
         handlePageStructure(selectedItemsOnPAgeValue.value)
-        console.log(selectedItemsOnPAgeValue);
+        // console.log(selectedItemsOnPAgeValue);
 
     }, [selectedItemsOnPAgeValue])
 
     return (
         <div className="phones-page page">
-            <Header />
+            <Header>
+                <input
+                    id="filter-field"
+                    type="text"
+                    value={searchField}
+                    onChange={handleVisible}
+                    className="filter-input--wrapper filter-input--search"
+                    placeholder="Search in phones..."
+                />
+            </Header>
+
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Phones', link: '/phones' }]} />
                 <p className="main-title page-name-title">Mobile phones</p>
@@ -208,7 +218,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                         <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                     </div>
 
-                    <div style={{ marginLeft: 20 }}>
+                    <div>
                         <p className="small-text models-count"> Items on page</p>
                         <Select
                             itemList={selectitemsOnPageList}
@@ -219,14 +229,14 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                         />
                     </div>
 
-                    <div className="filter" style={{marginLeft: 15}}>
+                    {/* <div className="filter" style={{ marginLeft: 15 }}>
                         <p className="small-text models-count">Serach field</p>
                         <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                             <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
 
                             <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
                         </label>
-                    </div>
+                    </div> */}
                 </div>
 
 

@@ -81,9 +81,9 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
     }
 
 
-    useEffect(() => {
-        console.log('checkoutDeviceList: ', checkoutDeviceList);
-    }, [checkoutDeviceList])
+    // useEffect(() => {
+    //     console.log('checkoutDeviceList: ', checkoutDeviceList);
+    // }, [checkoutDeviceList])
 
 
     const removeDeviceFromList = (id: string) => {
@@ -91,7 +91,7 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
         const mathcedDevice = checkoutDeviceList.find((device: cartDevice) => device._id === id);
         setDeletedItemsId([...deletedItemsId, id])
 
-        console.log('mathcedDevice: ', mathcedDevice);
+        // console.log('mathcedDevice: ', mathcedDevice);
         
         toggleCartDevice(mathcedDevice!)
     }   

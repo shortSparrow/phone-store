@@ -31,7 +31,9 @@ const Footer = () => {
                 <div className="footer__back-to-top">
                     <p className="small-text">Back to top</p>
                     <div className="footer__navigation__back-to-top" onClick={() => {
-                        document!.body!.querySelector('.header-navigation__wrapper')!.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+                        document.body.querySelector('.footer')?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+                        // console.log(document.body.querySelector('.header-navigation__wrapper'));
+                        
                     }}>
                         <img src="./icons/arrow.svg" alt="arrow" className="footer__back-to-top__arrow" />
                     </div>

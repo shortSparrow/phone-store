@@ -14,7 +14,7 @@ export const useHTTP = ()=> {
     const [response, setResponse] = useState(null)
 
     const getReguest = useCallback(async (path: string) => {
-        console.log('request');
+        // console.log('request');
 
         setLoading(true)
         try {

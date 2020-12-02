@@ -35,7 +35,7 @@ const MainPage: React.FC<mainPropsInterfaces> = (props) => {
         loadNewModels();
         loadHotPricePhones();    
         
-        console.log(newModelPhones);
+        // console.log(newModelPhones);
         
     }, [])
 

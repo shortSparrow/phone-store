@@ -1,20 +1,21 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import { DeviceScreenType } from '../../interfaces/appStateInterface';
 import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
-import  MobileHeader from './MobileHeader/MobileHeader';
+import MobileHeader from './MobileHeader/MobileHeader';
 import DesktopHeader from './DesktopHeader/DesktopHeader';
 
-const Header:FC<MainPageInterface> = ({deviceScreen}) => {
+const Header: FC<MainPageInterface> = (props) => {
+    const { deviceScreen } = props;
 
-    return(
-        <>
-        {
-            deviceScreen.value! <= 750
-                ? <MobileHeader />
-                : <DesktopHeader />
-        }
-        </>
+    return (
+        <footer className="footer">
+            {
+                deviceScreen.value! <= 750
+                    ? <MobileHeader>{props.children}</MobileHeader>
+                    : <DesktopHeader>{props.children}</DesktopHeader>
+            }
+        </footer>
     )
 }
 
@@ -23,12 +24,12 @@ export interface MainPageInterface {
 }
 
 
-const mapStateToProps = (state: RootStateInterface, ownProps:any) => ({
+const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen
 })
 
 // const mapDispatchToProps = (dispatch) => ({
-    
+
 // })
 
 

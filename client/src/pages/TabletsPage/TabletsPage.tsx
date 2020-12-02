@@ -98,7 +98,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
         if (tabletList.length) {
             // console.log(structureList);
             // console.log('tabletListState: ', tabletListState.visible);
-            console.log('curentVisible: ', [...tabletListState.visible].slice(0, structureList.onPage));
+            // console.log('curentVisible: ', [...tabletListState.visible].slice(0, structureList.onPage));
 
 
 
@@ -127,7 +127,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
         const filtered = [...tabletListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        console.log('filtered: ', filtered);
+        // console.log('filtered: ', filtered);
 
         setTabletListState({
             ...tabletListState,
@@ -169,13 +169,23 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
     useEffect(() => {
         handlePageStructure(selectedItemsOnPAgeValue.value)
-        console.log(selectedItemsOnPAgeValue);
+        // console.log(selectedItemsOnPAgeValue);
 
     }, [selectedItemsOnPAgeValue])
 
     return (
         <div className="tablets-page page">
-            <Header />
+            <Header>
+                <input
+                    id="filter-field"
+                    type="text"
+                    value={searchField}
+                    onChange={handleVisible}
+                    className="filter-input--wrapper filter-input--search"
+                    placeholder="Search in phones..."
+                />
+            </Header>
+
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
 
@@ -201,7 +211,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                         <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                     </div>
 
-                    <div style={{marginLeft: 20}}>
+                    <div>
                         <p className="small-text models-count"> Items on page</p>
                         <Select
                             itemList={selectitemsOnPageList}
@@ -210,15 +220,6 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                             defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
                             width={128}
                         />
-                    </div>
-
-                    <div className="filter" style={{marginLeft: 15}}>
-                        <p className="small-text models-count">Serach field</p>
-                        <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                            <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
-
-                            <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
-                        </label>
                     </div>
                 </div>
 
@@ -233,7 +234,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                     />
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
 
     )
