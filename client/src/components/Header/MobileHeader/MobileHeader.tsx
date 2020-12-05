@@ -20,7 +20,7 @@ const MobileHeader = (props: any) => {
                 </div>
 
                 {
-                    deviceScreen.value >= 500
+                    props.children && deviceScreen.value >= 500
                         ? (
                             <div className="header-search-field--wrapper" style={{ marginRight: 20 }}>
                                 <label className="header-search-field--label">
@@ -30,17 +30,19 @@ const MobileHeader = (props: any) => {
                                 </label>
                             </div>
                         )
-                        : (
-                            <div className="header-search-field--wrapper">
-                                <div
-                                    className="header-search-field--icon-wrapper header-search-field--icon-wrapper--mobile"
-                                    onClick={() => setOpenSearchField(true)}
-                                >
-                                    <img src="/icons/Search.svg" style={{ cursor: 'pointer' }} />
-                                </div>
+                        : props.children && deviceScreen.value < 500
+                            ? (
+                                <div className="header-search-field--wrapper">
+                                    <div
+                                        className="header-search-field--icon-wrapper header-search-field--icon-wrapper--mobile"
+                                        onClick={() => setOpenSearchField(true)}
+                                    >
+                                        <img src="/icons/Search.svg" style={{ cursor: 'pointer' }} />
+                                    </div>
 
-                            </div>
-                        )
+                                </div>
+                            )
+                            : null
 
                 }
 

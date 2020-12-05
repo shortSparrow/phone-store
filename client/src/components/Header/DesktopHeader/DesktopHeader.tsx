@@ -69,17 +69,19 @@ const DesktopHeader: FC<DesktopHeaderInterface> = (props) => {
                             </label>
                         </div>
                     )
-                    : (
-                        <div className="header-search-field--wrapper">
-                            <div
-                                className="header-search-field--icon-wrapper"
-                                onClick={() => setOpenSearchField(true)}
-                            >
-                                <img src="/icons/Search.svg" style={{ cursor: 'pointer' }} />
-                            </div>
+                    : props.children && deviceScreen.value! < 910
+                        ? (
+                            <div className="header-search-field--wrapper">
+                                <div
+                                    className="header-search-field--icon-wrapper"
+                                    onClick={() => setOpenSearchField(true)}
+                                >
+                                    <img src="/icons/Search.svg" style={{ cursor: 'pointer' }} />
+                                </div>
 
-                        </div>
-                    )
+                            </div>
+                        )
+                        : null
             }
 
             <div className="header-navigation__item">
