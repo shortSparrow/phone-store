@@ -1,6 +1,6 @@
 @import "../../constants/style.scss";
 
-.full-card {
+.full-device {
     max-width: 1136px;
     margin: auto;
 
@@ -15,7 +15,7 @@
         // width: 464px;
         height: 464px;
         width: 100%;
-        height: 100%;
+        // height: 100%;
         max-width: 464px;
         // max-height: 464px;
     }
@@ -209,12 +209,13 @@
     &__tech-sepcification__item {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 12px;
+        margin-top: 12px;
     }
 }
 
-
 @media screen and (max-width: 1000px) {
-    .full-card {
+    .full-device {
         &__specifations {
             flex-direction: column;
             align-items: center;
@@ -233,7 +234,7 @@
 }
 
 @media screen and (max-width: 850px) {
-    .full-card {
+    .full-device {
         &__select-block {
             width: 100%;
             max-width: 512px;
@@ -292,7 +293,7 @@
 }
 
 @media screen and (max-width: 420px) {
-    .full-card {
+    .full-device {
 
         &__big-image, 
         &__big-image--itself {

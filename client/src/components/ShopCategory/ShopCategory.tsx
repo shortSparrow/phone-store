@@ -31,7 +31,7 @@ const ShopCategory: FC<ShopCategoryInterface> = ({ deviceCount }) => {
                 <img src="./icons/accsessories-catalog-preview.jpg" alt="" className="shop-category__image" onClick={() => history.push('/accessories')} />
                 <div className="shop-category__description">
                     <p className="shop-category__title">Accessories</p>
-                    <p className="small-text shop-category__amount"> {deviceCount.accessories ?? 'coming soon'}</p>
+                    <p className="small-text shop-category__amount"> {deviceCount.accessories} models</p>
                 </div>
             </div>
         </div>

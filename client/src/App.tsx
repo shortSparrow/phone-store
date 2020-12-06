@@ -9,8 +9,6 @@ import { setDeviceScreen, loadDevicesCount } from './store/actions/appState';
 import { setFavoriteDevices } from './store/actions/favoritesDevice';
 import { setCartDeviceList } from './store/actions/cartDeviceList';
 
-
-
 function App() {
   const routes = useRoutes(false);
 
@@ -22,9 +20,9 @@ function App() {
       value: screenWidth,
       name: screenWidth > 0 && screenWidth <= 500
         ? 'phone'
-        : screenWidth > 500 && screenWidth <= 900 
-        ? 'tablet'
-        : 'desktop'
+        : screenWidth > 500 && screenWidth <= 900
+          ? 'tablet'
+          : 'desktop'
     }))
   }
 
@@ -39,7 +37,7 @@ function App() {
 
     // add chartDeviceList from localStorage to redux
     const cartDeviceLocalList = localStorage.getItem('@cartDeviceList') || JSON.stringify([]);
-    
+
     store.dispatch(setCartDeviceList(JSON.parse(cartDeviceLocalList!)));
 
     return () => {
@@ -49,11 +47,11 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div className="app">
-        <HashRouter>
-          {routes}
-        </HashRouter>
-      </div>
+        <div className="app">
+          <HashRouter>
+            {routes}
+          </HashRouter>
+        </div>
     </Provider>
   )
 }

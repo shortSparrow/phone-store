@@ -64,7 +64,7 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
             title: device.title,
             routePosition: device.routePosition,
             deviceInfo: {
-                
+
                 camera: device.deviceInfo.camera,
                 cell: device.deviceInfo.cell,
                 processor: device.deviceInfo.processor,
@@ -88,14 +88,16 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
                 if (letPress) {
 
                     // console.log('device: ', device);
-                    
-                    if (device.type === 'tablet') {
-                        history.push(`/tablet/${device.routePosition}`)
-                    } else {
-                        history.push(`/phone/${device.routePosition}`)
-                    }
-                    
-                    
+                    history.push(device.routePosition)
+                    // if (device.type === 'tablet') {
+                    //     history.push(`/tablet/${device.routePosition}`)
+                    // } else if (device.type){
+                    //     history.push(device.routePosition)
+                    // } else {
+                    //     history.push(`/phone/${device.routePosition}`)
+                    // }
+
+
                 }
             }}
             onMouseDown={(event) => {
@@ -123,13 +125,14 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
             </div>
             <div className="phone-card__content">
                 <p className="phone-card__title">{device.title}</p>
-                <div className="phone-card__price">
+               <div>
+               <div className="phone-card__price">
                     <p className="phone-card__current-price">{device.price.current}</p>
                     <p className="phone-card__old-price">{device.price.old}</p>
                 </div>
 
                 <div className="phone-card__line"></div>
-
+                {/* 
                 <div className="card-specification--list">
                     <div className="card-specification--item">
                         <div className="card-specification__name">Screen</div>
@@ -145,7 +148,26 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
                         <div className="card-specification__name">Camera</div>
                         <div className="card-specification__value">{device.deviceInfo.camera}</div>
                     </div>
-                </div>
+                </div> */}
+
+                {
+                    device.shortInfo && (
+                        <div className="card-specification--list">
+                            {
+                                Object.entries(device.shortInfo).map((item: [string, any], index: number) => {
+                                    const [name, description] = item;
+
+                                    return (
+                                        <div className="card-specification--item" key={name + index}>
+                                            <p className="card-specification__name">{name}</p>
+                                            <p className="card-specification__value">{description}</p>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                }
 
                 <div className="phone-card__button--wrapper" onClick={(event) => event.stopPropagation()}>
                     <div className={`button__add-cart--wrapper phone-card__add-cart--wrapper ${addToCartList ? 'button__add-cart--active' : ''}`} >
@@ -164,6 +186,7 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
                     </div>
                 </div>
 
+               </div>
             </div>
         </div>
     )

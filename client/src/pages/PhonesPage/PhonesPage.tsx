@@ -12,7 +12,7 @@ import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { Select } from '../../components/Select/Select';
 import { Preloader } from '../../components/Preloader/Preloader';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { phonesState } from '../../store/reducers/phones';
+import { phone } from '../../store/reducers/phones';
 import Footer from '../../components/Footer/Footer';
 
 const selectList = [
@@ -265,9 +265,9 @@ interface mainPropsInterfaces {
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
-    phoneList: state.phonesState.phoneList,
-    phoneListState: state.phonesState.phoneListState,
-    phoneState: state.phonesState.phoneListState,
+    phoneList: state.phone.phoneList,
+    phoneListState: state.phone.phoneListState,
+    phoneState: state.phone.phoneListState,
     deviceCount: state.appState.deviceCount
 })
 

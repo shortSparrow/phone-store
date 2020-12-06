@@ -9,13 +9,13 @@ const Header: FC<MainPageInterface> = (props) => {
     const { deviceScreen } = props;
 
     return (
-        <footer className="footer">
+        <header className="footer">
             {
                 deviceScreen.value! <= 750
                     ? <MobileHeader>{props.children}</MobileHeader>
                     : <DesktopHeader>{props.children}</DesktopHeader>
             }
-        </footer>
+        </header>
     )
 }
 

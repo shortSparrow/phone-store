@@ -4,7 +4,6 @@ import {
     PHONE_LIST_ERROR,
     PHONE_LIST_SUCCESS,
     PHONE_LIST_STATE,
-    PHONE_ITEM_SUCCESS,
     REQUEST_LOADING,
     REQUEST_FAILED,
     SET_FAVORITE_DEVICES,
@@ -13,9 +12,13 @@ import {
     TABLET_LIST_SUCCESS,
     TABLET_LIST_ERROR,
     TABLET_LIST_STATE,
-    TABLET_ITEM_SUCCESS,
-    SET_DEVICES_COUNT
+    SET_DEVICES_COUNT,
+    ACCESSORIES_LIST_LOADING,
+    ACCESSORIES_LIST_SUCCESS,
+    ACCESSORIES_LIST_ERROR,
+    ACCESSORIES_LIST_STATE,
 } from '../constants/actions';
+import { accessoriesCardInterface, accessoriesListStateType } from './accessoriesStateInterface';
 import { phoneCardInterface, phoneListStateType } from './phonesInterfaces';
 import { tabletCardInterface, tabletListStateType } from './tabletStateInterface';
 
@@ -70,11 +73,6 @@ interface phoneListState {
     phoneListState: phoneListStateType
 }
 
-interface phoneItemSuccess {
-    type: typeof PHONE_ITEM_SUCCESS,
-    currentModel: phoneCardInterface
-}
-
 interface requestLoading {
     type: typeof REQUEST_LOADING,
     loading: boolean
@@ -113,13 +111,29 @@ interface tabletListState {
     tabletListState: tabletListStateType
 }
 
-interface tabletItemSuccess {
-    type: typeof TABLET_ITEM_SUCCESS,
-    currentModel: tabletCardInterface
+interface accessoriesLoading {
+    type: typeof ACCESSORIES_LIST_LOADING,
+    loading: boolean
 }
+
+interface accessoriesSuccess {
+    type: typeof ACCESSORIES_LIST_SUCCESS,
+    accessoriesList: accessoriesCardInterface[]
+}
+interface accessoriesError {
+    type: typeof ACCESSORIES_LIST_ERROR,
+    error: any
+}
+interface accessoriesListState {
+    type: typeof ACCESSORIES_LIST_STATE,
+    accessoriesListState: accessoriesListStateType
+}
+
+
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
     setDeviceScreenInterface | setDevicesCountInterface | phoneListLoadingInterface | phoneListSuccessInterface |
-    phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
+    phoneListFailInterface | phoneListState | requestLoading | requestFailed |
     setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess |
-    tabletsError | tabletListState | tabletItemSuccess
+    tabletsError | tabletListState | accessoriesLoading | accessoriesSuccess | accessoriesError |
+    accessoriesListState 

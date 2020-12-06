@@ -70,11 +70,12 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
         if (tabletList.length) {
 
             setStructureList({
-                onPage: 5,
-                currentPage: 1,
-                pages: Array.from(Array(Math.ceil(tabletList.length / 5)).keys(), (_, i) => i + 1),
-                data: tabletList,
-                currentVissible: tabletList.slice(0, 5),
+                ...structureList,
+                // onPage: 5,
+                // currentPage: 1,
+                // pages: Array.from(Array(Math.ceil(tabletList.length / 5)).keys(), (_, i) => i + 1),
+                // data: tabletList,
+                // currentVissible: tabletList.slice(0, 5),
                 loaded: true
             })
         }
@@ -186,7 +187,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
 
-                <p className="main-title page-name-title">Mobile phones</p>
+                <p className="main-title page-name-title">Tablets</p>
                 <p className="small-text models-count">{
                     structureList.loaded && structureList?.data?.length
                         ? structureList.data.length
@@ -239,8 +240,8 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
-    tabletList: state.tabletsState.tabletList,
-    tabletListState: state.tabletsState.tabletListState,
+    tabletList: state.tablet.tabletList,
+    tabletListState: state.tablet.tabletListState,
     deviceCount: state.appState.deviceCount
 })
 

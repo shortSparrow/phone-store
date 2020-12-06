@@ -11,7 +11,9 @@ interface useHTTPInterface {
 export const useHTTP = ()=> {
     const [loading, setLoading] = useState<null | boolean>(null);
     const [error, setError] = useState<any>(null);
-    const [response, setResponse] = useState(null)
+    const [response, setResponse] = useState(null);
+    const [data, setData] = useState(null)
+
 
     const getReguest = useCallback(async (path: string) => {
         // console.log('request');
@@ -19,6 +21,7 @@ export const useHTTP = ()=> {
         setLoading(true)
         try {
             const response = await request(path);
+            setData(response)
             return response
             // setResponse(response)
 
@@ -34,7 +37,7 @@ export const useHTTP = ()=> {
         setError(null)
     }
 
-    return {getReguest, loading, error, cleanError}
+    return {getReguest, loading, error, data, cleanError}
 }
 
 

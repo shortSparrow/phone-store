@@ -6,13 +6,12 @@ import {
     TABLET_LIST_SUCCESS,
     TABLET_LIST_ERROR,
     TABLET_LIST_STATE,
-    TABLET_ITEM_SUCCESS
 } from '../../constants/actions';
 import { request, postRequest } from '../../api/request';
 import { AppStateActionTypes } from '../../interfaces/appStateInterface';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
-import { phonesState } from '../reducers/phones';
+import { phone } from '../reducers/phones';
 import { tabletCardInterface } from '../../interfaces/tabletStateInterface';
 
 export const tabletsLoading = (loading: boolean): AppStateActionTypes => ({
@@ -73,34 +72,3 @@ export const loadTablets = (): ThunkAction<void, RootStateInterface, unknown, Ac
         }
     }
 }
-
-export const tabletItemSuccess = (currentModel: tabletCardInterface): AppStateActionTypes => ({
-    type: TABLET_ITEM_SUCCESS,
-    currentModel
-})
-
-export const getTabletByModelName = (model_name: string): ThunkAction<void, RootStateInterface, unknown, Action<string>> => {
-    return async dispatch => {
-        dispatch(tabletsLoading(true));
-        try {
-            const tablet: tabletCardInterface = await request(`/api/tablet/item/?model_name=${model_name}`);
-            // console.log('tablet item: ', tablet);
-            
-
-            // add mainImage ro other imageList, ecause in db they not connected
-            tablet.availabelDevices.map(device => {
-                device.images.other.unshift(device.images.main);
-                return device
-            });
-
-            dispatch(tabletItemSuccess(tablet))
-
-        } catch (err) {
-            dispatch(tabletsError(err));
-        } finally {
-            dispatch(tabletsLoading(false));
-        }
-
-    }
-}
-

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { phones } from '../../store/actions';
-import { useParams } from 'react-router-dom'
+import { connect, useDispatch, useStore, useSelector } from 'react-redux';
+import { accessories, phones, tablets } from '../../store/actions';
+import { useParams, useLocation, useHistory } from 'react-router-dom'
 import { RootState } from '../../store/reducers';
 import { phoneCardInterface } from '../../interfaces/phonesInterfaces';
 
-import "./PhoneCardFull.scss"
+
+
+import "./DeviceFullCard.scss";
 import { defaultConstatnts } from '../../constants/defaultConstants';
 import Header from '../Header/Header';
 import SmallNavigation from '../SmallNavigation/SmallNavigation';
@@ -15,31 +17,37 @@ import { favoritesDevice, cartDeviceList } from '../../store/actions';
 import { favoriteDevice } from '../../interfaces/favoriteDevice'
 import { title } from 'process';
 import { cartDevice } from '../../interfaces/cartDeviceList';
+import { accessoriesCardInterface } from '../../interfaces/accessoriesStateInterface';
+import { useHTTP } from '../../hooks/useHTTP.hook';
+import Footer from '../Footer/Footer';
 
 type params = {
     model_name: string
 }
 
-interface PhoneCardFullInterface {
-    currentModel: phoneCardInterface | null,
-    loading: boolean | null,
-    error: any,
-    getPhoneByModelName: (model_name: string) => {},
+interface DeviceFullCardInterface {
     toggleFavoriteDevice: (device: favoriteDevice) => {},
     toggleCartDevice: (device: cartDevice) => void,
     favoriteDevices: favoriteDevice[],
-    cartDeviceList: cartDevice[]
+    cartDeviceList: cartDevice[],
 }
 
 
 
-const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
+const DeviceFullCard: React.FC<DeviceFullCardInterface> = (props) => {
     const {
-        loading, error, currentModel,
-        getPhoneByModelName, favoriteDevices,
+        favoriteDevices,
         toggleFavoriteDevice, toggleCartDevice,
         cartDeviceList
     } = props
+    const location = useLocation();
+    const history = useHistory();
+    const productType = location.pathname.match(/^\/[\w]+/gi)![0].slice(1,);
+
+
+
+    const { getReguest, loading: isLoading, error, data: currentModel }: any = useHTTP()
+
 
     const [device, setDevice] = useState<any>(null);
     const [addToFavotireList, setAddToFavoriteList] = useState<boolean | null>(null);
@@ -47,9 +55,14 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
 
     let params: params = useParams();
 
+    console.log('currentModel: ', currentModel);
+
     useEffect(() => {
-        getPhoneByModelName(params.model_name)
+        // getReguest(`/api/${productType}/item/?model_name=${params.model_name}`)
+        getReguest(`/api/${productType}/item/?model_name=${productType}/` + params.model_name)
     }, [])
+
+
 
 
     useEffect(() => {
@@ -85,14 +98,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
             title: currentModel!.title,
             routePosition: currentModel!.routePosition,
             deviceInfo: {
-                camera: currentModel!.deviceInfo.camera,
-                cell: currentModel!.deviceInfo.cell,
-                processor: currentModel!.deviceInfo.processor,
-                resolution: currentModel!.deviceInfo.resolution,
-                screen: currentModel!.deviceInfo.screen,
-                zoom: currentModel!.deviceInfo.zoom,
-                color: device.currentDevice.currentColor,
-                RAM: device.currentDevice.currentRAM,
+                ...currentModel?.deviceInfo
             },
             about: device.abuot
         }
@@ -106,7 +112,6 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                 ...currentModel,
                 currentDevice: {
                     ...currentModel.availabelDevices[0],
-                    currentRAM: currentModel.availabelDevices[0].availableRAM[0],
                     currentColor: currentModel.availabelColor[0],
                     bigImage: currentModel.availabelDevices[0].images.main,
                 },
@@ -115,33 +120,31 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
         }
     }, [currentModel])
 
-    useEffect(() => {
-        // console.log(device.about);
-    }, [device])
-
     return (
-        <div>
+        <div className="page">
             <Header />
             <div className="main-limit">
                 {
-                    device?.title ? <SmallNavigation params={[{ title: 'Phones', link: '/phones' }, { title: device.title, link: '' }]} /> : null
+                    device?.title ? <SmallNavigation params={[{ title: 'Accessories', link: '/accessories' }, { title: device.title, link: '' }]} /> : null
                 }
                 <GoBack />
                 {
-                    loading ? <p>LOADING...</p>
+                    isLoading ? (
+                        <p>LOADING...</p>
+                    )
                         : error ? <p>Error</p>
-                            : loading === false && !error && device ? (
-                                <div className="full-card">
+                            : isLoading === false && !error && device ? (
+                                <div className="full-device">
                                     <p className="main-title">{device.title}</p>
 
-                                    <div className="full-card__specifations">
+                                    <div className="full-device__specifations">
 
-                                        <div className="full-card__images-wrapper">
-                                            <div className="full-card__small-image-list">
+                                        <div className="full-device__images-wrapper">
+                                            <div className="full-device__small-image-list">
                                                 {
-                                                    device.currentDevice.images.other.map((image: string, index: number) => (
+                                                    [device.currentDevice.images.main, ...device.currentDevice.images.other].map((image: string, index: number) => (
                                                         <div
-                                                            className={`full-card__small-image ${image === device.currentDevice.bigImage ? "full-card__small-image--active" : ""}`}
+                                                            className={`full-device__small-image ${image === device.currentDevice.bigImage ? "full-device__small-image--active" : ""}`}
                                                             onClick={() => {
                                                                 const newDevice = { ...device, currentDevice: { ...device.currentDevice, bigImage: image } }
                                                                 setDevice(newDevice)
@@ -151,42 +154,41 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                                                             <img
                                                                 src={defaultConstatnts.domain + "/" + image}
                                                                 alt={device.title}
-                                                                className={`full-card__small-image--itself `}
+                                                                className={`full-device__small-image--itself `}
                                                             />
                                                         </div>
                                                     ))
                                                 }
                                             </div>
-                                            <div className="full-card__big-image">
+                                            <div className="full-device__big-image">
                                                 <img
                                                     src={defaultConstatnts.domain + "/" + device.currentDevice.bigImage}
                                                     alt={device.title}
-                                                    className="full-card__big-image--itself"
+                                                    className="full-device__big-image--itself"
                                                 />
                                             </div>
                                         </div>
 
-                                        <div className="full-card__select-block">
-                                            <div className="full-card__available-color-list__wrapper">
-                                                <p className="card-specification__name full-card__select-titile">Available colors</p>
+                                        <div className="full-device__select-block">
+                                            <div className="full-device__available-color-list__wrapper">
+                                                <p className="card-specification__name full-device__select-titile">Available colors</p>
 
-                                                <div className="full-card__available-color-list">
+                                                <div className="full-device__available-color-list">
                                                     {
                                                         device.availabelColor.map((color: string) => (
                                                             <div
-                                                                className={`full-card__availabe-color-wrapper ${device.currentColor === color ? "full-card__availabe-color-wrapper--selected" : ""}`}
+                                                                className={`full-device__availabe-color-wrapper ${device.currentColor === color ? "full-device__availabe-color-wrapper--selected" : ""}`}
                                                                 key={color}
                                                             >
                                                                 <div
-                                                                    className="full-card__availabe-color"
+                                                                    className="full-device__availabe-color"
                                                                     style={{ backgroundColor: color }}
                                                                     onClick={() => {
-                                                                        const newDeviceIndex = currentModel?.availabelDevices.findIndex((model) => model.color === color)
+                                                                        const newDeviceIndex = currentModel?.availabelDevices.findIndex((model: any) => model.color === color)
 
                                                                         const newDevice = {
                                                                             ...device, currentDevice: {
                                                                                 ...currentModel!.availabelDevices[newDeviceIndex!],
-                                                                                currentRAM: currentModel!.availabelDevices[newDeviceIndex!].availableRAM[0],
                                                                                 currentColor: currentModel!.availabelColor[newDeviceIndex!],
                                                                                 bigImage: currentModel!.availabelDevices[newDeviceIndex!].images.main,
                                                                             }
@@ -200,37 +202,15 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                                                     }
                                                 </div>
                                             </div>
-                                            <div className="full-card__separate-line"></div>
+                                            <div className="full-device__separate-line"></div>
 
-                                            <div className="full-card__availabe-ram-list_wrapper">
-                                                <p className="card-specification__name">Select capacity</p>
-
-                                                <div className="full-card__availabe-ram-list">
-                                                    {
-                                                        device.currentDevice.availableRAM.map((ram: string) => (
-                                                            <div
-                                                                className={`full-card__availale-ram-wrapper ${device.currentDevice.currentRAM === ram ? "full-card__availale-ram-wrapper__selected" : ""}`}
-                                                                onClick={() => {
-                                                                    const updatedDevice = { ...device, currentDevice: { ...device.currentDevice, currentRAM: ram } }
-                                                                    setDevice(updatedDevice)
-                                                                }}
-                                                                key={ram}
-                                                            >
-                                                                <p className="full-card__availale-ram">{ram}</p>
-                                                            </div>
-                                                        ))
-                                                    }
-                                                </div>
-                                            </div>
-
-
-                                            <div className="phone-card__price full-card__price">
-                                                <p className="phone-card__current-price full-card__current-price">{currentModel?.price.current}</p>
+                                            <div className="phone-card__price full-device__price">
+                                                <p className="phone-card__current-price full-device__current-price">{currentModel?.price.current}</p>
                                                 <p className="phone-card__old-price">{currentModel?.price.old}</p>
                                             </div>
 
-                                            <div className="full-card__short-info">
-                                                <div className="phone-card__button--wrapper full-card__button-wrapper">
+                                            <div className="full-device__short-info">
+                                                <div className="phone-card__button--wrapper full-device__button-wrapper">
                                                     <div
                                                         className={`button__add-cart--wrapper phone-card__add-cart--wrapper ${addToCartList ? 'button__add-cart--active' : ''}`}
                                                         onClick={handleToggleCartList}
@@ -246,7 +226,7 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                                                     </div>
                                                 </div>
 
-                                                <div className="card-specification--list">
+                                                {/* <div className="card-specification--list">
                                                     <div className="card-specification--item">
                                                         <div className="card-specification__name">Screen</div>
                                                         <div className="card-specification__value">{currentModel?.deviceInfo.screen}</div>
@@ -261,10 +241,29 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                                                         <div className="card-specification__name">Camera</div>
                                                         <div className="card-specification__value">{currentModel?.deviceInfo.camera}</div>
                                                     </div>
-                                                </div>
+                                                </div> */}
+
+                                                {
+                                                    device.shortInfo && (
+                                                        <div className="card-specification--list">
+                                                            {
+                                                                Object.entries(device.shortInfo).map((item: [string, any], index: number) => {
+                                                                    const [name, description] = item;
+
+                                                                    return (
+                                                                        <div className="card-specification--item" key={name + index}>
+                                                                            <p className="card-specification__name">{name}</p>
+                                                                            <p className="card-specification__value">{description}</p>
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </div>
+                                                    )
+                                                }
                                             </div>
 
-                                            <div className="full-card__id">
+                                            <div className="full-device__id">
                                                 <p className="card-specification__name">ID: undefined</p>
                                             </div>
 
@@ -274,31 +273,37 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                                     </div>
 
 
-                                    <div className="full-card__description">
-                                        <div className="full-card__summary">
-                                            <p className="second-title full-card__second-title">About</p>
-                                            <div className="full-card__separate-line"></div>
+                                    <div className="full-device__description">
+                                        <div className="full-device__summary">
+                                            <p className="second-title full-device__second-title">About</p>
+                                            <div className="full-device__separate-line"></div>
                                             {
-                                                device.about.map((item: { title: string, description: string }, index: number) => (
-                                                    <div className="full-card__summary__paragraph" key={title + index}>
-                                                        <p className="full-card__summary__title third-title">{item.title}</p>
-                                                        <p className="full-card__summary__description body-text">{item.description}</p>
-                                                    </div>
-                                                ))
+                                                device.about
+                                                    ? device.about.map((item: { title: string, description: string }, index: number) => (
+                                                        <div className="full-device__summary__paragraph" key={title + index}>
+                                                            <p className="full-device__summary__title third-title">{item.title}</p>
+                                                            <p className="full-device__summary__description body-text">{item.description}</p>
+                                                        </div>
+                                                    ))
+                                                    : (
+                                                            <p className="full-device__summary__title third-title">There aren't any description about this product, we add one in the near future</p>
+                                                    )
+
+
                                             }
                                         </div>
-                                        <div className="full-card__tech-sepcification">
-                                            <p className="second-title full-card__second-title">Tech specs</p>
-                                            <div className="full-card__separate-line"></div>
-                                            <div className="full-card__tech-specifation__list">
+                                        <div className="full-device__tech-sepcification">
+                                            <p className="second-title full-device__second-title">Tech specs</p>
+                                            <div className="full-device__separate-line"></div>
+                                            <div className="full-device__tech-specifation__list">
                                                 {
                                                     Object.entries(device.deviceInfo).map((item: [string, any], index: number) => {
                                                         const [name, description] = item;
 
                                                         return (
-                                                            <div className="full-card__tech-sepcification__item" key={name + index}>
-                                                                <p className="full-card__tech-sepcification__name card-specification__name">{name}</p>
-                                                                <p className="full-card__tech-sepcification__description card-specification__value">{description}</p>
+                                                            <div className="full-device__tech-sepcification__item" key={name + index}>
+                                                                <p className="full-device__tech-sepcification__name card-specification__name">{name}</p>
+                                                                <p className="full-device__tech-sepcification__description card-specification__value">{description}</p>
                                                             </div>
                                                         )
                                                     })
@@ -312,24 +317,23 @@ const PhoneCardFull: React.FC<PhoneCardFullInterface> = (props) => {
                             ) : null
                 }
             </div>
-
+            <Footer />
         </div>
     )
 }
 
 const mapStateToProps = (state: RootState) => ({
-    loading: state.phonesState.loading,
-    error: state.phonesState.error,
-    currentModel: state.phonesState.currentModel,
+    // isLoading: state.accessories.isLoading,
+    // error: state.accessories.error,
+    // currentModel: state.accessories.currentModel,
     favoriteDevices: state.favoritesDevice.deviceList,
     cartDeviceList: state.cartDeviceList.deviceList
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    getPhoneByModelName: (id: string) => dispatch(phones.getPhoneByModelName(id)),
     toggleFavoriteDevice: (device: favoriteDevice) => dispatch(favoritesDevice.toggleFavoriteDevice(device)),
     toggleCartDevice: (device: cartDevice) => dispatch(cartDeviceList.toggleCartDevice(device))
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhoneCardFull)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceFullCard)
