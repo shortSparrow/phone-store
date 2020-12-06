@@ -20,9 +20,9 @@ app.use('/api/accessories', require('./routes/accessories.routes'))
 
 app.use('/api/devices_count', require('./routes/devicesCount.routes'))
 
-const PORT = config.get('port') || 5000
+// const PORT = config.get('port') || 5000
 
-// const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000
 
 async function start() {
     try {
