@@ -1,14 +1,15 @@
 import {AppStateInterface} from './appStateInterface';
-import { phoneState, hotPriceState } from './phonesInterfaces';
+import { phoneState } from './phonesInterfaces';
 import {favoriteDeviceState} from './favoriteDevice';
 import { cartDeviceListState } from './cartDeviceList';
 import { tabletState } from './tabletStateInterface';
+import {accessoriesState} from './accessoriesStateInterface'
 
 export interface RootStateInterface {
     appState: AppStateInterface,
-    phonesState: phoneState,
-    hotPricePhones: hotPriceState,
+    phone: phoneState,
     favoritesDevice: favoriteDeviceState,
     cartDeviceList: cartDeviceListState,
-    tabletsState: tabletState
+    tablet: tabletState,
+    accessories: accessoriesState,
 }

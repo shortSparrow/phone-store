@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import DeviceCardList from '../../components/DeviceCardList/DeviceCardList'
+import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header/Header'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { Preloader } from '../../components/Preloader/Preloader'
@@ -44,7 +45,7 @@ const selectitemsOnPageList = [
     },
 ]
 
-const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState }: any) => {
+const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState, deviceCount }: any) => {
     const [searchField, setSearchField] = useState('');
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
@@ -69,11 +70,12 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
         if (tabletList.length) {
 
             setStructureList({
-                onPage: 5,
-                currentPage: 1,
-                pages: Array.from(Array(Math.ceil(tabletList.length / 5)).keys(), (_, i) => i + 1),
-                data: tabletList,
-                currentVissible: tabletList.slice(0, 5),
+                ...structureList,
+                // onPage: 5,
+                // currentPage: 1,
+                // pages: Array.from(Array(Math.ceil(tabletList.length / 5)).keys(), (_, i) => i + 1),
+                // data: tabletList,
+                // currentVissible: tabletList.slice(0, 5),
                 loaded: true
             })
         }
@@ -93,13 +95,10 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
     }
 
     useEffect(() => {
-
         if (tabletList.length) {
             // console.log(structureList);
             // console.log('tabletListState: ', tabletListState.visible);
-            console.log('curentVisible: ', [...tabletListState.visible].slice(0, structureList.onPage));
-
-
+            // console.log('curentVisible: ', [...tabletListState.visible].slice(0, structureList.onPage));
 
             setStructureList({
                 ...structureList,
@@ -126,7 +125,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
         const filtered = [...tabletListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        console.log('filtered: ', filtered);
+        // console.log('filtered: ', filtered);
 
         setTabletListState({
             ...tabletListState,
@@ -168,21 +167,31 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
     useEffect(() => {
         handlePageStructure(selectedItemsOnPAgeValue.value)
-        console.log(selectedItemsOnPAgeValue);
+        // console.log(selectedItemsOnPAgeValue);
 
     }, [selectedItemsOnPAgeValue])
 
     return (
-        <div>
-            <Header />
+        <div className="tablets-page page">
+            <Header>
+                <input
+                    id="filter-field"
+                    type="text"
+                    value={searchField}
+                    onChange={handleVisible}
+                    className="filter-input--wrapper filter-input--search"
+                    placeholder="Search in phones..."
+                />
+            </Header>
+
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
 
-                <p className="main-title page-name-title">Mobile phones</p>
+                <p className="main-title page-name-title">Tablets</p>
                 <p className="small-text models-count">{
                     structureList.loaded && structureList?.data?.length
                         ? structureList.data.length
-                        : <Preloader
+                        : deviceCount.tablets ?? <Preloader
                             color="#89939A"
                             width="12"
                             height="12"
@@ -199,7 +208,8 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                         <p className="small-text models-count"> Sort by</p>
                         <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                     </div>
-                    <div style={{marginLeft: 20}}>
+
+                    <div>
                         <p className="small-text models-count"> Items on page</p>
                         <Select
                             itemList={selectitemsOnPageList}
@@ -209,11 +219,6 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                             width={128}
                         />
                     </div>
-                </div>
-
-
-                <div className="filter">
-                    <input type="text" value={searchField} onChange={handleVisible} />
                 </div>
 
                 <DeviceCardList deviceList={structureList.currentVissible} />
@@ -227,7 +232,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                     />
                 </div>
             </div>
-            
+            <Footer />
         </div>
 
     )
@@ -235,8 +240,9 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
-    tabletList: state.tabletsState.tabletList,
-    tabletListState: state.tabletsState.tabletListState,
+    tabletList: state.tablet.tabletList,
+    tabletListState: state.tablet.tabletListState,
+    deviceCount: state.appState.deviceCount
 })
 
 const mapDispatchToProps = (dispatch: any) => ({

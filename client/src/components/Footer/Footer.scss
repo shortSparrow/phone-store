@@ -13,6 +13,11 @@
         height: 96px;
     }
 
+    &__logo {
+        width: 54px;
+        cursor: pointer;
+    }
+
     &__navigation__list {
         display: flex;
     }
@@ -62,8 +67,27 @@
 
 @media screen and (max-width: 665px) {
     .footer {
+        height: auto;
+    
         &__content {
             flex-direction: column;
+            padding: 15px 0 !important;
+        }
+
+        &__logo {
+            margin: 10px 0;
+        }
+
+        &__back-to-top {
+            margin-top: 15px;
+        }
+
+        &__navigation__item {
+            margin: 0;
+        }
+
+        &__navigation__list {
+            justify-content: space-evenly;
         }
     }
 }

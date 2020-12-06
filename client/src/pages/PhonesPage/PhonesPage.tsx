@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phones } from '../../store/actions'
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
-import { DeviceScreenType } from '../../interfaces/appStateInterface';
+import { DeviceCountType, DeviceScreenType } from '../../interfaces/appStateInterface';
 import DeviceCardList from '../../components/DeviceCardList/DeviceCardList';
 import SmallNavigation from '../../components/SmallNavigation/SmallNavigation';
 import { Select } from '../../components/Select/Select';
 import { Preloader } from '../../components/Preloader/Preloader';
 import { Pagination } from '../../components/Pagination/Pagination';
-import { phonesState } from '../../store/reducers/phones';
+import { phone } from '../../store/reducers/phones';
+import Footer from '../../components/Footer/Footer';
 
 const selectList = [
     {
@@ -48,7 +49,12 @@ const selectitemsOnPageList = [
     },
 ]
 
-const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setPhoneListState, phoneListState, phoneLoadSuccss }) => {
+const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
+    const {
+        phoneList, loadPhones,
+        setPhoneListState, phoneListState,
+        phoneLoadSuccss, deviceCount
+    } = props
     const [searchField, setSearchField] = useState('');
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
@@ -84,7 +90,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         }
     }, [phoneList])
 
-    console.log(structureList.currentVissible);
+    // console.log(structureList.currentVissible);
 
 
     const handlePageStructure = (value: number) => {
@@ -105,7 +111,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
         if (phoneList.length) {
             // console.log(structureList);
             // console.log('phoneListState: ', phoneListState.visible);
-            console.log('curentVisible: ', [...phoneListState.visible].slice(0, structureList.onPage));
+            // console.log('curentVisible: ', [...phoneListState.visible].slice(0, structureList.onPage));
 
 
 
@@ -134,7 +140,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
 
         const filtered = [...phoneListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        console.log('filtered: ', filtered);
+        // console.log('filtered: ', filtered);
 
         setPhoneListState({
             ...phoneListState,
@@ -176,20 +182,30 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
 
     useEffect(() => {
         handlePageStructure(selectedItemsOnPAgeValue.value)
-        console.log(selectedItemsOnPAgeValue);
+        // console.log(selectedItemsOnPAgeValue);
 
     }, [selectedItemsOnPAgeValue])
 
     return (
         <div className="phones-page page">
-            <Header />
+            <Header>
+                <input
+                    id="filter-field"
+                    type="text"
+                    value={searchField}
+                    onChange={handleVisible}
+                    className="filter-input--wrapper filter-input--search"
+                    placeholder="Search in phones..."
+                />
+            </Header>
+
             <div className="main-limit">
                 <SmallNavigation params={[{ title: 'Phones', link: '/phones' }]} />
                 <p className="main-title page-name-title">Mobile phones</p>
                 <p className="small-text models-count">{
                     structureList.loaded && structureList?.data?.length
                         ? structureList.data.length
-                        : <Preloader
+                        : deviceCount.phones ?? <Preloader
                             color="#89939A"
                             width="12"
                             height="12"
@@ -207,7 +223,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                         <Select itemList={selectList} setSelectedItem={setSelectedSortValue} selectedItem={selectedSortValue} />
                     </div>
 
-                    <div style={{ marginLeft: 20 }}>
+                    <div>
                         <p className="small-text models-count"> Items on page</p>
                         <Select
                             itemList={selectitemsOnPageList}
@@ -216,15 +232,6 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                             defaultSelectIndex={selectitemsOnPageList.findIndex((item) => item.value === structureList.onPage)}
                             width={128}
                         />
-                    </div>
-
-                    <div className="filter" style={{marginLeft: 15}}>
-                        <p className="small-text models-count">Serach field</p>
-                        <label style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                            <img src="/icons/Search.svg" style={{ position: 'absolute', left: 5 }} />
-
-                            <input id="filter-field" type="text" value={searchField} onChange={handleVisible} className="filter-input--wrapper" />
-                        </label>
                     </div>
                 </div>
 
@@ -241,6 +248,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = ({ phoneList, loadPhones, setP
                     />
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
@@ -249,6 +257,7 @@ interface mainPropsInterfaces {
     deviceScreen: DeviceScreenType,
     phoneList: phoneCardInterface[],
     phoneListState: any,
+    deviceCount: DeviceCountType,
     loadPhones: () => {},
     setPhoneListState: (phoneListState: phoneListStateType) => {},
     phoneLoadSuccss: (data: phoneCardInterface[]) => {}
@@ -256,9 +265,10 @@ interface mainPropsInterfaces {
 
 const mapStateToProps = (state: RootStateInterface, ownProps: any) => ({
     deviceScreen: state.appState.deviceScreen,
-    phoneList: state.phonesState.phoneList,
-    phoneListState: state.phonesState.phoneListState,
-    phoneState: state.phonesState.phoneListState
+    phoneList: state.phone.phoneList,
+    phoneListState: state.phone.phoneListState,
+    phoneState: state.phone.phoneListState,
+    deviceCount: state.appState.deviceCount
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
