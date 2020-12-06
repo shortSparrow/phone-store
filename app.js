@@ -17,7 +17,6 @@ app.use('/api/phone', require('./routes/phone.routes'))
 app.use('/api/tablet', require('./routes/tablets.routes'))
 app.use('/api/accessories', require('./routes/accessories.routes'))
 
-
 app.use('/api/devices_count', require('./routes/devicesCount.routes'))
 
 // const PORT = config.get('port') || 5000
