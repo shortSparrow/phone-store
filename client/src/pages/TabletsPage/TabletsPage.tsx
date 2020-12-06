@@ -47,6 +47,7 @@ const selectitemsOnPageList = [
 
 const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletListState, deviceCount }: any) => {
     const [searchField, setSearchField] = useState('');
+    const [noMathes, setNoMathces] = useState(false)
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
         value: 'cheap'
@@ -125,7 +126,11 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
 
         const filtered = [...tabletListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        // console.log('filtered: ', filtered);
+        if (filtered.length) {
+            setNoMathces(false)
+        } else {
+            setNoMathces(true)
+        }
 
         setTabletListState({
             ...tabletListState,
@@ -184,7 +189,7 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                 />
             </Header>
 
-            <div className="main-limit">
+            <div className="main-limit content">
                 <SmallNavigation params={[{ title: 'Tablets', link: '/tablets' }]} />
 
                 <p className="main-title page-name-title">Tablets</p>
@@ -222,6 +227,17 @@ const TabletsPage: FC = ({ tabletList, tabletListState, loadTablets, setTabletLi
                 </div>
 
                 <DeviceCardList deviceList={structureList.currentVissible} />
+
+                {
+                    noMathes && (
+                        <div className="empty-list--information">
+                            <p className="uppaercase-text" style={{ fontSize: 20, lineHeight: 'inherit' }}>
+                                Doesn't find any device
+                            </p>
+                        </div>
+                    )
+                }
+
 
                 <div className="phones-page__pagination-warpper">
                     <Pagination

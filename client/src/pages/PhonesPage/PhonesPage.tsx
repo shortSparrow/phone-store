@@ -56,6 +56,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
         phoneLoadSuccss, deviceCount
     } = props
     const [searchField, setSearchField] = useState('');
+    const [noMathes, setNoMathces] = useState(false)
     const [selectedSortValue, setSelectedSortValue] = useState({
         title: 'Cheap',
         value: 'cheap'
@@ -140,7 +141,11 @@ const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
 
         const filtered = [...phoneListState.sorted].filter(phone => phone.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 
-        // console.log('filtered: ', filtered);
+        if (filtered.length) {
+            setNoMathces(false)
+        } else {
+            setNoMathces(true)
+        }
 
         setPhoneListState({
             ...phoneListState,
@@ -199,7 +204,7 @@ const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
                 />
             </Header>
 
-            <div className="main-limit">
+            <div className="main-limit content">
                 <SmallNavigation params={[{ title: 'Phones', link: '/phones' }]} />
                 <p className="main-title page-name-title">Mobile phones</p>
                 <p className="small-text models-count">{
@@ -236,8 +241,17 @@ const PhonesPage: React.FC<mainPropsInterfaces> = (props) => {
                 </div>
 
 
-
                 <DeviceCardList deviceList={structureList.currentVissible} />
+
+                {
+                    noMathes && (
+                        <div className="empty-list--information">
+                            <p className="uppaercase-text" style={{ fontSize: 20, lineHeight: 'inherit' }}>
+                                Doesn't find any device
+                            </p>
+                        </div>
+                    )
+                }
 
                 <div className="phones-page__pagination-warpper">
                     <Pagination

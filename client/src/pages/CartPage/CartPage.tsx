@@ -49,7 +49,7 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
     }, [checkoutDeviceList])
 
 
-    const plusDevice = (id: string) => { 
+    const plusDevice = (id: string) => {
         const newCheckoutDevice = checkoutDeviceList.map((device: deviceCheckoutType) => {
             if (device._id === id) {
                 return {
@@ -92,80 +92,93 @@ const CartPage: FC<cartPageInterface> = ({ chartDeviceList, toggleCartDevice }) 
         setDeletedItemsId([...deletedItemsId, id])
 
         // console.log('mathcedDevice: ', mathcedDevice);
-        
+
         toggleCartDevice(mathcedDevice!)
-    }   
+    }
 
     return (
         <div className="page">
             <Header />
-            <div className="main-limit">
+            <div className="main-limit content">
                 {
                     <SmallNavigation params={[{ title: 'Cart', link: '/cart' }]} />
                 }
                 <GoBack />
-                <div className="cart">
-                    <div>
-                        {
-                            checkoutDeviceList.map((device: deviceCheckoutType) => (
-                                <div className="cart-item">
-                                    <div className="cart-item__preview">
-                                        <div className="cart-item__cross" onClick={() => removeDeviceFromList(device._id)}>
-                                            <img src="/icons/cross.svg" className="cart-item__cross--icon" />
-                                        </div>
-                                        <div className="cart-item__image-wrapper">
-                                            <img src={device.image} className="cart-item__image" />
-                                        </div>
-                                        <div className="cart-item__title-wrapper">
-                                            <p className="cart-title--text">{device.title}</p>
-                                        </div>
-                                    </div>
+                <p className="main-title">Cart</p>
+                {
+                    chartDeviceList.length
+                        ? (
+                            <div className="cart">
+                                <div>
+                                    {
+                                        checkoutDeviceList.map((device: deviceCheckoutType) => (
+                                            <div className="cart-item">
+                                                <div className="cart-item__preview">
+                                                    <div className="cart-item__cross" onClick={() => removeDeviceFromList(device._id)}>
+                                                        <img src="/icons/cross.svg" className="cart-item__cross--icon" />
+                                                    </div>
+                                                    <div className="cart-item__image-wrapper">
+                                                        <img src={device.image} className="cart-item__image" />
+                                                    </div>
+                                                    <div className="cart-item__title-wrapper">
+                                                        <p className="cart-title--text">{device.title}</p>
+                                                    </div>
+                                                </div>
 
-                                    <div className="cart-item__info">
-                                        <div className="cart-item__counter">
-                                            <div
-                                                className="slider-buttons slider-buttons--not-active slider-buttons--cart"
-                                                onClick={() => minusDevice(device._id)}
-                                            >
-                                                -
+                                                <div className="cart-item__info">
+                                                    <div className="cart-item__counter">
+                                                        <div
+                                                            className="slider-buttons slider-buttons--not-active slider-buttons--cart"
+                                                            onClick={() => minusDevice(device._id)}
+                                                        >
+                                                            -
                                         </div>
-                                            <p className="cart-item__count">
-                                                {device.count}
-                                            </p>
-                                            <div
-                                                onClick={() => plusDevice(device._id)}
-                                                className="slider-buttons slider-buttons--cart"
-                                            >
-                                                +
+                                                        <p className="cart-item__count">
+                                                            {device.count}
+                                                        </p>
+                                                        <div
+                                                            onClick={() => plusDevice(device._id)}
+                                                            className="slider-buttons slider-buttons--cart"
+                                                        >
+                                                            +
                                             </div>
 
-                                        </div>
+                                                    </div>
 
-                                        <div className="cart-item__price-wrapper">
-                                            <p className="second-title cart-item__price">{device.priceNumber * device.count} {device.price.current[0]}</p>
-                                        </div>
+                                                    <div className="cart-item__price-wrapper">
+                                                        <p className="second-title cart-item__price">{device.priceNumber * device.count} {device.price.current[0]}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+
+                                <div className="cart__checkout">
+                                    <div className="cart__total">
+                                        <p className="cart__total-price second-title">{totalSum}</p>
+                                        <p className="cart__total-items small-text">Total for {checkoutDeviceList.length} items</p>
                                     </div>
 
+                                    <div className="cart__line"></div>
+                                    <div className="cart__button-wrapper">
+                                        <div className="button__add-cart--wrapper cart__button">
+                                            <p style={{ margin: 0 }}>Ceckout</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            ))
-                        }
-                    </div>
 
-                    <div className="cart__checkout">
-                        <div className="cart__total">
-                            <p className="cart__total-price second-title">{totalSum}</p>
-                            <p className="cart__total-items small-text">Total for {checkoutDeviceList.length} items</p>
-                        </div>
-
-                        <div className="cart__line"></div>
-                        <div className="cart__button-wrapper">
-                            <div className="button__add-cart--wrapper cart__button">
-                                <p style={{ margin: 0 }}>Ceckout</p>
                             </div>
-                        </div>
-                    </div>
-
-                </div>
+                        )
+                        : (
+                            <div className="empty-list--information">
+                                <p className="uppaercase-text" style={{ fontSize: 20, lineHeight: 'inherit' }}>
+                                    Нou haven’t added anything to the cart yet. When you add a product to the cart, it will be displayed here and you can make a purchase
+                            </p>
+                            </div>
+                        )
+                }
             </div>
             <Footer />
         </div>

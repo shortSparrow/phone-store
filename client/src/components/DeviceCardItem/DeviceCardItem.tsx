@@ -56,25 +56,14 @@ const DeviceCardItem: React.FC<PhoneCardInterface> = ({ device, toggleFavoriteDe
     const handleAddToCartList = () => {
         const cartDevice = {
             _id: device._id,
-            price: {
-                old: device!.price.old,
-                current: device!.price.current
-            },
+            price: device.price,
             image: device.availabelDevices[0].images.main,
             title: device.title,
             routePosition: device.routePosition,
             deviceInfo: {
-
-                camera: device.deviceInfo.camera,
-                cell: device.deviceInfo.cell,
-                processor: device.deviceInfo.processor,
-                resolution: device.deviceInfo.resolution,
-                screen: device.deviceInfo.screen,
-                zoom: device.deviceInfo.zoom,
-                color: device.availabelDevices[0].color,
-                RAM: device.availabelDevices[0].availableRAM[0],
+                ...device.deviceInfo
             },
-            about: device.about
+            about: device?.about
         }
 
         toggleCartDevice(cartDevice)
