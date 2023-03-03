@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DeviceCountType } from "../../interfaces/appStateInterface";
 import { RootStateInterface } from "../../interfaces/rootStateInterface";
 
 import "./ShopCategory.scss";
 
 const ShopCategory: FC<ShopCategoryInterface> = ({ deviceCount }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div className="shop-category__list">
@@ -16,7 +16,7 @@ const ShopCategory: FC<ShopCategoryInterface> = ({ deviceCount }) => {
           src="./icons/phones-catalog-preview.jpg"
           alt=""
           className="shop-category__image"
-          onClick={() => history.push("/phones")}
+          onClick={() => navigate("/phones")}
         />
         <div className="shop-category__description">
           <p className="shop-category__title">Mobile phones</p>
@@ -31,7 +31,7 @@ const ShopCategory: FC<ShopCategoryInterface> = ({ deviceCount }) => {
           src="./icons/tablets-category-preview.png"
           alt=""
           className="shop-category__image"
-          onClick={() => history.push("/tablets")}
+          onClick={() => navigate("/tablets")}
         />
         <div className="shop-category__description">
           <p className="shop-category__title">Tablets</p>
@@ -46,7 +46,7 @@ const ShopCategory: FC<ShopCategoryInterface> = ({ deviceCount }) => {
           src="./icons/accsessories-catalog-preview.jpg"
           alt=""
           className="shop-category__image"
-          onClick={() => history.push("/accessories")}
+          onClick={() => navigate("/accessories")}
         />
         <div className="shop-category__description">
           <p className="shop-category__title">Accessories</p>

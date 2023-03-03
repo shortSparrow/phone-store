@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import Header from "../../components/Header/Header";
 
 import "./PhonesPage.scss";
-import { connect } from "react-redux";
+
 import { RootStateInterface } from "../../interfaces/rootStateInterface";
 import { phones } from "../../store/actions";
 import {

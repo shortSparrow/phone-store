@@ -1,60 +1,38 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 // import PhoneCardFull from './components/PhoneCardFull/PhoneCardFull';
-import MainPage from './pages/MainPage/MainPage';
-import PhonesPage from './pages/PhonesPage/PhonesPage';
-import FavoritePage from './pages/FavoritesPage/FavoritePage';
-import ChartPage from './pages/CartPage/CartPage';
-import TabletsPage from './pages/TabletsPage/TabletsPage';
+import MainPage from "./pages/MainPage/MainPage";
+import PhonesPage from "./pages/PhonesPage/PhonesPage";
+import FavoritePage from "./pages/FavoritesPage/FavoritePage";
+import ChartPage from "./pages/CartPage/CartPage";
+import TabletsPage from "./pages/TabletsPage/TabletsPage";
 // import TabletCardFull from './components/TabletCardFull/TabletCardFull';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import AccessoriesPage from './pages/AccessoriesPage/AccessoriesPage';
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import AccessoriesPage from "./pages/AccessoriesPage/AccessoriesPage";
 // import AccessoriesFullCard from './components/AccessoriesFullCard/AccessoriesFullCard';
-import DeviceFullCard from './components/DeviceFullCard/DeviceFullCard';
+import DeviceFullCard from "./components/DeviceFullCard/DeviceFullCard";
 
+export const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/phones" element={<PhonesPage />} />
 
-export const useRoutes = (isAuthentificated: boolean) => {
+      <Route path="/tablets" element={<TabletsPage />} />
 
-    return (
-        <Switch>
-            <Route path="/" exact>
-                <MainPage />
-            </Route>
-            <Route path="/phones" exact>
-                <PhonesPage />
-            </Route>
-            <Route path="/tablets" exact>
-                <TabletsPage />
-            </Route>
+      <Route path="/accessories" element={<AccessoriesPage />} />
 
-            <Route path="/accessories" exact>
-                <AccessoriesPage />
-            </Route>
+      <Route path="/phone/:model_name" element={<DeviceFullCard />} />
 
-            <Route path="/phone/:model_name" exact>
-                {/* <PhoneCardFull /> */}
-                <DeviceFullCard />
-            </Route>
-            <Route path="/tablet/:model_name" exact>
-                {/* <TabletCardFull /> */}
-                <DeviceFullCard />
-            </Route>
+      <Route path="/tablet/:model_name" element={<DeviceFullCard />} />
 
-            <Route path="/accessories/:model_name" exact>
-                {/* <AccessoriesFullCard /> */}
-                <DeviceFullCard />
-            </Route>
-            <Route path="/favorites" exact>
-                <FavoritePage />
-            </Route>
+      <Route path="/accessories/:model_name" element={<DeviceFullCard />} />
 
-            <Route path="/cart" exact>
-                <ChartPage />
-            </Route>
+      <Route path="/favorites" element={<FavoritePage />} />
 
-            <Route>
-                <NotFoundPage />
-            </Route>
-        </Switch>
-    )
-}
+      <Route path="/cart" element={<ChartPage />} />
+      <Route path="/404" element={<NotFoundPage />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
+    </Routes>
+  );
+};
