@@ -1,28 +1,57 @@
-import React, {MouseEvent} from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { RootState } from '../../../store/reducers';
 
 import './MobileHeader.scss';
 
-const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
+const MobileHeader = (props: any) => {
+    const { favoriteDevices, cartDeviceList, deviceScreen } = props;
+    const [openSearchField, setOpenSearchField] = useState(false)
+
     const location = useLocation()
     let history = useHistory();
 
     return (
         <div className="header-navigation-burger__wrapper">
             <div className="header-navigation-burger__line">
-                <div className="header-nav-burger__logo-wrapper">LOGO</div>
+                <div className="header-nav-burger__logo-wrapper" onClick={() => history.push('/')}>
+                    <img src="icons/logo.png" className="logo-image" style={{ width: '100%' }} />
+                </div>
+
+                {
+                    props.children && deviceScreen.value >= 500
+                        ? (
+                            <div className="header-search-field--wrapper" style={{ marginRight: 20 }}>
+                                <label className="header-search-field--label">
+                                    <img src="/icons/Search.svg" style={{ position: 'absolute', right: 25, cursor: 'pointer' }} />
+
+                                    {props.children}
+                                </label>
+                            </div>
+                        )
+                        : props.children && deviceScreen.value < 500
+                            ? (
+                                <div className="header-search-field--wrapper">
+                                    <div
+                                        className="header-search-field--icon-wrapper header-search-field--icon-wrapper--mobile"
+                                        onClick={() => setOpenSearchField(true)}
+                                    >
+                                        <img src="/icons/Search.svg" style={{ cursor: 'pointer' }} />
+                                    </div>
+
+                                </div>
+                            )
+                            : null
+
+                }
 
                 <div className="header-nav-burger__menu-wrapper">
-                    {/* <button className="burger-icon" onClick={() => {
-                        document.querySelector('.header-nav-burger__nav-wrapper')?.classList.toggle('header-nav-burger__nav-wrapper--active')
-                    }}>X</button> */}
                     <div className="menu-toggle" onClick={(event: any) => {
                         document.querySelector('.header-nav-burger__nav-wrapper')?.classList.toggle('header-nav-burger__nav-wrapper--active')
                         document.querySelector('.menu-toggle')?.classList.toggle('active')
 
-                        
+
                     }}>
                         <div className="hamburger">
                             <span></span>
@@ -37,10 +66,11 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
                 </div>
             </div>
 
+
             <nav className="header-nav-burger__nav-wrapper">
                 <ul className="header-nav-burger__item-wrapper" onClick={() => {
                     console.log('click');
-                    
+
                 }}>
                     <li className={`header-nav-burger__item ${location.pathname === "/" ? "header-nav-burger__item--active" : ""}`} onClick={() => history.push('/')}>
                         <Link to="/" className="header-nav-burger__link third-title ">home</Link>
@@ -92,13 +122,51 @@ const MobileHeader = ({ favoriteDevices, cartDeviceList }: any) => {
                 </ul>
             </nav>
 
+            {
+                openSearchField && (
+
+                    <div
+                        className="search-field-alert--wrapper"
+                        onClick={(event: MouseEvent<HTMLElement>) => {
+                            event.preventDefault();
+
+                            const target = event.target as HTMLElement
+
+                            if (target.classList.contains('search-field-alert--wrapper')) {
+                                setOpenSearchField(false)
+                            }
+                        }}
+                    >
+                        <div className="search-field-alert__content search-field-alert__content--mobile">
+                            <div
+                                className="search-field-alert__cross"
+                                onClick={() => setOpenSearchField(false)}
+                            >
+                                <img src="/icons/cross.svg" className="search-field-alert__cross--icon" />
+                            </div>
+                            <label style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                width: '100%',
+                                height: '100%'
+                            }}>
+
+                                <img src="/icons/Search.svg" style={{ position: 'absolute', right: 25 }} />
+                                {props.children}
+                            </label>
+
+                        </div>
+                    </div>
+                )
+            }
         </div>
     )
 };
 
 const mapStateToProps = (state: RootState) => ({
     favoriteDevices: state.favoritesDevice.deviceList,
-    cartDeviceList: state.cartDeviceList.deviceList
+    cartDeviceList: state.cartDeviceList.deviceList,
+    deviceScreen: state.appState.deviceScreen
 });
 
 const matDispatchToProps = () => ({

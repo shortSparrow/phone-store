@@ -65,7 +65,9 @@ const SliderImages: FC<sliderImagesInterface> = (props) => {
                     <Slider {...settings} ref={slickSliderRef}>
                         {
                             props.imageList.map((image: any) => (
-                                <img src={image} alt="" className="slider-images__big-image" key={image} />
+
+                                <img src={image} alt="" className="slider-images__big-image" key={image}/>
+
                             ))
                         }
                     </Slider>

@@ -1,10 +1,10 @@
 import { combineReducers, Reducer, AnyAction } from 'redux';
 import { appState } from './appState';
-import { phonesState } from './phones';
-import { hotPricePhones } from './hotPricePhones';
+import { phone } from './phones';
 import { favoritesDevice } from './favoritesDevice';
 import { cartDeviceList } from './cartDeviceList';
-import { tabletsState } from './tablets'
+import { tablet } from './tablets'
+import {accessories} from './accessories'
 
 import { AppStateInterface } from '../../interfaces/appStateInterface';
 
@@ -17,11 +17,11 @@ import { AppStateInterface } from '../../interfaces/appStateInterface';
 
 export const rootReducer = combineReducers({
   appState,
-  phonesState,
-  hotPricePhones,
+  phone,
   favoritesDevice,
   cartDeviceList,
-  tabletsState,
+  tablet,
+  accessories
 })
 
 export type RootState = ReturnType<typeof rootReducer>

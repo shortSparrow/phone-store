@@ -8,13 +8,16 @@
 
     &__select-phones--wrapper {
         display: flex;
+        flex-wrap: wrap;
         margin-top: 40px;
         margin-bottom: 24px;
+        gap: 20px;
     }
 
     &__pagination-warpper {
         display: flex;
         justify-content: center;
+        margin-top: 50px;
     }
 
     // &__conrol-fields--wrapper {

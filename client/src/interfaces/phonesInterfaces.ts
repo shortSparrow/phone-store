@@ -41,26 +41,3 @@ export type phoneListStateType = {
     sorted: phoneCardInterface[] | [],
     currentSortedValue: string
 }
-
-export type hotPriceState = {
-    error: any | null,
-    loading: boolean | null,
-    hotPricePhoneList: phoneCardInterface[] | [],
-}
-
-// export type currentDevice = {
-//     availableRAM: string[],
-//     bigImage: string,
-//     color: string,
-//     currentColor: string,
-//     currentRAM: string,
-//     images: {
-//         main: string,
-//         other: string[]
-//     },
-// }
-
-
-// phoneList = visileList
-// visibleList.sort() -> sorted
-// sorted.filter() => visible

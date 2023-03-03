@@ -6,13 +6,12 @@ import {
     PHONE_LIST_ERROR,
     PHONE_LIST_SUCCESS,
     PHONE_LIST_STATE,
-    PHONE_ITEM_SUCCESS
 } from '../../constants/actions';
 import { request, postRequest } from '../../api/request';
 import { AppStateActionTypes } from '../../interfaces/appStateInterface';
 import { RootStateInterface } from '../../interfaces/rootStateInterface';
 import { phoneCardInterface, phoneListStateType } from '../../interfaces/phonesInterfaces';
-import { phonesState } from '../reducers/phones';
+import { phone } from '../reducers/phones';
 
 export const phoneLoading = (loading: boolean): AppStateActionTypes => ({
     type: PHONE_LIST_LOADING,
@@ -71,32 +70,3 @@ export const loadPhones = (): ThunkAction<void, RootStateInterface, unknown, Act
         }
     }
 }
-
-export const phoneItemSuccess = (currentModel: phoneCardInterface): AppStateActionTypes => ({
-    type: PHONE_ITEM_SUCCESS,
-    currentModel
-})
-
-export const getPhoneByModelName = (model_name: string): ThunkAction<void, RootStateInterface, unknown, Action<string>> => {
-    return async dispatch => {
-        dispatch(phoneLoading(true));
-        try {
-            const phone: phoneCardInterface = await request(`/api/phone/item/?model_name=${model_name}`);
-
-            // add mainImage ro other imageList, ecause in db they not connected
-            phone.availabelDevices.map(device => {
-                device.images.other.unshift(device.images.main);
-                return device
-            });
-
-            dispatch(phoneItemSuccess(phone))
-
-        } catch (err) {
-            dispatch(phoneError(err));
-        } finally {
-            dispatch(phoneLoading(false));
-        }
-
-    }
-}
-

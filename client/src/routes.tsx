@@ -1,13 +1,16 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import PhoneCardFull from './components/PhoneCardFull/PhoneCardFull';
+// import PhoneCardFull from './components/PhoneCardFull/PhoneCardFull';
 import MainPage from './pages/MainPage/MainPage';
 import PhonesPage from './pages/PhonesPage/PhonesPage';
 import FavoritePage from './pages/FavoritesPage/FavoritePage';
 import ChartPage from './pages/CartPage/CartPage';
 import TabletsPage from './pages/TabletsPage/TabletsPage';
-import TabletCardFull from './components/TabletCardFull/TabletCardFull';
+// import TabletCardFull from './components/TabletCardFull/TabletCardFull';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import AccessoriesPage from './pages/AccessoriesPage/AccessoriesPage';
+// import AccessoriesFullCard from './components/AccessoriesFullCard/AccessoriesFullCard';
+import DeviceFullCard from './components/DeviceFullCard/DeviceFullCard';
 
 
 export const useRoutes = (isAuthentificated: boolean) => {
@@ -23,11 +26,23 @@ export const useRoutes = (isAuthentificated: boolean) => {
             <Route path="/tablets" exact>
                 <TabletsPage />
             </Route>
+
+            <Route path="/accessories" exact>
+                <AccessoriesPage />
+            </Route>
+
             <Route path="/phone/:model_name" exact>
-                <PhoneCardFull/>
+                {/* <PhoneCardFull /> */}
+                <DeviceFullCard />
             </Route>
             <Route path="/tablet/:model_name" exact>
-                <TabletCardFull />
+                {/* <TabletCardFull /> */}
+                <DeviceFullCard />
+            </Route>
+
+            <Route path="/accessories/:model_name" exact>
+                {/* <AccessoriesFullCard /> */}
+                <DeviceFullCard />
             </Route>
             <Route path="/favorites" exact>
                 <FavoritePage />

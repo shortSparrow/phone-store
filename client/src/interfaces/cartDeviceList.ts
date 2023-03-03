@@ -12,24 +12,25 @@ export interface cartDeviceListState {
 export type cartDevice = {
     _id: string,
     price: {
-        old: string,
+        old?: string,
         current: string
     },
-    image: string,
-    title: string,
-    routePosition: string,
-    deviceInfo: {
+    image?: string,
+    title?: string,
+    routePosition?: string,
+    deviceInfo?: {
         camera?: string,
         cell?: string,
         processor?: string,
         resolution?: string,
         screen?: string,
         zoom?: string,
-        color: string,
-        RAM: string,
+        color?: string,
+        RAM?: string,
     },
-    about: {
+    about?: {
         title: string,
         description: string
     }[],
+    [key: string]: any
 }
