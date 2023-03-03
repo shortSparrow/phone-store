@@ -1,5 +1,4 @@
 const express = require("express");
-<<<<<<< HEAD
 const config = require("config");
 const mongoose = require("mongoose");
 cors = require("cors");
@@ -42,28 +41,3 @@ async function start() {
 }
 
 start();
-=======
-const config = require('config');
-const mongoose = require("mongoose");
-
-const app = express();
-
-const PORT = config.get('port') || 5000
-
-async function start() {
-    try {
-        await mongoose.connect(config.get('mongoUri'), {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        });
-
-        app.listen(PORT, () => console.log(`Listren server on ${PORT}`))
-    } catch (err) {
-        console.log("Server Error", err.message);
-        process.exit()
-    }
-}
-
-start();
->>>>>>> b233ddf (connect data base)

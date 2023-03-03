@@ -133,13 +133,7 @@ interface accessoriesListState {
 // here we export whole action of appState as one big type
 export type AppStateActionTypes =
     setDeviceScreenInterface | setDevicesCountInterface | phoneListLoadingInterface | phoneListSuccessInterface |
-<<<<<<< HEAD
     phoneListFailInterface | phoneListState | requestLoading | requestFailed |
     setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess |
     tabletsError | tabletListState | accessoriesLoading | accessoriesSuccess | accessoriesError |
     accessoriesListState 
-=======
-    phoneListFailInterface | phoneListState | phoneItemSuccess | requestLoading | requestFailed |
-    setFavoriteDevices | setCartDeviceList | tabletsLoading | tabletsSuccess |
-    tabletsError | tabletListState | tabletItemSuccess
->>>>>>> 6d00548 (add route for countDevice count)
