@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const accessoriesSchema = {
-    _id: String,
+
     routePosition: String,
     title: String,
     availabelColor: [String],
