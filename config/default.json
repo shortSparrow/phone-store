@@ -1,5 +1,0 @@
-{
-  "port": 5000,
-  "jwtSecret": "SenyaSecretKey",
-  "mongoUri": "mongodb+srv://admin:admin@phone-store-cluster.eaf96.mongodb.net/phone-list?retryWrites=true&w=majority"
-}

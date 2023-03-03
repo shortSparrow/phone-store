@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-    "git.ignoreLimitWarning": true,
-    "editor.minimap.enabled": false
-=======
-    "git.ignoreLimitWarning": true
->>>>>>> b233ddf (connect data base)
+  "git.ignoreLimitWarning": true,
+  "editor.minimap.enabled": false
 }
